@@ -1,0 +1,36 @@
+﻿@model Notice
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Notices</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Details()">@(Model.Heading)</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("AddAttachment",new { Model.ID})"><i class="mdi mdi-upload"></i> Add attachment..</a></div>
+        @if (!User.IsInRole(nameof(UserRole.FARMER)))
+        {
+            <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+            if (Model.Status.HasFlag(ArticleFlags.PUBLISHED))
+            {
+                <div class="nav-item"><a class="nav-link" href="@Url.Action("ChangeStatus", new { Model.ID, StatusID = (int)ArticleFlags.UNPUBLISHED })"><span class="badge badge-pill badge-danger"><i class="mdi mdi-cancel"></i> Un-publish</span></a></div>
+            }
+            else
+            {
+                <div class="nav-item"><a class="nav-link" href="@Url.Action("ChangeStatus", new { Model.ID, StatusID = (int)ArticleFlags.PUBLISHED })"><span class="badge badge-pill badge-success"><i class="mdi mdi-check"></i> Publish</span></a></div>
+            }
+        }
+
+    </div>
+}
+<h3>@Model.Heading</h3>
+<h5>Type:@Model.Type.ToEnumString()</h5>
+<div class="m-2">
+    <div>Start date: @Model.StartDate</div>
+    <div>End date: @Model.EndDate</div>
+</div>
+@if (Model.AttachmentID.HasValue)
+{
+    <div>
+        <label>Attachment</label>
+        <div><a href="@Url.Action("Download","Attachments",new { Model.Attachment.ID})"><i class="mdi mdi-download"></i> @Model.Attachment.Name</a></div>
+    </div>
+}
+@Html.Raw(Model.Description);
+

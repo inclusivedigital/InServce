@@ -1,0 +1,129 @@
+﻿@{
+    var ctrl = ViewContext.HttpContext.Request.Url.PathAndQuery.ToLower();
+}
+@if (Request.IsAuthenticated)
+{
+    int id = User.Identity.GetUserId<int>();
+    <nav id="sidebar" class="d-block d-print-none">
+        <div style="height:45px; background-color:#57b759;">
+            <div class="nav-item"><a href="@Url.Index("Home")" class="navbar-brand nav-link text-white"><i class="mdi mdi-home"></i> Home</a></div>
+        </div>
+        <div class="sidebar-header">
+            <h4>In service training</h4>
+        </div>
+        <ul class="list-unstyled components">
+            @if (User.IsInRole(nameof(UserRole.ADMINISTRATOR)))
+            {
+                <li>
+                    <a class="dropdown-toggle @((ctrl.Contains("article")) ? "active bg-dark" : "")" href="#mycontent" role="button" id="dropdownMenuLink0" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-shopping-basket"></i> Content management..
+                    </a>
+                    <ul id="mycontent" class="collapse list-unstyled">
+                        <li><a href="@Url.Index("Articles")">Articles</a></li>
+                        <li><a href="@Url.Index("Notices")">Notice board</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-toggle @(ctrl.Contains("course")?"active bg-dark":"")" href="#mycourse" role="button" id="dropdownMenuLink0" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-book-reader"></i> Courses..
+                    </a>
+                    <ul id="mycourse" class="collapse list-unstyled">
+                        <li><a href="@Url.Index("Courses")">Courses</a></li>
+                        <li><a href="@Url.Index("Modules")">Course modules</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-toggle @(ctrl.Contains("department")?"active bg-dark":"")" href="#mydepartment" role="button" id="dropdownMenuLink0" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-book"></i> Departments..
+                    </a>
+                    <ul id="mydepartment" class="collapse list-unstyled">
+                        <li><a href="@Url.Index("Departments")">Departments</a></li>
+                        <li><a href="@Url.Index("Sections")">Sections</a></li>
+                        <li><a href="@Url.Index("Branches")">Branches</a></li>
+                        <li><a href="@Url.Index("ValueChains")">Value chains</a></li>
+                        <li><a href="@Url.Index("NonValueChains")">Non value chains</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-toggle @(ctrl.Contains("crop") ? "active bg-dark" : "")" href="#mycrops" role="button" id="dropdownMenuLinkcrops" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-tree"></i> Crops..
+                    </a>
+                    <ul id="mycrops" class="collapse list-unstyled">
+                        <li><a href="@Url.Index("CropCategories")">Categories</a></li>
+                        <li><a href="@Url.Index("Crops")">Crops</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="dropdown-toggle @(ctrl.Contains("livestock") ? "active bg-dark" : "")" href="#mylivestock" role="button" id="dropdownMenuLinkcrops" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-beer"></i> Livestock..
+                    </a>
+                    <ul id="mylivestock" class="collapse list-unstyled">
+                        <li><a href="@Url.Index("LivestockCategories")">Livestock categories</a></li>
+                        <li><a href="@Url.Index("Livestocks")">Livestock</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a class="nav-link @(ctrl.Contains("farmer")?"active bg-dark":"")" href="@Url.Index("Farmers")"><i class="fa fa-users"></i> Farmers</a>
+                </li>
+                <li>
+                    <a class="nav-link @(ctrl.Contains("extensionOfficers")?"active bg-dark":"")" href="@Url.Index("ExtensionOfficers")"><i class="fa fa-users-cog"></i> Extensin officers</a>
+                </li>
+                <li>
+                    <a class="nav-link @(ctrl.Contains("examination")?"active bg-dark":"")" href="@Url.Index("Examinations")"><i class="fa fa-book"></i> Examinations</a>
+                </li>
+                <li>
+                    <a class="dropdown-toggle @((ctrl.Contains("payment") || ctrl.Contains("currenc")) ? "active bg-dark" : "")" href="#myfinannces" role="button" id="dropdownMenuLink0" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-dollar-sign"></i> Financials..
+                    </a>
+                    <ul id="myfinannces" class="collapse list-unstyled">
+                        <li><a href="@Url.Index("Payments")">Farmer payments</a></li>
+                        <li><a href="@Url.Index("Currencies")">Currencies</a></li>
+                        <li><a href="@Url.Index("PaymentMethods")">Payment methods</a></li>
+                        <li><a href="@Url.Index("ExchangeRates")">Exchange rates</a></li>
+                    </ul>
+                </li>
+            }
+
+            @if (User.IsInRole(nameof(UserRole.ADMINISTRATOR)))
+            {
+                <li>
+                    <a class="dropdown-toggle @(ctrl.Contains("continent")?"active bg-dark":"")" href="#myaccounts" role="button" id="dropdownMenuLink0" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-cog"></i> Config..
+                    </a>
+                    <ul id="myaccounts" class="collapse list-unstyled">
+                        <li><a href="@Url.Index("Instructions")">Instructions</a></li>
+                        <li><a href="@Url.Index("Users")">System users</a></li>
+                        <li class="dropdown-divider"></li>
+                        <li><a href="@Url.Index("Continents")">Continents</a></li>
+                        <li><a href="@Url.Index("Regions")">Regions</a></li>
+                        <li><a href="@Url.Index("Countries")">Countries</a></li>
+                        <li><a href="@Url.Index("Provinces")">Provinces</a></li>
+                        <li><a href="@Url.Index("Districts")">Districts</a></li>
+                        <li><a href="@Url.Index("Wards")">Wards</a></li>
+                    </ul>
+                </li>
+            }
+        </ul>
+
+        <ul class="list-unstyled subitems">
+
+            <li>
+                <a class="dropdown-toggle" href="#sub" role="button" id="dropdownMenuLink9" data-toggle="collapse" aria-haspopup="true" aria-expanded="false">
+                    <i class="mdi mdi-account-circle"></i> @User.Identity.FullName()
+                </a>
+                <ul id="sub" class="collapse list-unstyled">
+                    <li><a href="@Url.Action("Details", "Users", new { id = User.Identity.GetUserId<int>() })">Profile</a></li>
+                </ul>
+            </li>
+            <li>
+                @using (Html.BeginForm("LogOff", "Account", new { area = "" }, FormMethod.Post, new { id = "logoutFormn", @class = "navbar-right" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <a class="btn btn-danger" href="javascript:document.getElementById('logoutFormn').submit()">Sign out <i class="mdi mdi-logout"></i></a>
+                }
+            </li>
+        </ul>
+    </nav>
+}
+
+

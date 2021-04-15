@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:divider="?android:attr/listDivider"
+    android:showDividers="end"
+    android:background="?android:attr/selectableItemBackground"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="4dp">
+        <ImageView
+            android:id="@+id/img_status"
+            android:layout_height="48dp"
+            android:layout_width="48dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_clock_outline" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_weight="4"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="1dp"
+            android:paddingLeft="8dp">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/text_topic"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:layout_height="wrap_content"
+                    android:text="Examination" />
+                <TextView
+                    android:id="@+id/text_coursecode"
+                    android:layout_width="wrap_content"
+                    android:gravity="right|center"
+                    android:textStyle="bold"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="?android:attr/textColorPrimary"
+                    android:layout_height="fill_parent"
+                    android:text="BSC101" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/text_date"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:text="28-Apr-2018" />
+                <TextView
+                    android:id="@+id/text_coursename"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_weight="1"
+                    android:singleLine="true"
+                    android:gravity="right"
+                    android:textColor="?android:attr/textColorSecondary"
+                    android:text="Course name" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

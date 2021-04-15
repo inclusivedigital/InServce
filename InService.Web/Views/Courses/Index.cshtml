@@ -1,0 +1,162 @@
+﻿@model IPagedList<Course>
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Courses</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i>Add new</a></div>
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="text-center mt-4">
+        <h4 class="text-danger">There's nothing here!</h4>
+        <a href="@Url.Add()" class="btn btn-outline-success btn-sm"><i class="mdi mdi-plus"></i> Add new course</a>
+    </div>
+}
+else
+{
+    <h3>Available courses</h3>
+    <div class="card card-border shadow mb-3">
+        <div class="card-header border-0 rounded">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist" id="tabList">
+                <li class="nav-item"><a class="nav-link active" href="#Dailysales" data-toggle="tab">Value chain courses</a></li>
+                <li class="nav-item"><a class="nav-link" href="#Monthlysales" data-toggle="tab">Non value chain courses</a></li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="Dailysales">
+                    <h4 class="font-weight-light">@Model.ToList().Where(c => c.ValueChainID.HasValue).Count() value chain course@(Model.ToList().Where(c => c.ValueChainID.HasValue).Count() == 1 ? "" : "s")<small> found..</small></h4>
+                    @*<table class="table table-striped table-hover table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Course code</th>
+                                    <th>Branch</th>
+                                    <th>Value chain</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in Model.ToList().Where(c => c.ValueChainID.HasValue))
+                                {
+                                    <tr>
+                                        <td><a class="text-success" href="@Url.Details(i.ID)">@i.Name</a></td>
+                                        <td>@i.Code</td>
+                                        <td>@(i.Branch?.Name)</td>
+                                        <td>@(i.ValueChain?.Name)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>*@
+
+                    <div class="demo10">
+                        <div class="container">
+                            <div class="row">
+                                @foreach (var item in Model.ToList().Where(c => c.ValueChainID.HasValue))
+                                {
+                                    <div class="col-md-4 col-sm-8">
+                                        <div class="pricingTable10 border mb-3" style="height:500px;">
+                                            <div class="pricingTable-header">
+                                                <h3 class="heading"><a class="text-white" href="@Url.Details(item.ID)">@item.Name</a></h3>
+                                                @if (item.CurrentPrice != null)
+                                                {
+                                                    <span class="price-value">
+                                                        <span class="currency">@item.CurrentPrice.Currency.Symbol</span> @item.CurrentPrice.Amount
+                                                        <span class="month">only</span>
+                                                    </span>
+                                                }
+                                            </div>
+                                            <div class="pricing-content">
+                                                <ul>
+                                                    @if (item.Modules.Any())
+                                                    {
+                                                        foreach (var item2 in item.Modules.OrderBy(c => c.Number).Take(5))
+                                                        {
+                                                            <li>@item2.Name</li>
+                                                        }
+                                                    }
+                                                </ul>
+                                                <a href="@Url.Details(item.ID)" class="read">Quick view</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+                <div class="tab-pane fade show" id="Monthlysales">
+                    <h4 class="font-weight-light">@Model.ToList().Where(c => c.NonValueChainID.HasValue).Count() non value chain course@(Model.ToList().Where(c => c.NonValueChainID.HasValue).Count() == 1 ? "" : "s")<small> found..</small></h4>
+                    @*<table class="table table-striped table-hover table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Course code</th>
+                                    <th>Branch</th>
+                                    <th>Value chain</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in Model.ToList().Where(c => c.NonValueChainID.HasValue))
+                                {
+                                    <tr>
+                                        <td><a class="text-success" href="@Url.Details(i.ID)">@i.Name</a></td>
+                                        <td>@i.Code</td>
+                                        <td>@(i.Branch?.Name)</td>
+                                        <td>@(i.ValueChain?.Name)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>*@
+
+                    <div class="demo10">
+                        <div class="container">
+                            <div class="row">
+                                @foreach (var item in Model.ToList().Where(c => c.NonValueChainID.HasValue))
+                                {
+                                    <div class="col-md-4 col-sm-8">
+                                        <div class="pricingTable10 border mb-3" style="height:500px;">
+                                            <div class="pricingTable-header">
+                                                <h3 class="heading"><a class="text-white" href="@Url.Details(item.ID)">@item.Name</a></h3>
+                                                @if (item.CurrentPrice != null)
+                                                {
+                                                    <span class="price-value">
+                                                        <span class="currency">@item.CurrentPrice.Currency.Symbol</span> @item.CurrentPrice.Amount
+                                                        <span class="month">only</span>
+                                                    </span>
+                                                }
+                                            </div>
+                                            <div class="pricing-content">
+                                                <ul>
+                                                    @if (item.Modules.Any())
+                                                    {
+                                                        foreach (var item2 in item.Modules.OrderBy(c => c.Number).Take(5))
+                                                        {
+                                                            <li>@item2.Name</li>
+                                                        }
+                                                    }
+                                                </ul>
+                                                <a href="@Url.Details(item.ID)" class="read">Quick view</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="card-footer bg-white">
+        </div>
+    </div>
+
+    @Html.PagedListPager(Model, p => Url.Query(new { p }),
+       new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true })
+}

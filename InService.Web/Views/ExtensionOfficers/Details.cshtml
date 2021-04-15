@@ -1,0 +1,77 @@
+﻿@model ExtensionOfficer
+
+@section subnav{
+    <div class="navbar-nav">
+        @if (!User.IsInRole(nameof(UserRole.FARMER)))
+        {
+            <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-left"></i>Extension Officers</a></div>
+        }
+        <div class="nav-item"><a class="nav-link" href="@Url.Details()"><i class="mdi mdi-account"></i> @Model.Firstname</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+    </div>
+}
+
+@section sidebar{
+    @Html.Partial("_Sidebar")
+}
+<h3 class="font-weight-light">@Model.Firstname</h3>
+<div class="card card-border shadow mb-3">
+    <div class="card-header border-0 rounded">
+        <ul class="nav nav-tabs card-header-tabs" role="tablist" id="tabList">
+            <li class="nav-item"><a class="nav-link active" href="#Details" data-toggle="tab">Details</a></li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="Details">
+                <div class="row">
+                    <div class="col-md-8">
+                        @if (!String.IsNullOrEmpty(Model.Fullname))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Name</label>
+                                <div class="col-md-8">@Model.Fullname</div>
+                            </div>
+                        }
+                        <div class="row">
+                            <label class="col-md-4 font-weight-bold">Gender</label>
+                            <div class="col-md-8">@Model.Gender.ToEnumString()</div>
+                        </div>
+                      
+                        @if (!String.IsNullOrEmpty(Model.NationalID))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">ID Number</label>
+                                <div class="col-md-8">@Model.NationalID</div>
+                            </div>
+                        }
+                        <div class="row">
+                            <label class="col-md-4 font-weight-bold">Creation date</label>
+                            <div class="col-md-8">@Model.CreationDate.BasicFormat()</div>
+                        </div>
+                        @if (!String.IsNullOrEmpty(Model.Mobile))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Mobile</label>
+                                <div class="col-md-8">@Model.Mobile</div>
+                            </div>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.Email))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Email</label>
+                                <div class="col-md-8">@Model.Email</div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer bg-white">
+        <label class="text-muted small">Created @Model.CreationDate.BasicFormatWithTime()</label>
+    </div>
+</div>
+

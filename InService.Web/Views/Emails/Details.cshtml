@@ -1,0 +1,66 @@
+﻿@model EmailConfig
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-left"></i> Email configs</a></div>
+        <div class="nav-item"><a class="nav-link " href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit</a></div>
+    </div>
+}
+<h3 class="font-weight-light">@Model.Name</h3>
+<div class="row">
+    <div class="col-md-7">
+        <div class="card">
+            <div class="card-body">
+                <div class="form-group mb-4">
+                    <label class="text-muted h5 mb-0">Config name</label>
+                    <div>@Model.Name</div>
+                </div>
+                <div class="form-group mb-4">
+                    <label class="text-muted h5 mb-0">Email server host address</label>
+                    <div>@Model.Host:@Model.Port</div>
+                </div>
+                <div class="form-group mb-4">
+                    <label class="text-muted h5 mb-0">Sender email address</label>
+                    <div>@Model.SenderID</div>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.Username))
+                {
+                    <div class="form-group mb-4">
+                        <label class="text-muted mb-0 h5">Email account username</label>
+                        <div>@Model.Username</div>
+                    </div>
+                }
+                <div class="form-group">
+                    <label class="text-muted h5 mb-0">
+                        Connect to email server via SSL
+                        <span class="badge badge-pill badge-@(Model.EnableSSL ? "success" : "light")">
+                            <i class="mdi mdi-@(Model.EnableSSL ? "check" : "close")"></i>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        @using (Html.BeginForm("Test", "Email", new { Model.ID }, FormMethod.Post, new { @class = "form-inline ml-auto" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="input-group mt-4">
+                <input name="Email" required type="email" value="@ViewBag.CurUserEmail" class="form-control" placeholder="Email address" />
+                <div class="input-group-append">
+                    <button class="btn btn-info"><i class="mdi mdi-send"></i> Send test email</button>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-5">
+        <h5 class="text-muted font-weight-light mt-2">Use configuration for</h5>
+        <div class="list-group list-group-flush">
+            @foreach (EmailTarget item in Enum.GetValues(typeof(EmailTarget)))
+            {
+                <div class="list-inline-item">
+                    <span class="badge badge-pill badge-@(Model.Target.HasFlag(item) ? "success" : "light")">
+                        <i class="mdi mdi-@(Model.Target.HasFlag(item) ? "check" : "close")"></i>
+                    </span> @item.ToString().Replace("_", " ")
+                </div>
+            }
+        </div>
+    </div>
+</div>

@@ -1,0 +1,42 @@
+﻿@model Course
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+ <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <title>In service training app</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="~/Scripts/coursepage/syntax-highlighter/styles/shCore.css" rel="stylesheet" media="all" />
+    <link href="~/Scripts/coursepage/syntax-highlighter/styles/shThemeDefault.css" rel="stylesheet" media="all" />
+    <link href="~/Scripts/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/Scripts/coursepage/css/normalize.min.css" rel="stylesheet" />
+    <link href="~/Scripts/coursepage/css/main.css" rel="stylesheet" />
+
+</head>
+
+<body id="welcome">
+
+    @RenderBody()
+
+    <!-- Essential JavaScript Libraries
+    ==============================================-->
+    <script src="~/Scripts/coursepage/js/jquery-1.11.0.min.js"></script>
+    <script src="~/Scripts/coursepage/js/jquery.nav.js"></script>
+    <script src="~/Scripts/coursepage/syntax-highlighter/scripts/shCore.js"></script>
+    <script src="~/Scripts/coursepage/syntax-highlighter/scripts/shBrushXml.js"></script>
+    <script src="~/Scripts/coursepage/syntax-highlighter/scripts/shBrushCss.js"></script>
+    <script src="~/Scripts/coursepage/syntax-highlighter/scripts/shBrushJScript.js"></script>
+    <script src="~/Scripts/coursepage/syntax-highlighter/scripts/shBrushPhp.js"></script>
+    <script type="text/javascript">
+        SyntaxHighlighter.all()
+    </script>
+    <script src="~/Scripts/coursepage/js/custom.js"></script>
+
+</body>
+</html>

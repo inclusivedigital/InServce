@@ -1,0 +1,131 @@
+﻿@model Payment
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i> Payments</a></div>
+        <div class="nav-item"><a class="nav-link text-white" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new..</a></div>
+
+    </div>
+}
+
+<h3 class="font-weight-light">Add an payment</h3>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-7">
+            <div class="card border-success">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Status</label>
+                        <div class="col-md-8">
+                            @Html.DropDownList("StatusID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Payment Method</label>
+                        <div class="col-md-8">
+                            @Html.DropDownList("PaymentMethodID", (SelectList)ViewBag.PaymentMethodID, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Currency</label>
+                        <div class="col-md-8">
+                            @Html.DropDownList("CurrencyID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <hr />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h5 class="mt-4">Add items</h5>
+    <div class="form-inline">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">Item</span>
+            </div>
+            <select id="Product" class="form-control" data-bind="value: SelectedProduct" style="width:200px;"></select>
+            <input type="number" min="1" data-bind="textinput: Quantity" class="form-control" placeholder="Quantity" style="width:150px;" />
+            <input type="number" data-bind="textinput: Amount" class="form-control" style="width:150px;" placeholder="Amount" />
+            <div class="input-group-append">
+                <button type="button" class="btn btn-primary" data-bind="click: addItem, attr: {disabled: canAddItem()==false}">Add <i class="mdi mdi-chevron-right"></i></button>
+            </div>
+        </div>
+    </div>
+    <!-- ko if: Items().length > 0 -->
+    <div class="mt-4">
+        <h6><i class="mdi mdi-format-list-bulleted"></i>Items list</h6>
+    </div>
+    <table class="table table-sm table-striped table-hover table-bordered table-active">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Amount</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach:Items">
+            <tr>
+                <td><label data-bind="text:Product.text"></label><input type="hidden" name="ProductID" data-bind="value:Product.id" /></td>
+                <td><input type="number" min="1" data-bind="textinput:Qty" class="form-control" name="Quantity" /></td>
+                <td><input type="number" data-bind="textinput:Amnt" class="form-control" name="Amount" /></td>
+                <td class="text-center"><button class="btn btn-danger btn-sm" data-bind="click :$parent.removeItem">Delete <i class="mdi mdi-delete-forever"></i></button></td>
+            </tr>
+        </tbody>
+        <tfoot class="table-secondary">
+            <tr>
+                <th>Total</th>
+                <th class="align-bottom text-right"><label data-bind="text:Total"></label></th>
+                <th class="align-bottom text-right"><label data-bind="text:Total1"></label></th>
+            </tr>
+        </tfoot>
+    </table>
+    <div class="text-right mb-4">
+        <button class="btn btn-success">Submit <i class="mdi mdi-checkbox-marked-circle"></i></button>
+    </div>
+    <!--/ko-->
+}
+
+@section Scripts {
+    <script src="~/Scripts/App/ko.Payment.AddItems.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var model = new MyModel();
+            ko.applyBindings(model);
+            $('#Product').select2({
+                placeholder: "Select product..",
+                minimumInputLength: 1,
+                theme: "bootstrap4",
+                ajax: {
+                    dataType: 'json',
+                    url: "@Url.Action("Search", "Products")",
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            });
+              $('#CID').select2({
+                placeholder: "Search currency...",
+                 minimumInputLength: 1,
+                 theme: "bootstrap4",
+                ajax: {
+                    dataType: 'json',
+                    url: "@Url.Action("Search","Currencies")",
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    }
+
+                }
+            });
+        });
+    </script>
+}
+

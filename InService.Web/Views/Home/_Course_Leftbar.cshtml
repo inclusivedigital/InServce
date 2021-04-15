@@ -1,0 +1,18 @@
+﻿@model Course
+
+<aside class="left-sidebar">
+    <div class="logo">
+        <a href="@Url.Action("Course","Home",new { CourseID=Model.ID})">
+            <h4>@Model.Name</h4>
+        </a>
+    </div>
+    <nav class="left-nav">
+        <ul id="nav">
+            <li class="current"><a href="#welcome">Welcome</a></li>
+            @foreach (var item in Model.Modules.OrderBy(c => c.Number))
+            {
+                <li><a href="#@($"_{item.ID}")">@item.Name</a></li>
+            }
+        </ul>
+    </nav>
+</aside>

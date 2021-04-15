@@ -1,0 +1,43 @@
+﻿@model IEnumerable<Course>
+
+<div class="demo10">
+    <div class="container">
+        <h4 class="py-4 text-center">Pricing Table</h4>
+        <div class="row">
+            @foreach (var item in Model)
+            {
+            <div class="col-md-4 col-sm-8">
+                <div class="pricingTable10 border mb-3" style="height:500px;">
+                    <div class="pricingTable-header">
+                        <h3 class="heading">@item.Name</h3>
+                        @if (item.CurrentPrice != null)
+                        {
+                            <span class="price-value">
+                                <span class="currency">@item.CurrentPrice.Currency.Symbol</span> @item.CurrentPrice.Amount
+                                <span class="month">only</span>
+                            </span>
+                        }
+                    </div>
+                    <div class="pricing-content">
+                        <ul>
+                            @if (item.Modules.Any())
+                            {
+                                foreach (var item2 in item.Modules.OrderBy(c => c.Number).Take(5))
+                                {
+                                    <li>@item2.Name</li>
+                                }
+                            }
+                        </ul>
+                        <a href="#" class="read">sign up</a>
+                    </div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+</div>
+@section styles{
+    <style>
+
+    </style>
+}

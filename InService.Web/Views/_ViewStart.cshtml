@@ -1,0 +1,4 @@
+﻿@{
+    var ctrl = ViewContext.HttpContext.Request.Url.PathAndQuery.ToLower();
+    Layout = (Request.IsAuthenticated || ctrl.Contains("login")) ? "~/Views/Shared/_Layout.cshtml" : "~/Views/Shared/_SiteLayout.cshtml";
+}

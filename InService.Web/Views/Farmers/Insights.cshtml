@@ -1,0 +1,119 @@
+﻿@model IPagedList<Farmer>
+@section subnav{
+    <div class="navbar-nav mr-auto">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Farmers</a></div>
+        <div class="nav-item"><a class="nav-link " href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new...</a></div>
+    </div>
+    <div class="navbar-nav ml-auto">
+        <div class="dropdown nav-item">
+            <a class="nav-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fa fa-chart-pie"></i> Insights
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                @foreach (FarmerType item in Enum.GetValues(typeof(FarmerType)))
+                {
+                    <a class="dropdown-item" href="@Url.Action("Insights",new {TypeID=(int)item})">@item.ToEnumString()</a>
+                }
+            </div>
+        </div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("Calendar")"><i class="fa fa-calendar"></i> Calendar.</a></div>
+    </div>
+}
+<div class="form-inline">
+    <div>
+        <h3 class="font-weight-light">Farmers  <span class="badge badge-pill badge-success">@Model.TotalItemCount</span></h3>
+    </div>
+</div>
+<div class="mt-2" id="svchartContainer" style="height: 300px; width: 100%;"></div>
+<div class="mt-2" id="chartContainer" style="height: 370px; width: 100%;"></div>
+<div class="mt-2" id="areaChartContainer" style="height: 370px; width: 100%;"></div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        window.onload = function () {
+        var chart1 = new CanvasJS.Chart("svchartContainer",
+            {
+                theme: "theme2",
+                animationEnabled: true,
+                exportEnabled: true,
+                axisX: {
+                    title: "Farmer type",
+                },
+                axisY: {
+                    title: "Count",
+                },
+                data: [
+                    {
+                        type: "column",
+                        legendText: "Farmer types",
+                        showInLegend: "true",
+                        dataPoints:@Html.Raw(ViewBag.points),
+                    },
+                ]
+            });
+            chart1.render();
+
+            var chart = new CanvasJS.Chart("chartContainer", {
+                exportEnabled: true,
+                animationEnabled: true,
+                theme: "light2",
+                title: {
+                    text: "Farmers"
+                },
+                legend: {
+                    cursor: "pointer",
+                    itemclick: explodePie,
+                    verticalAlign: "center",
+                    horizontalAlign: "right",
+                },
+                data: [{
+                    type: "pie",
+                    showInLegend: true,
+                    legendText: "{label}",
+                    toolTipContent: "{label}: <strong>{y} </strong>",
+                    startAngle: -45,
+                    indexLabel: "{label} ({y})",
+                    indexLabelFontColor: "#12122B",
+                    indexLabelPlacement: "inside",
+                    indexLabelFontSize: 15,
+                    dataPoints: @Html.Raw(ViewBag.points)
+                    }]
+            });
+            chart.render();
+
+            function explodePie(e) {
+                if (typeof (e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+                    e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+                } else {
+                    e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+                }
+                e.chart.render();
+            }
+
+            var chart2 = new CanvasJS.Chart("areaChartContainer", {
+                animationEnabled: true,
+                exportEnabled: true,
+                title: {
+                    text: "Farmers"
+                },
+                axisX: {
+                    title: "Farmer types",
+                },
+                axisY: {
+                    title: "Count",
+                },
+                data: [{
+                    type: "splineArea",
+                    color: "#185265",
+                    toolTipContent: "{label}: <strong>{y}</strong>",
+                    lineColor: "black",
+                    markerColor: "black",
+                    dataPoints: @Html.Raw(ViewBag.points)
+                    }]
+            });
+            chart2.render();
+        };
+    </script>
+
+}

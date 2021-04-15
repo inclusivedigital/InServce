@@ -1,0 +1,36 @@
+﻿@model ExchangeRate
+@section subnav{
+    <div class="navbar-nav mr-auto">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i> Rates</a></div>
+        <div class="nav-item"><a class="nav-link " href="@Url.Details( Model.ID)">@Model.Rate</a></div>
+    </div>
+}
+
+<h4 class="font-weight-light">Rate details</h4>
+<div class="row">
+    <div class="col-md-7">
+        <div class="card border-primary">
+            <div class="card-body">
+                <div class="row">
+                    <label class="col-md-4 font-weight-bold">Rate</label>
+                    <div class="col-md-8">@Model.Rate</div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4 font-weight-bold">Currency</label>
+                    <div class="col-md-8">@Model.Currency.Name</div>
+                </div>
+                @if (Model.PaymentMethodID.HasValue)
+                {
+                    <div class="row">
+                        <label class="col-md-4 font-weight-bold">Payment Method</label>
+                        <div class="col-md-8">@Model.PaymentMethod.Name</div>
+                    </div>
+                }
+                <div class="row">
+                    <label class="col-md-4 font-weight-bold">Creation date</label>
+                    <div class="col-md-8">@Model.CreationDate.BasicFormat()</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@model EmailConfig
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-left"></i> Email configs..</a></div>
+        <div class="nav-item"><a class="nav-link " href="@Url.Details()"><i class="mdi mdi-chevron-left"></i> Details</a></div>
+    </div>
+}
+<h3>@ViewBag.Title</h3>
+<div class="row">
+    <div class="col-md-7">
+        @if (ViewBag.Exception == null)
+        {
+            <div class="alert alert-success">
+                <h4><i class="mdi mdi-check-circle-outline"></i> Email successfully sent</h4>
+                <div>Email address: <strong>@ViewBag.Email</strong></div>
+                Please check your email
+            </div>
+        }
+        else
+        {
+            var Exception = (Exception)ViewBag.Exception;
+            <div class="alert alert-danger border-danger border">
+                <h4><i class="oi oi-circle-x"></i> Sending email failed</h4>
+                <div>Email address: <strong>@ViewBag.Email</strong></div>
+                @Exception.Message
+                @if (Exception.InnerException != null)
+                {
+                    <div class="font-weight-light">@Exception.InnerException.Message</div>
+                }
+                <div class="text-right mt-2">
+                    <a href="@Url.Action("Edit", new { Model.ID })" class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i> Edit configuration</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

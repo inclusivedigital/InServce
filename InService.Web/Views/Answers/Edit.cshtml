@@ -1,0 +1,54 @@
+﻿@model Answer
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link" href="@Url.Details("Questions",Model.Question.ID )"><i class="mdi mdi-chevron-double-left"></i> Question</a></div>
+        <div class="nav-item"> <a class="nav-link" href="@Url.Edit( Model.ID)"><i class="mdi mdi-plus"></i>Edit...</a></div>
+    </div>
+}
+
+<h3 class="font-weight-light">Edit answer</h3>
+<div class="row">
+    <div class="col-md-7">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <input type="hidden" name="id" value="@Model.ID" />
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Answer <i class="text-danger">*</i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "", autofocus = "" })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Status</label>
+                        <div class="col-md-8">
+                            @Html.SelectListFor(m => m.Flags, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Flags, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Comment</label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(m => m.Comments, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Comments, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="text-right">
+                        <button class="btn btn-success">Submit <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

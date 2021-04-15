@@ -1,0 +1,132 @@
+﻿@model Course
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item">  <a class="nav-link" href="@Url.Index()">Courses</a></div>
+        <div class="nav-item"> <a class="nav-link" href="@Url.Details()">@Model.Name</a></div>
+        <div class="nav-item"> <a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-7">
+        <h3 class="font-weight-light">Edit course</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger small" })
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Name</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Code</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Code, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(m => m.Code, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Final Exam Questions</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.FinalExamQuestions, new { @class = "form-control", type = "number" })
+                            @Html.ValidationMessageFor(m => m.FinalExamQuestions, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Branch</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(m => m.BranchID, (SelectList)ViewBag.branches, "Select..", new { @class = "form-control options", required = "" })
+                            @Html.ValidationMessageFor(m => m.BranchID, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <hr />
+                        <label>Set course under</label>
+                        <div>
+                            <div class="form-check">
+                                <input data-bind="checked:comp" type="radio" class="form-check-input" value="2" id="Organization" checked />
+                                <label class="form-check-label" for="Organization">A value chain</label>
+                            </div>
+                            <div class="form-check">
+                                <input data-bind="checked:ind" type="radio" class="form-check-input" value="1" id="Individual" />
+                                <label class="form-check-label" for="Individual">A non value chain</label>
+                            </div>
+                        </div>
+                        <hr />
+                    </div>
+
+                    <div id="orgPanel" data-role="collapse" data-bind="visible:ShowComp">
+                        <div class="form-group row">
+                            <label class="col-md-4">Value chain</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(m => m.ValueChainID, (SelectList)ViewBag.valuechains, "Select value chain..", new { @class = "form-control options" })
+                                @Html.ValidationMessageFor(m => m.ValueChainID, "", new { @class = "text-danger small" })
+                            </div>
+                        </div>
+                    </div>
+                    <div id="personPanel" data-role="collapse" data-bind="visible:ShowInd">
+                        <div class="form-group row">
+                            <label class="col-md-4">Non Value chain</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(m => m.NonValueChainID, (SelectList)ViewBag.nonvaluechains, "Select non value chain..", new { @class = "form-control options" })
+                                @Html.ValidationMessageFor(m => m.NonValueChainID, "", new { @class = "text-danger small" })
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4">Short description</label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer  text-right">
+                    <button class="btn btn-success"><i class="mdi mdi-check-circle-outline"></i> Save changes</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            var model = new MyModel();
+            ko.applyBindings(model);
+        })
+        function MyModel() {
+            var self = this;
+            self.card = ko.observable();
+            self.addCard = ko.computed(function () {
+                return self.card();
+            }, self)
+
+            self.comp = ko.observable();
+            self.ind = ko.observable();
+
+            self.ShowComp = ko.computed(function () {
+                if (self.comp()) {
+                    self.ind(false);
+                    return self.comp();
+                }
+            });
+            self.ShowInd = ko.computed(function () {
+                if (self.ind()) {
+                    self.comp(false)
+                    return self.ind();
+                }
+            });
+
+        }
+
+    </script>
+}

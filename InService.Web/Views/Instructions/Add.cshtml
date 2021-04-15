@@ -1,0 +1,54 @@
+﻿@model Instruction
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i>Instructions</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()">Add new..</a></div>
+    </div>
+}
+
+<h3 class="font-weight-light">Add Instructions</h3>
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Examination type</label>
+                        <div class="col-md-8">
+                            @Html.SelectListFor(c => c.Type, new { @class = "form-control options", required = "" })
+                            @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-light mb-0 h3">Instructions</label>
+                        @Html.TextAreaFor(c => c.Description, new { @class = "form-control", required = "", id = "sceditor", rows = 15 })
+                        @Html.ValidationMessage("Instructions", "", new { @class = "text-danger small" })
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-success">Submit <i class="mdi mdi-check-circle"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Styles{
+    <link rel="stylesheet" href="~/Scripts/SCEditor/themes/square.min.css" />
+}
+
+@section Scripts {
+    <script src="~/Scripts/SCEditor/jquery.sceditor.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var textarea = document.getElementById('sceditor');
+            sceditor.create(textarea, {
+                format: 'xhtml',
+                style: './../Scripts/SCEditor/themes/square.min.css',
+                emoticons: './../Scripts/SCEditor/emoticons/',
+            });
+        });
+    </script>
+}

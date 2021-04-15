@@ -1,0 +1,97 @@
+﻿@model Course
+@{
+    Layout = "~/Views/Shared/_Layout_Course.cshtml";
+}
+@if (ViewBag.course != null)
+{
+    <aside class="left-sidebar">
+        <div class="logo">
+            <a href="@Url.Action("Article","Home")">
+                <h4><i class="fa fa-home"></i> Home</h4>
+            </a>
+        </div>
+        <nav class="left-nav">
+            <ul id="nav">
+                <li class="current"><a href="@Url.Action("Course","Home",new { CourseID=Model.ID})">@Model.Name</a></li>
+                @foreach (var item in Model.Modules.OrderBy(c => c.Number))
+                {
+                    <li><a href="#@($"_{item.ID}")">@item.Name</a></li>
+                }
+            </ul>
+        </nav>
+    </aside>
+
+    <div id="main-wrapper">
+        <div class="main-content">
+            <section id="welcome">
+                @if (Model.Articles.Any(c => c.ModuleID == null))
+                {
+                    foreach (var article in Model.Articles.ToList().Where(c => c.ModuleID == null && c.FlagsID == (int)ArticleFlags.PUBLISHED))
+                    {
+                        <div class="content-header">
+                            <h1>@(article.Module?.Name??article.Name)</h1>
+                        </div>
+                        @Html.Raw(article.Description);
+                    }
+                }
+            </section>
+
+            @if (Model.Modules.Any())
+            {
+                foreach (var item in Model.Modules.OrderBy(c => c.Number))
+                {
+                    if (!string.IsNullOrWhiteSpace(item.AttachmentsJson))
+                    {
+                        if (item.Attachments.ToList().Any(c => c.MediaType() == (int)MediaFileType.VIDEO))
+                        {
+                            foreach (var a in item.Attachments.ToList().Where(c => c.MediaType() == (int)MediaFileType.VIDEO))
+                            {
+                                <section id="video">
+                                    <h2 class="title"> Video </h2>
+                                    <!-- 21:9 aspect ratio -->
+                                    <div class="embed-responsive embed-responsive-21by9">
+                                        <video class="img-fluid" height="200" width="500" controls src="@Url.Action("Source", "Attachments", new { a.ID })"></video>
+                                        @*  <iframe class="embed-responsive-item" width="100%" height="515" src="@Url.Action("Source", "Attachments", new { a.ID })" frameborder="0" allowfullscreen></iframe>*@
+                                        <p>@a.Name</p>
+                                    </div>
+                                </section>
+                            }
+                            <hr />
+                        }
+                    }
+
+                    <section id="@($"_{item.ID}")">
+                        <div class="content-header">
+                            <h1><a href="@Url.Action("Article",new { ModuleID=item.ID})">@item.Name</a></h1>
+                        </div>
+                        @if (item.Articles.Any())
+                        {
+                            foreach (var article in item.Articles.ToList().Where(c => c.FlagsID == (int)ArticleFlags.PUBLISHED))
+                            {
+                                @*<h2 class="title">@(article.Module?.Name??item.Name)</h2>*@
+                                <div class="section-content">
+                                    @Html.Raw(article.Description);
+                                </div>
+                            }
+                        }
+                    </section>
+                }
+            }
+        </div>
+    </div>
+
+}
+else
+{
+    <div style="min-height: 60vh">
+        <div class="py-5 text-center">
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <h1 class="text-center font-weight-light text-danger">KEEP<br />CALM</h1>
+                    <p class="text-muted mb-5">Unfortunately the page you're looking for is currently unavailable. Try visiting our <a href="@Url.Action("Article","Home",new { DefaultID=1})"><i class="mdi mdi-home"></i> home page</a> and start from there instead!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

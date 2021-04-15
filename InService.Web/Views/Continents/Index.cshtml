@@ -1,0 +1,56 @@
+﻿@model IPagedList<Continent>
+
+@section subnav{
+    <div class="navbar-nav mr-auto">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Continents</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i>Add new...</a></div>
+    </div>
+    <div class="navbar-nav ml-auto">
+        <div class="nav-item">
+            <div class="nav-link">
+                @using (Html.BeginForm("Index", "Continents", FormMethod.Get, new { @class = "form-inline" }))
+                {
+                    <div class="input-group">
+                        @Html.TextBox("q", "", new { @class = "form-control", Type = "search", placeholder = "Search" })
+                        <span class="input-group-append">
+                            <button class="btn btn-outline-success" type="submit">Go</button>
+                        </span>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.Any())
+{
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-inline">
+                <h3 class="font-weight-light">Continents</h3>
+                <span class="badge badge-pill badge-success ml-4">@Model.TotalItemCount</span>
+            </div>
+            @Html.PagedListPager(Model, p => Url.Query(new { p }),
+               new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true })
+            <table class="table table-sm table-striped table-hover">
+                <tbody>
+                    @foreach (var item in Model.OrderBy(c => c.Name))
+                    {
+                        <tr>
+                            <td><a href="@Url.Details(item.ID)">@item.Name</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, p => Url.Query(new { p }),
+               new PagedListRenderOptions() { Display = PagedListDisplayMode.Always, DisplayPageCountAndCurrentLocation = true })
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h4 class="text-danger">There's nothing here.</h4>
+        <a class="btn btn-outline-success btn-sm" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new...</a>
+    </div>
+}

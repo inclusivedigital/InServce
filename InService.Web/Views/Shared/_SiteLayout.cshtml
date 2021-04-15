@@ -1,0 +1,126 @@
+﻿<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="img/favicon.png" type="image/png">
+    <title>In service training app</title>
+    <!-- Bootstrap CSS -->
+    <link href="~/Scripts/site/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Scripts/site/vendors/linericon/style.css" rel="stylesheet" />
+    <link href="~/Scripts/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/Scripts/site/vendors/owl-carousel/owl.carousel.min.css" rel="stylesheet" />
+    <link href="~/Scripts/site/vendors/lightbox/simpleLightbox.css" rel="stylesheet" />
+    <link href="~/Scripts/site/vendors/nice-select/css/nice-select.css" rel="stylesheet" />
+    <link href="~/Scripts/site/vendors/animate-css/animate.css" rel="stylesheet" />
+    <!-- main css -->
+    <link href="~/Scripts/site/css/style.css" rel="stylesheet" />
+    @RenderSection("Styles", required: false)
+</head>
+
+<body>
+    @Html.Partial("_SiteLayoutPartial")
+    @RenderBody()
+    <footer class="footer-area section_gap">
+        <div class="container">
+            <div class="row">
+                @if (SiteManager.ValueChains.Any())
+                {
+                    <div class="col-lg-2 col-md-6 single-footer-widget">
+                        <h4><a class="text-white" href="@Url.Action("ValueChains","Home")">Value chains</a></h4>
+                        @*<ul>
+                                @foreach (var item in SiteManager.ValueChains)
+                                {
+                                    <li><a href="#">@item.Name</a></li>
+                                }
+                            </ul>*@
+                    </div>
+                }
+                @if (SiteManager.Courses.Any())
+                {
+                    <div class="col-lg-2 col-md-6 single-footer-widget">
+                        <h4><a class="text-white" href="@Url.Action("Courses","Home")">Courses</a></h4>
+                        @*<ul>
+                                @foreach (var item in SiteManager.Courses)
+                                {
+                                    <li><a href="@Url.Action("Course","Home",new { CourseID=item.ID})">@item.Name</a></li>
+                                }
+                            </ul>*@
+                    </div>
+                }
+                @if (SiteManager.Modules.Any())
+                {
+                    <div class="col-lg-2 col-md-6 single-footer-widget">
+                        <h4><a class="text-white" href="@Url.Action("Courses","Home")">Modules</a></h4>
+                        @*<ul>
+                                @foreach (var item in SiteManager.Modules.OrderBy(c => c.Name).Take(15))
+                                {
+                                    <li><a href="@Url.Action("Article","Home",new { ModuleID=item.ID})">@item.Name</a></li>
+                                }
+                            </ul>*@
+                    </div>
+                }
+                <div class="col-lg-2 col-md-6 single-footer-widget">
+                    <h4>Resources</h4>
+                    @*<ul>
+                            <li><a href="#">Guides</a></li>
+                            <li><a href="#">Research</a></li>
+                            <li><a href="#">Experts</a></li>
+                            <li><a href="#">Agencies</a></li>
+                        </ul>*@
+                </div>
+                <div class="col-lg-4 col-md-6 single-footer-widget">
+                    <h4>Newsletter</h4>
+                    <p>You can trust us. we only send promo offers,</p>
+                    <div class="form-wrap" id="mc_embed_signup">
+                        <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                              method="get" class="form-inline">
+                            <input class="form-control" name="EMAIL" placeholder="Your Email Address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address'"
+                                   required="" type="email">
+                            <button class="click-btn btn btn-default">
+                                <span>subscribe</span>
+                            </button>
+                            <div style="position: absolute; left: -5000px;">
+                                <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+                            </div>
+
+                            <div class="info"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="row footer-bottom d-flex justify-content-between">
+                <p class="col-lg-8 col-sm-12 footer-text m-0 text-white">
+                    Copyright © @DateTime.Now.Year All rights reserved
+                </p>
+                @*<div class="col-lg-4 col-sm-12 footer-social">
+                        <a href="#"><i class="fa fa-facebook"></i></a>
+                        <a href="#"><i class="fa fa-twitter"></i></a>
+                        <a href="#"><i class="fa fa-dribbble"></i></a>
+                        <a href="#"><i class="fa fa-behance"></i></a>
+                    </div>*@
+            </div>
+        </div>
+    </footer>
+    <!--================ End footer Area  =================-->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="~/Scripts/jquery-3.5.1.js"></script>
+    @*<script src="~/Scripts/site/js/jquery-3.2.1.min.js"></script>*@
+    <script src="~/Scripts/site/js/popper.js"></script>
+    <script src="~/Scripts/site/js/bootstrap.min.js"></script>
+    <script src="~/Scripts/site/js/stellar.js"></script>
+    @*<script src="~/Scripts/site/js/countdown.js"></script>*@
+    <script src="~/Scripts/site/vendors/nice-select/js/jquery.nice-select.min.js"></script>
+    <script src="~/Scripts/site/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/Scripts/site/js/owl-carousel-thumb.min.js"></script>
+    <script src="~/Scripts/site/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/Scripts/site/vendors/counter-up/jquery.counterup.js"></script>
+    <script src="~/Scripts/site/js/mail-script.js"></script>
+    <script src="~/Scripts/site/js/theme.js"></script>
+    @RenderSection("scripts", required: false)
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <android.support.v4.widget.ContentLoadingProgressBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:background="@color/colorPrimary"
+            android:id="@+id/load_progress_bar" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_marginBottom="10dp"
+            android:id="@+id/layout_title"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginBottom="@dimen/input_spacing"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_width="wrap_content"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:ellipsize="end"
+                    android:layout_height="wrap_content"
+                    android:text="In service training app"
+                    android:layout_gravity="center_horizontal"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    android:id="@+id/text_title1" />
+                <TextView
+                    android:id="@+id/text_title2"
+                    android:textColor="@color/colorPrimary"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="normal"
+                    android:text="My name here"
+                    android:singleLine="true"
+                    android:layout_gravity="center_horizontal"
+                    android:ellipsize="end"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/view_list_header" />
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/swipe_refresh_layout">
+            <android.support.v7.widget.RecyclerView
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layoutAnimation="@anim/layout_animation"
+                android:id="@+id/gridView_items" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+     <Button
+        android:visibility="gone"
+        android:id="@+id/btn_floating_action2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="12dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:gravity="center"
+        android:tint="@color/black"
+        android:text="FINAl EXAM"
+        android:textColor="@color/white"
+        android:background="@drawable/fab" />
+    <ImageButton
+        android:visibility="gone"
+        android:id="@+id/btn_floating_action"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="12dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:gravity="center"
+        android:tint="@color/black"
+        android:src="@drawable/ic_plus"
+        android:background="@drawable/fab" />
+</RelativeLayout>

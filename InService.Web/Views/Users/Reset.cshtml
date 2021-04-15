@@ -1,0 +1,44 @@
+﻿@model ResetViewModel
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Details("Users",new { id=User.Identity.GetUserId<int>()})"><i class="mdi mdi-chevron-double-left"></i>My profile</a></div>
+    </div>
+}
+<h3>Reset my password</h3>
+<div class="row">
+    <div class="col-md-7">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="card border-primary">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Old password</label>
+                        <div class="col-md-8">
+                            @Html.PasswordFor(m => m.OldPassword, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(model => model.OldPassword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">New password</label>
+                        <div class="col-md-8">
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Repeat</label>
+                        <div class="col-md-8">
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-primary">Submit <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+</div>

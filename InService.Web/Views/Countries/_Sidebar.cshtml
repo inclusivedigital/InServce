@@ -1,0 +1,7 @@
+﻿@model Country
+<div class="list-group-flush list-group mt-3" style="width:100%">
+    <a href="@Url.Index("Farmers",new { CountryID=Model.ID})" class="list-group-item list-group-item-light justify-content-between d-flex align-items-center"><div>Farmers</div><span class="badge badge-danger">@Model.Farmers.Count()</span></a>
+    <a href="@Url.Index("Provinces",new { CountryID=Model.ID})" class="list-group-item list-group-item-light justify-content-between d-flex align-items-center"><div>Provinces</div><span class="badge badge-danger">@Model.Provinces.Count()</span></a>
+    <a href="@Url.Index("Districts",new { CountryID=Model.ID})" class="list-group-item list-group-item-light justify-content-between d-flex align-items-center"><div>Districts</div><span class="badge badge-danger">@Model.Provinces.SelectMany(c => c.Districts).Count()</span></a>
+    <a href="@Url.Index("Wards",new { CountryID=Model.ID})" class="list-group-item list-group-item-light justify-content-between d-flex align-items-center"><div>Wards</div><span class="badge badge-danger">@Model.Provinces.SelectMany(c => c.Districts.SelectMany(d => d.Wards)).Count()</span></a>
+</div>

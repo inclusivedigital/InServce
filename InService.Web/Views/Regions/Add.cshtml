@@ -1,0 +1,52 @@
+﻿@model Region
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"> <a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i>Regions</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new..</a></div>
+    </div>
+}
+
+<h3 class="font-weight-light">Add a region</h3>
+<div class="row">
+    <div class="col-md-7">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Name</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Continent</label>
+                        <div class="col-md-8">
+                            @if (ViewBag.continent != null)
+                            {
+                                <input type="hidden" name="ContinentID" value="@ViewBag.continent.ID" />
+                                <input class="form-control" disabled value="@ViewBag.continent.Name" />
+                            }
+                            else
+                            {
+                                @Html.DropDownListFor(m => m.ContinentID, (SelectList)ViewBag.continents, "Select..", new { @class = "form-control options", required = "" })
+                                @Html.ValidationMessageFor(m => m.ContinentID, "", new { @class = "text-danger" })
+                            }
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="text-right">
+                        <button class="btn btn-success">Submit <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

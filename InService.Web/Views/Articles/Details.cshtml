@@ -1,0 +1,29 @@
+﻿@model Article
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Articles</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Details()">@(Model.Module?.Name??Model.Name)</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("AddAttachment",new { Model.ID})"><i class="mdi mdi-upload"></i> Add attachment..</a></div>
+        @if (Model.Flags.HasFlag(ArticleFlags.PUBLISHED))
+        {
+            <div class="nav-item"><a class="nav-link" href="@Url.Action("ChangeStatus",new {Model.ID, StatusID=(int)ArticleFlags.UNPUBLISHED})"><span class="badge badge-pill badge-danger"><i class="mdi mdi-cancel"></i> Un-publish</span></a></div>
+        }
+        else
+        {
+            <div class="nav-item"><a class="nav-link" href="@Url.Action("ChangeStatus",new {Model.ID, StatusID=(int)ArticleFlags.PUBLISHED})"><span class="badge badge-pill badge-success"><i class="mdi mdi-check"></i> Publish</span></a></div>
+        }
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("SetDefault",new { Model.ID})"><span class="badge badge-success badge-pill"><i class="mdi mdi-check-all"></i> Set as default page..</span></a></div>
+
+    </div>
+}
+<h3>@(Model.Module?.Name??Model.Name)</h3>
+@if (Model.AttachmentID.HasValue)
+{
+    <div>
+        <label>Attachment</label>
+        <div><a href="@Url.Action("Download","Attachments",new { Model.Attachment.ID})"><i class="mdi mdi-download"></i> @Model.Attachment.Name</a></div>
+    </div>
+}
+@Html.Raw(Model.Description)
+

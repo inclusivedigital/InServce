@@ -1,0 +1,112 @@
+﻿@model LoginViewModel
+
+<div class="row">
+    <div class="col-md-12 offset-md-4">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-4">
+                <div class="mt-1 text-center">
+                    <h4 id="arc" class="font-weight-bold mb-0">In service training platform</h4>
+                    <img class="img-fluid" style="width:100px;" src="~/Content/COA.png" />
+                    @*<h3 class="font-weight-light "> <i class="mdi mdi-lock text-danger"></i>Sign in</h3>*@
+                </div>
+                <section id="loginForm">
+                    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <div class="card shadow">
+                            <div class="card-body mb-0">
+                                <div class="form-group">
+                                    <label>User name</label>
+                                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control", required = "", autofocus = true })
+                                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                                    <div class="form-group">
+                                        <div class="input-group" id="show_hide_password">
+                                            <input class="form-control" type="password" name="Password">
+                                            <div class="input-group-append">
+                                                <a href="#" class="btn btn-outline-dark"><i class="mdi mdi-eye-off" aria-hidden="true"></i></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                </div>
+                                <div class="form-group">
+                                    <div class="checkbox">
+                                        @Html.CheckBoxFor(m => m.RememberMe)
+                                        @Html.LabelFor(m => m.RememberMe)
+                                    </div>
+                                </div>
+                                <hr />
+                                <div class="text-right">
+                                    <button class="btn btn-success">Login <i class="mdi mdi-login"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-2 lead"> <a class="text-muted" href="@Url.Action(" SendResetLink","Account")">I forgot my password! <mark>Reset</mark></a></p>
+                    }
+                </section>
+            </div>
+            <div class="col-md-8 mt-5">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/circletype.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            new CircleType(document.getElementById('arc'))
+                .radius(200);
+            $('.toggle').addClass('collapse');
+            $('.toggle').on('click', function () {
+                $('.login-container').stop().addClass('active');
+            });
+
+            $('.shower').on('click', function () {
+                $('.toggle').show('slow');
+                $('.login-container').stop().addClass('active');
+            });
+
+            $('.close').on('click', function () {
+                $('.login-container').stop().removeClass('active');
+            });
+
+            $("#show_hide_password a").on('click', function (event) {
+                event.preventDefault();
+                if ($('#show_hide_password input').attr("type") == "text") {
+                    $('#show_hide_password input').attr('type', 'password');
+                    $('#show_hide_password i').addClass("mdi-eye-off");
+                    $('#show_hide_password i').removeClass("mdi-eye");
+                } else if ($('#show_hide_password input').attr("type") == "password") {
+                    $('#show_hide_password input').attr('type', 'text');
+                    $('#show_hide_password i').removeClass("mdi-eye-off");
+                    $('#show_hide_password i').addClass("mdi-eye");
+                }
+            });
+        });
+        $('.login-reg-panel input[type="radio"]').on('change', function () {
+            if ($('#log-login-show').is(':checked')) {
+                $('.register-info-box').fadeOut();
+                $('.login-info-box').fadeIn();
+
+                $('.white-panel').addClass('right-log');
+                $('.register-show').addClass('show-log-panel');
+                $('.login-show').removeClass('show-log-panel');
+
+            }
+            else if ($('#log-reg-show').is(':checked')) {
+                $('.register-info-box').fadeIn();
+                $('.login-info-box').fadeOut();
+
+                $('.white-panel').removeClass('right-log');
+
+                $('.login-show').addClass('show-log-panel');
+                $('.register-show').removeClass('show-log-panel');
+            }
+        });
+    </script>
+}

@@ -1,0 +1,140 @@
+﻿@model Module
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i>Modules</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Details()"><i class="mdi mdi-chevron-left"></i> @Model.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new...</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("AddAttachment",new { Model.ID})"><i class="mdi mdi-upload"></i> Add attachment...</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("AddIcon",new { Model.ID})"><i class="mdi mdi-camera-image"></i> Add crop icon...</a></div>
+    </div>
+
+}
+<h3 class="font-weight-light">Module details</h3>
+<div class="row">
+    <div class="col-md-7">
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Name</label>
+                    <div class="col-md-8">@Model.Name</div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Course</label>
+                    <div class="col-md-8"><a href="@Url.Details("Courses",new { Model.Course.ID})">@Model.Course.Name</a></div>
+                </div>
+                @if (!string.IsNullOrWhiteSpace(Model.Code))
+                {
+                    <div class="form-group row">
+                        <label class="col-md-4 font-weight-bold">Code</label>
+                        <div class="col-md-8">@Model.Code</div>
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Description))
+                {
+                    <div class="form-group row">
+                        <label class="col-md-4 font-weight-bold">Description</label>
+                        <div class="col-md-8">@Model.Description.ToHTmlContentString()</div>
+                    </div>
+                }
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Creation date</label>
+                    <div class="col-md-8">@Model.CreationDate.ToString("dd MMM yyy")</div>
+                </div>
+                @if (Model.IconID.HasValue)
+                {
+                    <div class="">
+                        <div>
+                            <img class="img-fluid mb-1" src="@Url.Action("Icon", new { Model.ID })">
+                        </div>
+                        <a href="@Url.Action("AddIcon",new {Model.ID })">Change icon</a>
+                    </div>
+                }
+            </div>
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.AttachmentsJson))
+        {
+            if (Model.Attachments.ToList().Any(c => c.MediaType() == (int)MediaFileType.VIDEO))
+            {
+                <h5 class="text-muted font-weight-light mt-2"> <i class="mdi mdi-video"></i> Videos</h5>
+                foreach (var a in Model.Attachments.ToList().Where(c => c.MediaType() == (int)MediaFileType.VIDEO))
+                {
+                    if (Request.IsAuthenticated)
+                    {
+                        <div class="form-inline mb-0">
+                            <a class="text-primary ml-auto" href="@Url.Action("DeleteAttachment", "Modules", new { AID = a.ID, id = Model.ID })"><i class="mdi mdi-eye-off"></i> Remove..</a>
+                        </div>
+                    }
+                    <video class="img-fluid" height="200" width="500" controls src="@Url.Action("Source", "Attachments", new { a.ID })"></video>
+                    <p>@a.Name</p>
+                }
+                <hr />
+            }
+        }
+
+    </div>
+    <div class="col-md-5">
+        <div class="mb-2 mt-2">
+            @if (Model.Articles.Any())
+            {
+                <div class="form-inline">
+                    <h4 class="font-weight-light">Articles</h4>
+                    <a class="btn btn-sm btn-outline-success ml-auto" href="@Url.Add("Articles",new { ModuleID=Model.ID})">Add more</a>
+                </div>
+                <table class="table table-sm table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <td>Article name</td>
+                            <td>Created by</td>
+                            <td>Date created </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Articles)
+                        {
+                            <tr>
+                                <td><a href="@Url.Details("Articles",new { item.ID})">@item.Name</a></td>
+                                <td>@item.User.Name</td>
+                                <td>@item.CreationDate</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <div class="text-center">
+                    <h4>Articles will be listed here</h4>
+                    <a class="btn btn-sm btn-outline-success" href="@Url.Add("Articles",new { ModuleID=Model.ID})">Add article</a>
+                </div>
+            }
+        </div>
+        @if (!string.IsNullOrWhiteSpace(Model.AttachmentsJson))
+        {
+            <div class="form-inline">
+                <h4 class="font-weight-light">Attachments</h4>
+                <a class="btn btn-sm btn-outline-success ml-auto" href="@Url.Action("AddAttachment",new { Model.ID})">Add more</a>
+            </div>
+            <table class="table table-sm table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Attachment name</th>
+                        <th>Date uploaded</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Attachments)
+                    {
+                        <tr>
+                            <td><a href="@Url.Action("Download", "Attachments", new { item.ID })">@item.Name</a></td>
+                            <td>@item.UploadDate</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+</div>
+
+

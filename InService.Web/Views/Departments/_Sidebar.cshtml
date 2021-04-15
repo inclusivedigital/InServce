@@ -1,0 +1,5 @@
+﻿@model Department
+<div class="list-group-flush list-group mt-3" style="width:100%">
+    <a href="@Url.Index("Sections",new { DepartmentID=Model.ID})" class="list-group-item list-group-item-light justify-content-between d-flex align-items-center"><div>Sections</div><span class="badge badge-danger">@Model.Sections.Count()</span></a>
+    <a href="@Url.Index("Branches",new { DepartmentID=Model.ID})" class="list-group-item list-group-item-light justify-content-between d-flex align-items-center"><div>Branches</div><span class="badge badge-danger">@Model.Sections.SelectMany(c => c.Branches).Count()</span></a>
+</div>

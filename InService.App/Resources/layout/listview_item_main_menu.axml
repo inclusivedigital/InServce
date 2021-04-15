@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_margin="2dp"
+    android:background="@drawable/selectable_grey_color"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_height="64dp">
+        <ImageView
+            android:id="@+id/imageView_icon"
+            android:src="@drawable/ic_account_multiple_outline"
+            android:tint="@color/colorAccent"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_margin="4dp"
+            android:layout_gravity="center_vertical" />
+        <TextView
+            android:textColor="@color/black"
+            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/textView_label"
+            android:text="Test"
+            android:gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="4dp" />
+    </LinearLayout>
+    <TextView
+        android:textColor="@android:color/holo_red_light"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:id="@+id/textView_count"
+        android:layout_marginTop="-12dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="8dp" />
+</LinearLayout>

@@ -1,0 +1,100 @@
+﻿@model User
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-left"></i> Users</a></div>
+        <div class="nav-item"><a class="nav-link " href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit</a></div>
+
+        @if (Model.ID != User.Identity.GetUserId<int>())
+        {
+            if (Model.StatusID == (int)UserStatus.BLOCKED)
+            {
+                <div class="nav-item"><a class="nav-link " href="@Url.Action("Unlock", new { Model.ID })"><i class="mdi mdi-lock-open"></i> Unlock account</a></div>
+            }
+            else
+            {
+                if (User.IsInRole(nameof(UserRole.ADMINISTRATOR)))
+                {
+                    <div class="nav-item"><a class="nav-link " href="@Url.Action("Lock", new { Model.ID })"><i class="mdi mdi-lock"></i> Lock account</a></div>
+                }
+            }
+            if (Model.ID == User.Identity.GetUserId<int>())
+            {
+                <div class="nav-item"><a class="nav-link " href="@Url.Action("Reset",  new { Model.ID })"><i class="mdi mdi-lock-reset"></i> Reset password</a></div>
+            }
+        }
+        else
+        {
+            <div class="nav-item"><a class="nav-link " href="@Url.Action("Reset")"><i class="mdi mdi-lock-reset"></i> Reset my password</a></div>
+        }
+    </div>
+}
+<h3 class="font-weight-light">@(Model.ID != User.Identity.GetUserId<int>() ? "User details" : "My account")</h3>
+<div class="row">
+    <div class="col-md-7">
+        <div class="card @(Model.StatusID != (int)UserStatus.ACTIVE?"border-danger":"border-primary") ">
+            <div class="card-body">
+                <div class="row">
+                    <label class="col-md-4 font-weight-bold">Name</label>
+                    <div class="col-md-8">@Model.Name</div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4 font-weight-bold">User name</label>
+                    <div class="col-md-8">@Model.LoginID</div>
+                </div>
+                <div class="row">
+                    <label class="col-md-4 font-weight-bold">Status</label>
+                    <div class="col-md-8">@Model.Status.ToEnumString()</div>
+                </div>
+                @if (Model.LastLoginDate.HasValue)
+                {
+                    <div class="row">
+                        <label class="col-md-4 font-weight-bold">Last login date</label>
+                        <div class="col-md-8">@Model.LastLoginDate.Value.ToString("dd/MMM/yyy HH:mm:ss")</div>
+                    </div>
+                }
+                @if (!String.IsNullOrEmpty(Model.Mobile))
+                {
+                    <div class="row">
+                        <label class="col-md-4 font-weight-bold">Mobile</label>
+                        <div class="col-md-8">@Model.Mobile</div>
+                    </div>
+                }
+                @if (!String.IsNullOrEmpty(Model.Email))
+                {
+                    <div class="row">
+                        <label class="col-md-4 font-weight-bold">Email</label>
+                        <div class="col-md-8">@Model.Email</div>
+                    </div>
+                }
+
+                <div class="row">
+                    <label class="col-md-4 font-weight-bold">Role</label>
+                    <div class="col-md-8">@Model.Role</div>
+                </div>
+
+                @if (Model.CountryID.HasValue)
+                {
+                    <div class="row">
+                        <label class="col-md-4 font-weight-bold">Country</label>
+                        <div class="col-md-8">@Model.Country.Name</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <h5>Access rights</h5>
+        <hr />
+        @foreach (AccessRight item in Enum.GetValues(typeof(AccessRight)))
+        {
+            <div class="form-check">
+                <i class="mdi mdi-@(Model.AccessRight.HasFlag(item) ? "check text-primary" : "close text-danger")"></i>
+                <label class="form-check-label @(Model.AccessRight.HasFlag(item) ? "text-bold" : "")" for="@((int)item)">@(item.ToString().Replace("_", " "))</label>
+            </div>
+        }
+    </div>
+</div>
+
+
+

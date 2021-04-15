@@ -1,0 +1,74 @@
+﻿@model EmailConfig
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i> Email configs..</a></div>
+        <div class="nav-item"><a class="nav-link " href="@Url.Details()"><i class="mdi mdi-chevron-left"></i> Details</a></div>
+    </div>
+}
+<h3 class="mt-3 font-weight-light">Edit email config</h3>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-5">Config name</label>
+                        <div class="col-md-7">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", maxlength = 64, required = "" })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-5">Email server host address</label>
+                        <div class="col-md-7">
+                            <div class="input-group">
+                                @Html.TextBoxFor(m => m.Host, new { @class = "form-control", style = "width:70%", placeholder = "Host", required = "", maxlength = 64 })
+                                @Html.TextBoxFor(m => m.Port, new { @class = "form-control", type = "number", style = "width:30%", placeholder = "Port", required = "" })
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Host, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-5">Sender email address</label>
+                        <div class="col-md-7">
+                            @Html.TextBoxFor(m => m.SenderID, new { @class = "form-control", type = "email", maxlength = 128, required = "" })
+                            @Html.ValidationMessageFor(m => m.SenderID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-5">Connect to email server via SSL</label>
+                        <div class="col-md-7">@Html.CheckBoxFor(m => m.EnableSSL)</div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-5">Email account username</label>
+                        <div class="col-md-7">
+                            @Html.TextBoxFor(m => m.Username, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger", maxlength = 128 })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-5">Email account password</label>
+                        <div class="col-md-7">
+                            @Html.TextBox("Password", "", new { @class = "form-control", type = "password", maxlength = 64 })
+                            @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="text-right card-footer"><button class="btn btn-success"><i class="mdi-floppy mdi"></i> Save</button></div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h4>Use configuration for</h4>
+            <hr />
+            @foreach (EmailTarget item in Enum.GetValues(typeof(EmailTarget)))
+            {
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="Targets" value="@((int)item)" id="@item" checked="@Model.Target.HasFlag(item)">
+                    <label class="form-check-label" for="@item">@item.ToEnumString()</label>
+                </div>
+            }
+        </div>
+    </div>
+}

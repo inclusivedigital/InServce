@@ -1,0 +1,47 @@
+﻿@model IPagedList<Attachment>
+@section subnav{
+    <div class="navbar-nav mr-auto">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Attachments</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="fa fa-plus"></i>Add new..</a></div>
+    </div>
+}
+@if (Model.TotalItemCount > 0)
+{
+    <div class="row">
+        <div class="col-md-12">
+            <h3 class="font-weight-light mb-0">Attachments</h3>
+            <h4>@Model.TotalItemCount attachment@(Model.TotalItemCount == 1 ? "" : "s") <small> found</small></h4>
+            <table class="table table-sm table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Upload date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <td><a href="@Url.Details(i.ID)">@i.Name</a></td>
+                            <td><div class="text-ellipsized" style="width:100px" title="@i.Description" data-toggle="tooltip">@i.Description</div></td>
+                            <td>@i.UploadDate.ToString("dd/MMM/yyy")</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @Html.PagedListPager(Model, p => Url.Query(new { p }),
+                                                   new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true })
+        </div>
+    </div>
+}
+else
+{
+    <div class="text-center jumbotron bg-white">
+        <h4 class="font-weight-light text-danger">There's nothing here</h4>
+        <a class=" btn btn-outline-success btn-sm" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new attachment</a>
+    </div>
+}
+
+
+

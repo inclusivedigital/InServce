@@ -1,0 +1,132 @@
+﻿@model Examination
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i>Examinations</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new..</a></div>
+    </div>
+}
+
+<h3 class="font-weight-light">Add an examination</h3>
+@Html.ValidationSummary(true, "", new { @class = "text-danger small" })
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-8">
+            @Html.AntiForgeryToken()
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Course</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(m => m.CourseID, (SelectList)ViewBag.courses, "Select..", new { @class = "form-control options", required = "" })
+                            @Html.ValidationMessageFor(m => m.CourseID, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Module</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(m => m.ModuleID, (SelectList)ViewBag.modules, "Select..", new { @class = "form-control options", required = "" })
+                            @Html.ValidationMessageFor(m => m.ModuleID, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Value chain</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(m => m.ValueChainID, (SelectList)ViewBag.valuechains, "Select..", new { @class = "form-control options" })
+                            @Html.ValidationMessageFor(m => m.ValueChainID, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4">Examination Type</label>
+                        <div class="col-md-8">
+                            @Html.SelectListFor(c => c.Type, new { @class = "form-control options", required = "" })
+                            @Html.ValidationMessageFor(m => m.Type, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Question paper format</label>
+                        <div class="col-md-8">
+                            @Html.SelectListFor(c => c.PaperFormat, new { @class = "form-control options", required = "" })
+                            @Html.ValidationMessageFor(m => m.PaperFormat, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Number of questions</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(c => c.NumberOfQuestions, new { @class = "form-control options", type = "number", required = "" })
+                            @Html.ValidationMessageFor(m => m.NumberOfQuestions, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Start date</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.StartDate, DateTime.Now.ToString("yyyy-MM-dd"), new { @class = "form-control", type = "date", required = "" })
+                            @Html.ValidationMessageFor(m => m.StartDate, "", new { @class = "text-danger small" })
+                        </div>
+                        <div class=" col-md-4 ">
+                            @Html.TextBox("StartTime", DateTime.Now.ToString("HH:mm"), new { @class = "form-control", type = "time", placeholder = "start time" })
+                            @Html.ValidationMessageFor(c => c.StartDate, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">End date</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.EndDate, new { @class = "form-control", type = "date", required = "" })
+                            @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger small" })
+                        </div>
+                        <div class="col-md-4">
+                            @Html.TextBox("EndTime", null, new { @class = "form-control", type = "time", placeholder = "finishing time" })
+                            @Html.ValidationMessageFor(m => m.EndDate, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Target audience</label>
+                        <div class="col-md-8">
+                            @foreach (ExaminationAudience item in Enum.GetValues(typeof(ExaminationAudience)))
+                            {
+                                <div class="form-check">
+                                    <input name="AudienceID" value="@((int)item)" type="checkbox" class="form-check-input" id="@item.ToString()" />
+                                    <label class="form-check-label" for="@item.ToString()">@item.ToEnumString()</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Duration</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <input class="form-control" type="number" pattern="\d*" placeholder="hours..." name="Hours" min="0" max="4" step="1" />
+                                <input class="form-control" type="number" pattern="\d*" placeholder="minut..." name="Minutes" min="0" max="59" step="1" />
+                            </div>
+                            @Html.ValidationMessageFor(m => m.Duration, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Maximum allowed attempts</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(c => c.MaxAttempts, new { @class = "form-control", type = "number" })
+                            @Html.ValidationMessageFor(m => m.MaxAttempts, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-success">Submit <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h4>Set exam as..</h4>
+            @foreach (ExaminationFlags item in Enum.GetValues(typeof(ExaminationFlags)))
+            {
+                <div class="form-check">
+                    <input type="checkbox" name="FlagsID" value="@((int)item)" class="form-check-input" id="@item.ToString()" />
+                    <label class="form-check-label" for="@item.ToString()">@item.ToEnumString()</label>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+
+

@@ -1,0 +1,135 @@
+﻿@model Question
+@{
+    var ex = (Examination)ViewBag.ex;
+}
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index("Examinations")"><i class="mdi mdi-chevron-double-left"></i>Examinations</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Details("Examinations",new { ex.ID})">@ex.Topic</a></div>
+    </div>
+}
+<h3>Add question @ViewBag.number <i class="mdi mdi-question-mark-circle"></i></h3>
+<a href="@Url.Details("Examinations",new { ex.ID})">Exam: @(ex.Module?.Name??ex.Topic)</a>
+@Html.ValidationSummary(false, "", new { @class = "text-danger small" })
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@ex.ID" />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="font-weight-light mb-0 h3">Question</label>
+                        @Html.TextAreaFor(m => m.Name, new { @class = "form-control", required = "", id = "sceditor", rows = 15 })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger small" })
+                    </div>
+                    <div class="form-group">
+                        <label class="font-weight-light mb-0">Score</label>
+                        @Html.TextBoxFor(m => m.Score, new { @class = "form-control", required = "", type = "number" })
+                        @Html.ValidationMessageFor(m => m.Score, "", new { @class = "text-danger small" })
+                    </div>
+                    <hr class="bg-success" />
+
+
+
+
+
+
+                    <div class="form-group">
+                        <label>Answer</label>
+                        <textarea class="form-control" data-bind="textinput: Answer" id="Answer"></textarea>
+                        <button type="button" id="btn" class="btn btn-success btn-sm mt-1" data-bind="click: $root.addItem">Add <i class="mdi mdi-chevron-right"></i></button>
+                    </div>
+
+                    <!-- ko if: Items().length > 0 -->
+                    <div class="mt-4">
+                        <h6><i class="mdi mdi-message-reply-text"></i>Answers</h6>
+                    </div>
+                    <table class="table table-sm table-striped table-hover table-bordered table-active">
+                        <thead>
+                            <tr>
+                                <th style="width:70%;">Answer</th>
+                                <th style="width:20%;">State(if correct)</th>
+                                <th style="width:10%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody data-bind="foreach:Items">
+                            <tr>
+                                <td><textarea data-bind="value:Ans" class="form-control" name="Anss" id="Anss"></textarea></td>
+                                <td>
+                                    <select name="Bits" class="form-control">
+                                        @foreach (AnswerFlags item in Enum.GetValues(typeof(AnswerFlags)))
+                                        {
+                                            <option value="@((int)item)">@item.ToEnumString()</option>
+                                        }
+                                    </select>
+                                </td>
+                                <td class="text-center"><button type="button" class="btn btn-danger btn-sm" data-bind="click :$parent.removeItem">Delete <i class="mdi mdi-delete-forever"></i></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <!--/ko-->
+                </div>
+                <div class="card-footer">
+                    <div class="mb-4 text-right">
+                        <button class="btn btn-success" id="sub">Submit <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="col-md-3 bg-light">
+                @if (!String.IsNullOrEmpty(ex.Topic))
+                {
+                    <div class="form-group">
+                        <label class="text-muted font-weight-bold mb-0">Topic</label>
+                        <div>@ex.Topic</div>
+                    </div>
+                }
+                <div class="form-group">
+                    <label class="text-muted font-weight-bold mb-0">Start date</label>
+                    <div>@ex.StartDate.ToString("dd MMM yyy HH:mm")</div>
+                </div>
+                <div class="form-group">
+                    <label class="text-muted font-weight-bold mb-0">Due date</label>
+                    <div>@ex.EndDate.ToString("dd MMM yyy HH:mm")</div>
+                </div>
+                <div class="form-group">
+                    <label class="text-muted font-weight-bold mb-0">Course</label>
+                    <div>@ex.Course.Name</div>
+                </div>
+                <div class="form-group">
+                    <label class="text-muted font-weight-bold mb-0">Score</label>
+                    <div>@ex.Score marks</div>
+                </div>
+                <div class="form-group">
+                    <label class="text-muted font-weight-bold mb-0">Type</label>
+                    <div>@ex.Type.ToEnumString()</div>
+                </div>
+            </div>*@
+    </div>
+}
+@section Styles{
+    <link rel="stylesheet" href="~/Scripts/SCEditor/themes/square.min.css" />
+}
+
+@section Scripts {
+    <script src="~/Scripts/App/ko.Questions.Add.js"></script>
+    <script src="~/Scripts/SCEditor/jquery.sceditor.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+           var model = new MyModel(@ViewBag.list);
+            ko.applyBindings(model);
+            var textarea = document.getElementById('sceditor');
+            sceditor.create(textarea, {
+                format: 'xhtml',
+                style: './../Scripts/SCEditor/themes/square.min.css',
+                emoticons: './../Scripts/SCEditor/emoticons/',
+            });
+        });
+
+
+    </script>
+}
+

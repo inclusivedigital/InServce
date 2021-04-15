@@ -1,0 +1,53 @@
+﻿@model IPagedList<District>
+
+@section subnav{
+    <div class="navbar-nav mr-auto d-print-none">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"> Districts</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new...</a></div>
+    </div>
+}
+
+@if (Model.TotalItemCount > 0)
+{
+    <h3 class="font-weight-light">Currencies</h3><em>Records found: @Model.TotalItemCount</em>
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Province</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model)
+            {
+                <tr>
+                    <td><a class="text-success" href="@Url.Details(i.ID)">@i.Name</a></td>
+                    <td>@i.Province.Name</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="d-none d-print-block">
+        <p>Report date: <b>@DateTime.Now</b></p>
+        <p>Printed by: <b>@User.Identity.GetUserName()</b></p>
+    </div>
+    @Html.PagedListPager(Model, p => Url.Query(new { p, q = ViewBag.q }),
+                new PagedListRenderOptions() { Display = PagedListDisplayMode.Always, DisplayPageCountAndCurrentLocation = true })
+}
+else
+{
+    if (Request.QueryString.AllKeys.Contains("q"))
+    {
+        <div class="text-center mt-4">
+            <h3 class="text-danger">No search results found</h3>
+            <h5>Your search: @Request["q"]</h5>
+        </div>
+    }
+    else
+    {
+        <div class="text-center mt-4">
+            <h4 class="text-danger font-weight-light">Districts will come here!</h4>
+            <a class="btn btn-outline-success btn-sm" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new...</a>
+        </div>
+    }
+}

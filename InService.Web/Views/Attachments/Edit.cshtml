@@ -1,0 +1,47 @@
+﻿@model Attachment
+@section subnav{
+    <nav class="navbar-nav mr-auto">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-left"></i> Attachments</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new..</a></div>
+    </nav>
+}
+
+<div class="row">
+    <div class="col-md-7">
+        <h3 class="font-weight-light">Edit attachment</h3>
+        @Html.ValidationSummary(false, "", new { @class = "text-danger small" })
+        @using (Html.BeginForm("Edit", "Attachments", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Name</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Description</label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label">Attach</label>
+                        <div class="col-md-8">
+                            <input type="file" name="file" class="form-control">
+                            @Html.ValidationMessage("file", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-success">Submit <i class="mdi mdi-check-circle"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

@@ -1,0 +1,44 @@
+﻿@model IPagedList<Notice>
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Notices</a></div>
+        @if (!User.IsInRole(nameof(UserRole.FARMER)))
+        {
+            <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i>Add new</a></div>
+        }
+    </div>
+}
+
+@if (!Model.Any())
+{
+    <div class="text-center mt-4">
+        <h4 class="text-danger">There's nothing here!</h4>
+        <a href="@Url.Add()" class="btn btn-outline-success btn-sm"><i class="mdi mdi-plus"></i> Add new notice</a>
+    </div>
+}
+else
+{
+    <h3 class="font-weight-light">Notices</h3>
+    <h4 class="font-weight-light">@Model.TotalItemCount Notice@(Model.TotalItemCount == 1 ? "" : "s")<small> found..</small></h4>
+    <table class="table table-striped table-hover table-sm">
+        <thead>
+            <tr>
+                <th>Notice heading</th>
+                <th>Notice type</th>
+                <th>Date created</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td><a class="text-success" href="@Url.Details(item.ID)">@item.Heading</a></td>
+                    <td>@(item.Type.ToEnumString())</td>
+                    <td>@(item.CreationDate)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.PagedListPager(Model, p => Url.Query(new { p }),
+       new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true })
+}

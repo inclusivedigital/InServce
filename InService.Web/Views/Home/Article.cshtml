@@ -1,0 +1,27 @@
+﻿@if (ViewBag.article != null)
+{
+    var article = (Article)ViewBag.article;
+    <div class="ml-5 mr-5">
+        @Html.Raw(((Article)ViewBag.article).Description);
+    </div>
+    if (article.ModuleID.HasValue)
+    {
+        if (article.Module.Examinations.Any())
+        {
+            <a href="@Url.Action("Instructions","Examinations",new { article.Module.ID })">Take a short exercise</a>
+        }
+    }
+}
+else
+{
+    <div style="min-height: 60vh">
+        <div class="py-5 text-center">
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <h1 class="text-center font-weight-light text-danger">KEEP<br />CALM</h1>
+                    <p class="text-muted mb-5">Unfortunately the page you're looking for is currently unavailable. Try visiting our <a href="@Url.Action("Article","Home",new { DefaultID=1})"><i class="mdi mdi-home"></i> home page</a> and start from there instead!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}

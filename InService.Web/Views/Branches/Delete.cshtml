@@ -1,0 +1,39 @@
+﻿@model Branch
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Branches</a></div>
+    </div>
+   
+}
+
+
+<div class="row">
+    <div class="col-md-7">
+        <div class="card border-danger">
+            <h3 class="card-header">Are you sure you want to delete this branch?</h3>
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Name</label>
+                    <div class="col-md-8">@Model.Name</div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Creation date</label>
+                    <div class="col-md-8">@Model.CreationDate</div>
+                </div>
+            </div>
+            <div class="card-footer">
+                @using (Html.BeginForm("Delete", "Branches", FormMethod.Post, new { id = "MyForm" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-actions no-color text-right">
+                        <button class="btn btn-danger">Delete</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

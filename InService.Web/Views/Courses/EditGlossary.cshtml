@@ -1,0 +1,102 @@
+﻿@model Article
+@{
+    var course = (Course)ViewBag.course;
+}
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Details(course.ID)">@course.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("EditGlossary",new { course.ID})"><i class="mdi mdi-plus"></i>Edit glossary</a></div>
+    </div>
+}
+<h3 class="font-weight-light mt-2 mb-2">Edit course glossary of terms</h3>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="">
+
+        <div class="form-group">
+            <div class="mt-2">
+                @Html.TextArea("Description", (!string.IsNullOrWhiteSpace(course.Glossary) ? course.Glossary : ""), new { @class = "form-control", @row = 5 ,id= "Description" })
+            </div>
+        </div>
+        <div class="form-group text-right">
+            <button class="btn btn-success" id="btnSubmit" type="submit">
+                Submit
+            </button>
+        </div>
+
+    </div>
+}
+
+@section styles{
+    <link href="~/Scripts/summernote/summernote.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <!-- Summernote -->
+    <script src="~/Scripts/summernote/summernote.js"></script>
+    <!-- Summernote init -->
+    <script src="~/Scripts/summernote/summernote-init.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#sidebar').addClass('active');
+            $('#ModuleID').select2({
+                placeholder: "Search module..",
+                minimumInputLength: 1,
+                theme: "bootstrap4",
+                ajax: {
+                    dataType: 'json',
+                    url: "@Url.Action("Search","Modules")",
+                    type:"GET",
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    }
+                },
+
+            });
+        })
+        $('#Description').summernote({
+            height: 300,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,                  // set focus to editable area after initializing summernote
+            callbacks: {
+                onImageUpload: function (files) {
+                    for (let i = 0; i < files.length; i++) {
+                        UploadImage(files[i]);
+                    }
+                }
+            }
+        });
+
+        function UploadImage(file) {
+        var url = '@Url.Action("UploadFile", "Articles")';
+
+        formData = new FormData();
+        formData.append("aUploadedFile", file);
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+               // alert(data);
+                var imgNode = document.createElement('img');
+                imgNode.src = '@Url.Action("Image", "Articles")?data=' + data;
+                $('#Description').summernote('insertNode', imgNode);
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
+    }
+    </script>
+}
+
+
+
+

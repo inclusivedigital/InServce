@@ -1,0 +1,43 @@
+﻿@model Section
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i> Sections</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Details()"><i class="mdi mdi-chevron-left"></i> @Model.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+    </div>
+
+}
+<h3 class="font-weight-light">Edit branch/department</h3>
+<div class="row">
+    <div class="col-md-7">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.ID)
+            <div class="card shadow">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger small" })
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Name</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Department</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(m => m.DepartmentID, (SelectList)ViewBag.departments, "Select..", new { @class = "form-control options", required = "" })
+                            @Html.ValidationMessageFor(m => m.DepartmentID, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-success">Save <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

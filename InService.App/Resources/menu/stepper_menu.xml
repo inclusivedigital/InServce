@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="Mukando.App.Steps.MainStepsActivity">
+  <item
+      android:id="@+id/action_swap"
+      android:orderInCategory="100"
+      android:title="Swap"
+      android:icon="@drawable/ic_sync"
+      app:showAsAction="always" />
+</menu>

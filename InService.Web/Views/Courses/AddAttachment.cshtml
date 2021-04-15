@@ -1,0 +1,53 @@
+﻿
+@{
+    var course = (Course)ViewBag.course;
+}
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Details(course.ID)"><i class="mdi mdi-chevron-double-left"></i> @course.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("AddAttachment",new { course.ID})"><i class="mdi mdi-plus"></i> Add attachments...</a></div>
+    </div>
+
+}
+@using (Html.BeginForm("AddAttachment", "Courses", FormMethod.Post, new { enctype = "multipart/form-data", @class = "dropzone dz-clickable form-horizontal form-bordered", id = "dropzoneForm", @name = "dropzoneForm" }))
+{
+    <input type="hidden" name="ID" value="@course.ID" />
+    <div class="form-group form-actions">
+        <div class="col-md-9 col-md-offset-4">
+            <button type="submit" id="submit" class="btn btn-sm btn-primary"><i class="fa fa-floppy-o"></i> Upload</button>
+        </div>
+    </div>
+}
+
+@section styles{
+    <link href="~/Scripts/dropzone/dropzone.min.css" rel="stylesheet" />
+}
+
+@section Scripts {
+    <script src="~/Scripts/dropzone/dropzone.min.js"></script>
+    <script>
+        function myParamName() {
+            return "DocumentPhotos";
+        }
+        Dropzone.options.dropzoneForm = {
+            autoProcessQueue: false,
+            paramName: myParamName,
+            uploadMultiple: true,
+            resizeWidth: 800,
+            parallelUploads: 10,
+            init: function () {
+                console.log("active");
+                var wrapperThis = this;
+                $("#submit").click(function (e) {
+                    e.preventDefault();
+                    wrapperThis.processQueue();
+                });
+            },
+            accept: function (file, done) {
+                done();
+            }
+        };
+
+    </script>
+}
+

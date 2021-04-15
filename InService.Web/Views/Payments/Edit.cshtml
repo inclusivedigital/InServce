@@ -1,0 +1,44 @@
+﻿@model Payment
+
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Action("Index", "Payments")"><i class="mdi mdi-chevron-left"></i> Payments</a></div>
+    </div>
+}
+
+<h3 class="font-weight-light">Edit payment</h3>
+<div class="row">
+    <div class="col-md-7">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.ID)
+            <div class="card border-success">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Currency</label>
+                        <div class="col-md-8">
+                            @Html.DropDownList("CurrencyID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    
+                    <div class="form-group row">
+                        <label class="col-md-4">Status</label>
+                        <div class="col-md-8">
+                            @Html.DropDownList("StatusID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.StatusID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                  
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-success">Save <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

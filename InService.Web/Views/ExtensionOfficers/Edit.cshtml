@@ -1,0 +1,139 @@
+﻿@model ExtensionOfficer
+
+@section subnav{
+    <div class="navbar-nav">
+        @if (!User.IsInRole(nameof(UserRole.FARMER)))
+        {
+            <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-left"></i>ExtensionOfficers</a></div>
+        }
+        <div class="nav-item"><a class="nav-link" href="@Url.Details()">@Model.Fullname</a></div>
+
+    </div>
+}
+
+<h3 class="font-weight-light">Edit oficer</h3>
+<div class="row">
+    <div class="col-md-7">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="id" value="@Model.ID" />
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">EC number <i class="text-danger">*</i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.ECNumber, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.ECNumber, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Name <i class="text-danger">*</i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.Firstname, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Firstname, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Surname <i class="text-danger">*</i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.Surname, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Gender <i class="text-danger">*</i></label>
+                        <div class="col-md-8">
+                            @Html.SelectListFor(m => m.Gender, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(m => m.Gender, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">ID number <i class="text-danger">*</i></label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.NationalID, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.NationalID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <div class="form-check">
+                                <input id="Doc" class="form-check-input" type="checkbox" data-bind="checked:addMore" />
+                                <label class="form-check-label" for="Doc">Add more</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div data-bind="visible:canAddAdvanced">
+                        <hr />
+                        <div class="form-group row">
+                            <label class="col-md">Mobile</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Email</label>
+                            <div class="col-md-8">
+                                @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">Province</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(c => c.ProvinceID, (SelectList)ViewBag.Provinces, new { @class = "form-control options" })
+                                @Html.ValidationMessageFor(model => model.ProvinceID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-md-4">District</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(c => c.ProvinceID, (SelectList)ViewBag.Districts, new { @class = "form-control options" })
+                                @Html.ValidationMessageFor(model => model.DistrictID, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-success">Save <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts{
+    <script src="~/Scripts/App/ko.formatter.search.js"></script>
+    <script>
+        $(document).ready(function () {
+            ko.applyBindings(new MyModel());
+            $('#Ward').select2({
+                placeholder: "Select ward..",
+                minimumInputLength: 1,
+                theme: "bootstrap4",
+                ajax: {
+                    dataType: 'json',
+                    url:  "@Url.Action("Search", "Wards")",
+                    type:"GET",
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    }
+                },
+                cache: false,
+                escapeMarkup: function (markup) { return markup; },
+              templateResult: formatData,
+          });
+        })
+        function MyModel() {
+            var self = this;
+            self.addMore = ko.observable(false);
+            self.canAddAdvanced = ko.computed(() => {
+                return self.addMore() == true;
+            }, self);
+        }
+    </script>
+}
+

@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="~/Content/images/icon.png">
+    <title>@ViewBag.Title - In service training</title>
+    @Styles.Render("~/bundles/styles")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+    <div class="wrapper">
+        @if (Request.IsAuthenticated)
+        {
+            @Html.Partial("_LayoutPartial")
+        }
+
+        <div id="content">
+            @if (Request.IsAuthenticated)
+            {
+                <div class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd; margin-left: -15px;margin-right: -15px;">
+                    <button type="button" id="sidebarCollapse" class="navbar-btn">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <button type="button" class="navbar-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse ">
+                        @if (IsSectionDefined("subnav"))
+                        {
+                            @RenderSection("subnav", false)
+                        }
+                    </div>
+                </div>
+            }
+            @if (IsSectionDefined("sidebar"))
+            {
+                <div class="row">
+                    <div class="col pb-3">
+                        @RenderBody()
+                    </div>
+                    <div class="col-3 collapse d-md-flex border-left border-light px-0 bg-light" style="min-height:100vh;margin-top:-10px; margin-right:-10px;">@RenderSection("sidebar", false)</div>
+                </div>
+            }
+            else
+            {
+                @RenderBody()
+            }
+            <hr />
+            <footer class="d-block d-print-none">
+                <p>&copy; @DateTime.Now.Year - In Service training app</p>
+            </footer>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/scripts")
+    @Scripts.Render("~/bundles/jqueryval")
+    @RenderSection("scripts", required: false)
+    <script src="~/Scripts/font-awesome/js/all.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".table > thead").addClass("table-success");
+            $(".table").addClass("border-bottom");
+            //  $("#content a").addClass("text-success");
+            // $(".btn a").addClass("table-white");
+            $('#sidebarCollapse').on('click', function () {
+                if (!$('#sidebar').hasClass('sidebar-transition')) $('#sidebar').addClass('sidebar-transition');
+                $('#sidebar').toggleClass('active');
+                $(this).toggleClass('active');
+                sessionStorage.setItem("sidebarCollapse", $('#sidebar').hasClass('active'));
+            });
+            if (sessionStorage.getItem('sidebarCollapse') == 'true') {
+                $('#sidebarCollapse').toggleClass('active');
+                $('#sidebar').toggleClass('active');
+            }
+            $(function () {
+                $('[data-toggle="tooltip"]').tooltip()
+
+            });
+            $("#Main").addClass("col-md-12")
+            $('.options').select2({
+                theme: 'bootstrap4',
+                placeholder: "Select..",
+            });
+
+        });
+        $("#data tr").click(function (e) {
+            $(this).toggleClass("table-success");
+            if ($(e.target).is(':checkbox')) return;
+
+            var $cb = $(this).find(':checkbox');
+            $cb.prop('checked', !$cb.is(':checked'));
+            lookUp();
+        });
+    </script>
+</body>
+</html>

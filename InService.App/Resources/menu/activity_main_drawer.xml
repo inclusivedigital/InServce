@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+	<group android:checkableBehavior="single">
+		<item
+			android:id="@+id/nav_courses"
+			android:icon="@drawable/ic_file_document_box_outline"
+			android:title="Courses" />
+		<item
+		   android:id="@+id/nav_exercises"
+		   android:icon="@drawable/ic_file_document_box_outline"
+		   android:title="My exercises" />
+		<item
+		   android:id="@+id/nav_sign_out"
+		   android:icon="@drawable/ic_account_circle_outline"
+		   android:title="Sign out" />
+	</group>
+
+	<item android:title="Communication">
+		<menu>
+			<item
+				android:id="@+id/nav_weather"
+				android:icon="@android:drawable/btn_star"
+				android:title="Weather" />
+			<item
+			  android:id="@+id/nav_change_language"
+			  android:icon="@drawable/ic_magnify"
+			  android:title="Change language" />
+			<item
+				 android:id="@+id/nav_send"
+				 android:icon="@drawable/ic_menu_send"
+				 android:title="Communication" />
+			<item
+				android:id="@+id/nav_share"
+				android:icon="@drawable/ic_menu_share"
+				android:title="Share" />
+		</menu>
+	</item>
+
+</menu>

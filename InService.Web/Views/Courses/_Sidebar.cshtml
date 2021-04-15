@@ -1,0 +1,14 @@
+﻿@model Course
+<div class="list-group-flush list-group mt-3" style="width:100%">
+    <a href="@Url.Index("Examinations",new { CourseID=Model.ID})" class="list-group-item list-group-item-light justify-content-between d-flex align-items-center"><div>Examinations</div><span class="badge badge-danger">@Model.Examinations.Count()</span></a>
+    <a href="@Url.Index("Modules",new { CourseID=Model.ID})" class="list-group-item list-group-item-light justify-content-between d-flex align-items-center"><div>Modules</div><span class="badge badge-danger">@Model.Modules.Count()</span></a>
+    @if (Model.CurrentPrice != null)
+    {
+        <a href="@Url.Index("CoursePrices", new { Model.ID })" class="list-group-item list-group-item-light justify-content-between d-flex align-items-center"><div>Price</div><span class="badge badge-success">@Model.CurrentPrice.Currency.Symbol @Model.CurrentPrice.Amount</span></a>
+    }
+    else
+    {
+        <a href="@Url.Add("CoursePrices", new { Model.ID })" class="list-group-item list-group-item-light justify-content-between d-flex align-items-center"><div>Add course price</div><i class="fa fa-plus"></i></a>
+
+    }
+</div>

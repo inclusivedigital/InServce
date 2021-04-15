@@ -1,0 +1,65 @@
+﻿@model Livestock
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item">   <a class="nav-link" href="@Url.Index()">Livestocks</a></div>
+        <div class="nav-item"> <a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new...</a></div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-7">
+        <h3 class="font-weight-light">Add new livestock</h3>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger small" })
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Name</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Livestock category</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(m => m.CategoryID, (SelectList)ViewBag.categories, "Select..", new { @class = "form-control options", required = "" })
+                            @Html.ValidationMessageFor(m => m.CategoryID, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Course</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(m => m.CourseID, (SelectList)ViewBag.courses, "Select..", new { @class = "form-control options" })
+                            @Html.ValidationMessageFor(m => m.CourseID, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    @*@if (ViewBag.parents != null)
+                    {
+                        <div class="form-group row">
+                            <label class="col-md-4">Parent livestock</label>
+                            <div class="col-md-8">
+                                @Html.DropDownListFor(m => m.ParentID, (SelectList)ViewBag.parents, "Select..", new { @class = "form-control options" })
+                                @Html.ValidationMessageFor(m => m.ParentID, "", new { @class = "text-danger small" })
+                            </div>
+                        </div>
+                    }*@
+                    <div class="form-group row">
+                        <label class="col-md-4">Short description</label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card-footer  text-right">
+                    <button class="btn btn-success"><i class="mdi mdi-check-circle-outline"></i> Submit</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>

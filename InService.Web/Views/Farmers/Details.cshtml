@@ -1,0 +1,129 @@
+﻿@model Farmer
+
+@section subnav{
+    <div class="navbar-nav">
+        @if (!User.IsInRole(nameof(UserRole.FARMER)))
+        {
+            <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-left"></i>Farmers</a></div>
+        }
+        <div class="nav-item"><a class="nav-link" href="@Url.Details()"><i class="mdi mdi-account"></i> @Model.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+    </div>
+}
+
+@section sidebar{
+    @Html.Partial("_Sidebar")
+}
+<h3 class="font-weight-light">@Model.Name</h3>
+<div class="card card-border shadow mb-3">
+    <div class="card-header border-0 rounded">
+        <ul class="nav nav-tabs card-header-tabs" role="tablist" id="tabList">
+            <li class="nav-item"><a class="nav-link active" href="#Details" data-toggle="tab">Details</a></li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="Details">
+                <div class="row">
+                    <div class="col-md-8">
+                        @if (!String.IsNullOrEmpty(Model.Name))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Name</label>
+                                <div class="col-md-8">@Model.Fullname</div>
+                            </div>
+                        }
+                        @if (Model.TypeID.HasValue)
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Type</label>
+                                <div class="col-md-8">@Model.Type.ToEnumString()</div>
+                            </div>
+                        }
+                        <div class="row">
+                            <label class="col-md-4 font-weight-bold">Gender</label>
+                            <div class="col-md-8">@Model.Gender.ToEnumString()</div>
+                        </div>
+                        @if (!String.IsNullOrEmpty(Model.Account))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Account</label>
+                                <div class="col-md-8">@Model.Account</div>
+                            </div>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.GrowersNumber))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Growers Number</label>
+                                <div class="col-md-8">@Model.GrowersNumber</div>
+                            </div>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.IDNumber))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">ID Number</label>
+                                <div class="col-md-8">@Model.IDNumber</div>
+                            </div>
+                        }
+                        <div class="row">
+                            <label class="col-md-4 font-weight-bold">Creation date</label>
+                            <div class="col-md-8">@Model.CreationDate.BasicFormat()</div>
+                        </div>
+                        @if (!String.IsNullOrEmpty(Model.Mobile))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Mobile</label>
+                                <div class="col-md-8">@Model.Mobile</div>
+                            </div>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.Email))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Email</label>
+                                <div class="col-md-8">@Model.Email</div>
+                            </div>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.Address))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Address</label>
+                                <div class="col-md-8">@Model.Address</div>
+                            </div>
+                        }
+                        @if (!String.IsNullOrEmpty(Model.FarmName))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Farm</label>
+                                <div class="col-md-8">@Model.FarmName</div>
+                            </div>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.Village))
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Village</label>
+                                <div class="col-md-8">@Model.Village</div>
+                            </div>
+                        }
+                        @if (Model.WardID.HasValue)
+                        {
+                            <div class="row">
+                                <label class="col-md-4 font-weight-bold">Ward</label>
+                                <div class="col-md-8">
+                                    @($"{Model.Ward.Name} number: {Model.Ward.Number},")
+                                    <div>@($"District: {Model.Ward.District.Name}")</div>
+                                    <div>@($" Province: {Model.Ward.District.Province.Name} {Model.Ward.District.Province.Country.Name}")</div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer bg-white">
+        <label class="text-muted small">Created @Model.CreationDate.BasicFormatWithTime()</label>
+    </div>
+</div>
+

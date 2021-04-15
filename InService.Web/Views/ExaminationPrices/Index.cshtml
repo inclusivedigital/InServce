@@ -1,0 +1,125 @@
+﻿@model IPagedList<ExaminationPrice>
+
+@section subnav{
+    <div class="navbar-nav mr-auto d-print-none">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index(new { id="",  PID="", CID="",  sd="", ed =""})">Prices</a></div>
+        <div class="dropdown">
+            <a class="nav-link  dropdown-toggle" href="#" role="button" id="dropdownMenuLink0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @(ViewBag.Currency == null ? "Currency..." : ViewBag.Currency.Name)
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink0">
+                @foreach (var w in ViewBag.Currencies)
+                {
+                    <a class="dropdown-item" href="@Url.Index(new {id=ViewBag.id,SID=ViewBag.SID,WID=ViewBag.WID,PID=ViewBag.WID,CID=w.ID,sd=ViewBag.sd,ed=ViewBag.ed})">@w.Name</a>
+                }
+            </div>
+        </div>
+        <div class="dropdown">
+            <a class="nav-link  dropdown-toggle" href="#" role="button" id="dropdownMenuLink0" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                @(ViewBag.PaymentMethod == null ? "Payment m..." : ViewBag.PaymentMethod.Name)
+            </a>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink0">
+                @foreach (var w in ViewBag.paymentmethds)
+                {
+                    <a class="dropdown-item" href="@Url.Index(new {id=ViewBag.id,PID=w.ID,CID=ViewBag.CID,sd=ViewBag.sd,ed=ViewBag.ed})">@w.Name</a>
+                }
+            </div>
+        </div>
+    </div>
+    @using (Html.BeginForm("Index", "ExaminationPrices", FormMethod.Get))
+    {
+        <input type="hidden" name="WID" value="@ViewBag.WID" />
+        <input type="hidden" name="SID" value="@ViewBag.SID" />
+        <input type="hidden" name="PID" value="@ViewBag.PID" />
+        <input type="hidden" name="CID" value="@ViewBag.CID" />
+        <div class="form-inline">
+            <div class="input-group mr-2">
+                <label class="input-group-prepend"><span class="input-group-text"><i class="mdi mdi-calendar"></i></span></label>
+                <input style="max-width:150px" placeholder="From..." type="text" name="sd" class="form-control" value="@ViewBag.sd" id="sd" />
+                <input style="max-width:150px" placeholder="To..." value="@ViewBag.ed" type="text" name="ed" class="form-control" id="ed" />
+            </div>
+            <div class="input-group">
+                <label class="input-group-prepend"><span class="input-group-text">Item</span></label>
+                <select id="Examination" name="id" style="width:300px" class="form-control">
+                    @if (ViewBag.Examination != null)
+                    {
+                        <option value="@ViewBag.Examination.ID">@ViewBag.Examination.Details</option>
+                    }
+                </select>
+                <span class="input-group-append">
+                    <button class="btn btn-light" type="submit"><i class="mdi mdi-magnify"></i></button>
+                </span>
+            </div>
+        </div>
+    }
+}
+
+
+<h3 class="text-info font-weight-light">Price list..</h3>
+@if (ViewBag.Examination != null)
+{
+    <h4 class="text-info"><a href="@Url.Details("Examinations",new {((Examination)ViewBag.Examination).ID })">@(((Examination)ViewBag.Examination).Topic)</a></h4>
+}
+@Html.PagedListPager(Model, p => Url.Query(new { p, id = ViewBag.id, SID = ViewBag.SID, WID = ViewBag.WID, PID = ViewBag.PID, CID = ViewBag.CID, sd = ViewBag.sd, ed = ViewBag.ed }),
+               new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true })
+<table class="table table-hover table-striped table-sm table-bordered">
+    <thead>
+        <tr>
+            <th>Examination</th>
+            <th>Revision date</th>
+            <th class="text-right">Unit cost</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var i in Model.OrderByDescending(c => c.RevisionDate).GroupBy(c => c.Examination))
+        {
+            <tr>
+                <td rowspan="@i.Count()"><a href="@Url.Details("Examinations",new { i.Key.ID})">@i.Key.Topic</a></td>
+                <td>@i.First().RevisionDate.BasicFormat()</td>
+                <td class="text-right">@i.First().Currency.Symbol @i.First().Amount.ToString("0.00")</td>
+            </tr>
+            if (i.Count() > 1)
+            {
+                foreach (var item in i.ToArray().Skip(1))
+                {
+                    <tr>
+                        <td>@item.RevisionDate.BasicFormat()</td>
+                        <td class="text-right">@item.Currency.Symbol @item.Amount.ToString("0.00")</td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+@Html.PagedListPager(Model, p => Url.Query(new { p, id = ViewBag.id, PID = ViewBag.PID, CID = ViewBag.CID, sd = ViewBag.sd, ed = ViewBag.ed }),
+               new PagedListRenderOptions() { Display = PagedListDisplayMode.Always, DisplayPageCountAndCurrentLocation = true })
+<div class="d-none d-print-block">
+    <p>Report date: <b>@DateTime.Now</b></p>
+    <p>Printed by: <b>@User.Identity.GetUserName()</b></p>
+</div>
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/App/Payments.Index.Search.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#Examination').select2({
+                placeholder: "Search Examination..",
+                minimumInputLength: 2,
+                theme: "bootstrap4",
+                ajax: {
+                    dataType: 'json',
+                    url: "@Url.Action("Search", "Examinations")",
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            });
+        });
+    </script>
+}
+

@@ -1,0 +1,41 @@
+﻿@model IPagedList<EmailConfig>
+
+@section subnav{
+    <div class="navbar-nav mr-auto">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Email config</a></div>
+        <div class="nav-item"><a class="nav-link " href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new config..</a></div>
+    </div>
+}
+
+@if (Model.Any())
+{
+    <h4 class="mt-4">@Model.TotalItemCount email config@(Model.TotalItemCount == 1 ? "" : "s")<small> found..</small></h4>
+    <table class="table table-sm table-striped table-hover mt-2">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email address</th>
+                <th>Host</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.ActionLink(item.Name, "Details", new { item.ID })</td>
+                    <td>@item.SenderID</td>
+                    <td>@item.Host:@item.Port</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.PagedListPager(Model, p => Url.Action("Index", "Email", new { p }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true })
+}
+else
+{
+    <div class="mt-2 text-center">
+        <h3 class="text-danger font-weight-light">No email config added yet!</h3>
+        <a class="btn btn-outline-success btn-sm" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new email config</a>
+    </div>
+}

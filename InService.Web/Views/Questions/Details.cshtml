@@ -1,0 +1,71 @@
+﻿@model Question
+
+@section subnav{
+    <div class="navbar-nav">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Details("Examinations",new { Model.Examination.ID})"><i class="mdi mdi-chevron-double-left"></i>@Model.Examination.Topic</a></div>
+            <div class="nav-item"><a class="nav-link" href="@Url.Edit("Questions",new { Model.ID})"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+            <div class="nav-item"><a class="nav-link" href="@Url.Add("Questions",new { Model.Examination.ID})"><i class="mdi mdi-plus"></i> Add new...</a></div>
+        }
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-10">
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="form-group">
+                    <div class="form-inline">
+                        <label class="font-weight-light mb-0 h3">Question</label>
+                        <label class="ml-auto">[@Model.Score]</label>
+                    </div>
+                    <hr />
+                    <div class="font-weight-light">
+                        @Html.Raw(Model.Name)
+                    </div>
+                </div>
+                @if (Model.Answers.Any())
+                {
+                    <h4>Answers</h4>
+                    <table class="table table-sm table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width:60%;">Answer</th>
+                                <th style="width:10%;">Status</th>
+                                <th style="width:30%;">Comment</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var i in Model.Answers)
+                            {
+                                <tr>
+                                    <td>@i.Name</td>
+                                    <td>
+                                        <span class="badge badge-@(i.IsCorrect?"success":"danger")"><i class="mdi mdi-@(i.IsCorrect ? "check" : "cancel")"></i></span>
+                                    </td>
+                                    <td>
+                                       
+                                        <p>
+                                            @if (!string.IsNullOrWhiteSpace(i.Comments))
+                                            {
+                                                @i.Comments
+                                            }
+
+                                            @if (i.IsCorrect)
+                                            {
+                                                <a class="" href="@Url.Edit("Answers", i.ID)">...<i class="mdi mdi-pencil"></i></a>
+                                            }
+                                        </p>
+
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

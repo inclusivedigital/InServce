@@ -1,0 +1,55 @@
+﻿@model ExaminationPrice
+
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link " href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+    </div>
+}
+
+@section breadcrumbs{
+    <div class="breadcrumb mx-3 rounded-0 py-2">
+        <a class="breadcrumb-item" href="@Url.Index("Examinations")">Examinations</a>
+        <a class="breadcrumb-item" href="@Url.Details("Examinations", new { Model.Examination.ID} )">@Model.Examination.Topic</a>
+        <a class="breadcrumb-item" href="@Url.Details()">@Model.Amount @Model.Currency.Symbol..</a>
+    </div>
+}
+
+<h3 class="font-weight-light">Item price details</h3>
+<div class="row">
+    <div class="col-md-7">
+        <div class="card border-primary">
+
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Examination</label>
+                    <div class="col-md-8"><a href="@Url.Details("Examinations",new { Model.Examination.ID})">@Model.Examination.Topic</a></div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Amount</label>
+                    <div class="col-md-8">@Model.Amount</div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Currency</label>
+                    <div class="col-md-8"> @Model.Currency.Name</div>
+                </div>
+                @if (Model.PaymentMethodID.HasValue)
+                {
+                    <div class="form-group row">
+                        <label class="col-md-4 font-weight-bold">Payment method</label>
+                        <div class="col-md-8"><a href="@Url.Details("PaymentMethod",new { @Model.PaymentMethod.ID})">@Model.PaymentMethod.Name</a></div>
+                    </div>
+                }
+
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Revision date</label>
+                    <div class="col-md-8">@Model.RevisionDate.BasicFormatWithTime()</div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Creation date</label>
+                    <div class="col-md-8">@Model.CreationDate.BasicFormat()</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:background="@drawable/layout_gradient2"
+    android:layout_height="fill_parent">
+    <TextView
+        android:layout_width="match_parent"
+        android:text="Register as..."
+        android:layout_marginTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:gravity="center"
+        android:layout_height="wrap_content"/>
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_height="wrap_content">
+        <RadioButton
+            android:id="@+id/ChkFarmer"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="A farmer" />
+        <RadioButton
+            android:id="@+id/ChkOfficer"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="An extention officer" />
+    </RadioGroup>
+    <Button
+        android:layout_marginTop="20dp"
+        android:text="Continue"
+        android:background="@drawable/selectable_orange_color"
+        android:layout_width="fill_parent"
+        android:drawableTint="@color/white"
+        android:textColor="@color/white"
+        android:layout_height="@dimen/btn_height"
+        android:drawableRight="@drawable/ic_chevron_right"
+        android:id="@+id/btnLogin" />
+</LinearLayout>
+    
+    
+    
+    
+    
+    
+   

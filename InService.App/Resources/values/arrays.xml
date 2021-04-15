@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+  <string-array name="gender_options">
+    <item>Select..</item>
+    <item>MALE</item>
+    <item>FEMALE</item>
+    <item>OTHER</item>
+  </string-array>
+  <string-array name="period_options">
+    <item>DAYS</item>
+    <item>MONTHS</item>
+  </string-array>
+  <string-array name="payback_options">
+    <item>ONCE OFF</item>
+    <item>EVERY DAY</item>
+    <item>EVERY WEEK</item>
+    <item>EVERY 2 WEEKS</item>
+    <item>EVERY MONTH</item>
+  </string-array>
+  <string-array name="payment_methods">
+    <item>CASH</item>
+    <item>eMONEY</item>
+  </string-array>
+</resources>

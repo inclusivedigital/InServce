@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/green_800"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/activity_top_margin"
+            android:padding="@dimen/input_spacing"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RadioButton
+                    android:id="@+id/ChkEnglish"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="English" />
+                <RadioButton
+                    android:id="@+id/ChkShona"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Shona" />
+                <RadioButton
+                    android:id="@+id/ChkNdebele"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ndebele" />
+            </RadioGroup>
+        </LinearLayout>
+    </ScrollView>
+    <ImageButton
+        android:id="@+id/btn_floating_action"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="12dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:gravity="center"
+        android:src="@drawable/ic_check"
+        android:background="@drawable/fab_success" />
+</RelativeLayout>
+    
+    
+    
+    
+    
+    
+   

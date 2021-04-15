@@ -1,0 +1,227 @@
+﻿@model IPagedList<Examination>
+@{
+    var CurCourse = (Course)ViewBag.course;
+}
+@section subnav{
+    <div class="navbar-nav mr-auto d-print-none">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Examinations</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new...</a></div>
+    </div>
+    <div class="navbar-nav ml-auto">
+        <div class="nav-item">
+            @using (Html.BeginForm("Index", "Examinations", FormMethod.Get, new { @class = "form-inline" }))
+            {
+                <div class="input-group input-group-sm">
+                    <select class="form-control" name="CID" id="SAID" style="width:150px" required>
+                        @if (CurCourse != null)
+                        {
+                            <option value="@CurCourse.ID">@CurCourse.Name</option>
+                        }
+                    </select>
+                    <span class="input-group-append">
+                        <button class="btn btn-outline-success" type="submit"><i class="mdi mdi-magnify"></i></button>
+                    </span>
+                </div>
+            }
+        </div>
+    </div>
+}
+
+<hr />
+@if (Model.TotalItemCount > 0)
+{
+    <h3 class="font-weight-light mb-0"><i class="mdi mdi-format-list-bulleted-type"></i> @(CurCourse == null ? "Examinations" : CurCourse.Name + " examinations")</h3>
+    <h4 class="font-weight-light">@Model.TotalItemCount examination@(Model.TotalItemCount == 1 ? "" : "s") <small>found</small></h4>
+
+
+    <div class="card card-border shadow mb-3">
+        <div class="card-header border-0 rounded">
+            <ul class="nav nav-tabs card-header-tabs" role="tablist" id="tabList">
+                <li class="nav-item"><a class="nav-link active" href="#Dailysales" data-toggle="tab">Value chain examinations</a></li>
+                <li class="nav-item"><a class="nav-link" href="#Monthlysales" data-toggle="tab">Non value chain examinations</a></li>
+            </ul>
+        </div>
+        <div class="card-body">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="Dailysales">
+                    <h3 class="font-weight-light">Value chain examinations</h3>
+                    <h4 class="font-weight-light">@Model.ToList().Where(c => c.ValueChainID.HasValue).Count() value chain examination@(Model.ToList().Where(c => c.ValueChainID.HasValue).Count() == 1 ? "" : "s")<small> found..</small></h4>
+                    @foreach (var valuechain in Model.ToList().Where(c => c.ValueChainID.HasValue).GroupBy(c => c.ValueChain))
+                    {
+                        <table class="table table-striped table-sm">
+                            <thead class="table-success">
+                                <tr>
+                                    <th colspan="6" class="text-center">@valuechain.Key.Name</th>
+                                </tr>
+                                <tr>
+                                    <th>Module</th>
+                                    <th>Course</th>
+                                    <th>Value chain</th>
+                                    <th>Type</th>
+                                    <th>Questions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in valuechain.OrderByDescending(c => c.CreationDate))
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (User.IsInRole(nameof(UserRole.FARMER)) || User.IsInRole(nameof(UserRole.EXTENSION_OFICER)))
+                                            {
+                                                <a href="@Url.Action("Instructions",new { i.ID })">@(i.Module?.Name??i.Topic)</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Details(i.ID)">@(i.Module?.Name??i.Topic)</a>
+                                            }
+                                        </td>
+                                        <td>@(i.Course?.Name??"")</td>
+                                        <td>@(i.ValueChain?.Name??"")</td>
+                                        <td>@i.Type.ToEnumString()</td>
+                                        <td><span class="badge badge-pill badge-@(i.Questions.Count() >= 5 ? "success" : "danger")">@i.Questions.Count()</span></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+
+                </div>
+                <div class="tab-pane fade show" id="Monthlysales">
+                    <h3 class="font-weight-light">Non value chain examinations</h3>
+                    <h4 class="font-weight-light">@Model.ToList().Where(c => c.ValueChainID == null).Count() non value examination@(Model.ToList().Where(c => c.ValueChainID == null).Count() == 1 ? "" : "s")<small> found..</small></h4>
+                    @foreach (var course in Model.ToList().Where(c => c.ValueChainID == null).GroupBy(c => c.Course))
+                    {
+                        <table class="table table-striped table-sm">
+                            <thead class="table-success">
+                                <tr>
+                                    <th colspan="6" class="text-center">@course.Key.Name</th>
+                                </tr>
+                                <tr>
+                                    <th>Module</th>
+                                    <th>Course</th>
+                                    <th>Value chain</th>
+                                    <th>Type</th>
+                                    <th>Questions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var i in course.OrderByDescending(c => c.CreationDate))
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (User.IsInRole(nameof(UserRole.FARMER)) || User.IsInRole(nameof(UserRole.EXTENSION_OFICER)))
+                                            {
+                                                <a href="@Url.Action("Instructions",new { i.ID })">@(i.Module?.Name??i.Topic)</a>
+                                            }
+                                            else
+                                            {
+                                                <a href="@Url.Details(i.ID)">@(i.Module?.Name??i.Topic)</a>
+                                            }
+                                        </td>
+                                        <td>@(i.Course?.Name??"")</td>
+                                        <td>@(i.ValueChain?.Name??"")</td>
+                                        <td>@i.Type.ToEnumString()</td>
+                                        <td><span class="badge badge-pill badge-@(i.Questions.Count() >= 5 ? "success" : "danger")">@i.Questions.Count()</span></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+
+                </div>
+            </div>
+        </div>
+        <div class="card-footer bg-white">
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+    @*<table class="table table-striped table-sm">
+            <thead class="table-success">
+                <tr>
+                    <th>Topic</th>
+                    <th>Start date</th>
+                    <th>Course</th>
+                    <th>Value chain</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model)
+                {
+                    <tr>
+                        <td>
+                            @if (User.IsInRole(nameof(UserRole.FARMER)) || User.IsInRole(nameof(UserRole.EXTENSION_OFICER)))
+                            {
+                                <a href="@Url.Action("Instructions",new { i.ID })">@i.Topic</a>
+                            }
+                            else
+                            {
+                                <a href="@Url.Details(i.ID)">@i.Topic</a>
+                            }
+                        </td>
+                        <td>@i.StartDate.ToString("dd MMM yyy HH:mm")</td>
+                        <td>@(i.Course?.Name??"")</td>
+                        <td>@(i.ValueChain?.Name??"")</td>
+                        <td>@i.Type.ToEnumString()</td>
+                        <td><span class="badge badge-pill badge-@(i.TimeToClose.TotalSeconds > 0 ? "success" : "danger")"><i class="mdi mdi-@(i.TimeToClose.TotalSeconds > 0 ? "pencil" : "pencil-off")"></i></span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>*@
+    <div class="d-none d-print-block">
+        <p>Report date: <b>@DateTime.Now</b></p>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <p>Printed by: <b>@User.Identity.FullName()</b></p>
+        }
+    </div>
+    @Html.PagedListPager(Model, p => Url.Query(new { p, SID = ViewBag.SID }),
+                                                             new PagedListRenderOptions() { Display = PagedListDisplayMode.Always, DisplayPageCountAndCurrentLocation = true })
+}
+else
+{
+    if (Request.QueryString.AllKeys.Contains("q"))
+    {
+        <div class="text-center mt-4">
+            <h3 class="text-danger">No search results found</h3>
+            <h5>Your search: @Request["q"]</h5>
+        </div>
+    }
+    else
+    {
+        <div class="text-center mt-4">
+            <h4 class="text-danger">There's nothing here!</h4>
+            <a class="btn btn-outline-success btn-sm" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new examination</a>
+        </div>
+    }
+}
+@section Scripts {
+    <script type="text/javascript">
+         $(document).ready(function () {
+             $('#SAID').select2({
+                placeholder: "search course...",
+                minimumInputLength: 1,
+                theme: "bootstrap4",
+                ajax: {
+                    dataType: 'json',
+                    url: "@Url.Action("Search", "Courses")",
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            });
+        });
+    </script>
+}

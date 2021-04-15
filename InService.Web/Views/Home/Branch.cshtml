@@ -1,0 +1,65 @@
+﻿@model Branch
+@{
+    Layout = "~/Views/Shared/_Layout_Course.cshtml";
+}
+@if (ViewBag.course != null)
+{
+    <aside class="left-sidebar">
+        <div class="logo">
+            <a href="@Url.Action("Article","Home")">
+                <h4><i class="fa fa-home"></i> Home</h4>
+            </a>
+        </div>
+        <nav class="left-nav">
+            <ul id="nav">
+                <li class="current"><a href="@Url.Action("Branch","Home",new { BranchID=Model.ID})">@Model.Name</a></li>
+                @foreach (var item in Model.Courses.OrderBy(c => c.Name))
+                {
+                    <li><a href="#@($"_{item.ID}")">@item.Name</a></li>
+                }
+            </ul>
+        </nav>
+    </aside>
+
+    <div id="main-wrapper">
+        <div class="main-content">
+
+            @if (Model.Courses.Any())
+            {
+                foreach (var item in Model.Courses.OrderBy(c => c.Name))
+                {
+                    <section id="@($"_{item.ID}")">
+                        <div class="content-header">
+                            <h1><a href="@Url.Action("Course","Home",new { CourseID=item.ID})">@item.Name</a></h1>
+                        </div>
+                        @if (item.Articles.Any())
+                        {
+                            foreach (var article in item.Articles.ToList().Where(c => c.FlagsID == (int)ArticleFlags.PUBLISHED))
+                            {
+                                @*<h2 class="title">@(article.Module?.Name??item.Name)</h2>*@
+                                <div class="section-content">
+                                    @Html.Raw(article.Description);
+                                </div>
+                            }
+                        }
+                    </section>
+                }
+            }
+        </div>
+    </div>
+
+}
+else
+{
+    <div style="min-height: 60vh">
+        <div class="py-5 text-center">
+            <div class="row">
+                <div class="col-md-4 offset-md-4">
+                    <h1 class="text-center font-weight-light text-danger">KEEP<br />CALM</h1>
+                    <p class="text-muted mb-5">Unfortunately the page you're looking for is currently unavailable. Try visiting our <a href="@Url.Action("Article","Home",new { DefaultID=1})"><i class="mdi mdi-home"></i> home page</a> and start from there instead!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

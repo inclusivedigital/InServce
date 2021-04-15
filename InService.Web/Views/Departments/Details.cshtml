@@ -1,0 +1,59 @@
+﻿@model Department
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i>Departments</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Details()"><i class="mdi mdi-chevron-left"></i> @Model.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new...</a></div>
+    </div>
+
+}
+@section sidebar{
+    @Html.Partial("_Sidebar")
+}
+<h3 class="font-weight-light">Department details</h3>
+<div class="card shadow">
+    <div class="card-body">
+        <div class="form-group row">
+            <label class="col-md-4 font-weight-bold">Name</label>
+            <div class="col-md-8">@Model.Name</div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-4 font-weight-bold">Creation date</label>
+            <div class="col-md-8">@Model.CreationDate.ToString("dd MMM yyy")</div>
+        </div>
+    </div>
+</div>
+@if (Model.Sections.Any())
+{
+    <div class="form-inline">
+        <h4 class="font-weight-light">Sections</h4>
+        <a class="btn btn-sm btn-outline-success ml-auto" href="@Url.Add("Sections",new { DepartmentID = Model.ID })">Add section</a>
+    </div>
+    <table class="table table-sm table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Creation Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model.Sections)
+            {
+                <tr>
+                    <td><a class="text-success" href="@Url.Details("Sections",new { i.ID})">@i.Name</a></td>
+                    <td>@i.CreationDate.ToString("dd MMM yyy HH:mm")</td>
+                </tr>
+            }
+    </table>
+}
+else
+{
+    <div class="text-center">
+        <h4 class="font-weight-light">Sections will be listed here</h4>
+        <a class="btn btn-sm btn-outline-success" href="@Url.Add("Sections",new {DepartmentID= Model.ID })">Add section</a>
+    </div>
+}
+
+

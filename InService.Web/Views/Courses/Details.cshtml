@@ -1,0 +1,169 @@
+﻿@model Course
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i> Courses</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new..</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("AddAttachment",new { Model.ID})"><i class="mdi mdi-upload"></i> Add attachment...</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("AddIcon",new { Model.ID})"><i class="mdi mdi-camera-image"></i> Add crop icon...</a></div>
+    </div>
+
+}
+@section sidebar{
+    @Html.Partial("_Sidebar")
+}
+<h3 class="font-weight-light"><i class="mdi mdi-folder"></i>@Model.Name details</h3>
+<div class="card shadow">
+    <div class="card-body">
+        <div class="form-group">
+            <label class="mb-0 text-muted font-weight-bold">Name</label>
+            <div>@Model.Name</div>
+        </div>
+        <div class="form-group">
+            <label class="mb-0 text-muted font-weight-bold">Code</label>
+            <div>@Model.Code</div>
+        </div>
+        @if (Model.FinalExamQuestions.HasValue)
+        {
+            <div class="form-group">
+                <label class="mb-0 text-muted font-weight-bold">Final Exam Questions</label>
+                <div>@Model.FinalExamQuestions question@(Model.FinalExamQuestions !=1 ?"":"s")</div>
+            </div>
+        }
+        <div class="form-group">
+            <label class="mb-0 text-muted font-weight-bold">Branch</label>
+            <div>@Model.Branch.Name</div>
+        </div>
+        @if (Model.ValueChainID.HasValue)
+        {
+            <div class="form-group">
+                <label class="mb-0 text-muted font-weight-bold">Value chain</label>
+                <div>@(Model.ValueChain?.Name)</div>
+            </div>
+        }
+        @if (Model.NonValueChainID.HasValue)
+        {
+            <div class="form-group">
+                <label class="mb-0 text-muted font-weight-bold">Non value chain</label>
+                <div>@(Model.NonValueChain?.Name)</div>
+            </div>
+        }
+
+        @if (!String.IsNullOrEmpty(Model.Description))
+        {
+            <div class="form-group">
+                <label class="mb-0 text-muted font-weight-bold">Description</label>
+                <div>@Model.Description</div>
+            </div>
+        }
+        @if (Model.IconID.HasValue)
+        {
+            <div class="">
+                <div>
+                    <img class="img-fluid mb-1" src="@Url.Action("Icon", new { Model.ID })">
+                </div>
+                <a href="@Url.Action("AddIcon",new {Model.ID })">Change icon</a>
+            </div>
+        }
+        @if (!string.IsNullOrWhiteSpace(Model.Glossary))
+        {
+            <div class="form-group">
+                <label class="mb-0 text-muted font-weight-bold">Glossary of terms  <a href="@Url.Action("EditGlossary",new { Model.ID})">...<i class="mdi mdi-pencil"></i></a> </label>
+                <div>@Html.Raw(Model.Glossary)</div>
+            </div>
+        }
+        else
+        {
+            <a href="@Url.Action("EditGlossary",new { Model.ID})">Consider adding a glossary of terms</a>
+        }
+    </div>
+</div>
+
+@if (Model.Modules.Any())
+{
+    <div class="form-inline mt-2">
+        <h4 class="font-weight-light">Modules</h4>
+        <a class="btn btn-sm btn-outline-success ml-auto" href="@Url.Add("Modules",new { CourseID=Model.ID})">Add more</a>
+    </div>
+    using (Html.BeginForm("Sorter", "Modules", FormMethod.Post))
+    {
+        <input type="hidden" name="CourseID" value="@Model.ID" />
+        <table class="table table-sm table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Creation Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in Model.Modules.OrderBy(c => c.Number))
+                {
+                    <tr>
+                        <td style="cursor:grabbing">
+                            <input type="hidden" name="OID" value="@i.ID" />
+                            <a href="@Url.Details("Modules", new { i.ID })">@i.Name</a>
+                        </td>
+                        <td>@i.CreationDate.ToString("dd MMM yyy HH:mm")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="text-right">
+            <button class="btn btn-primary"><i class="mdi mdi-floppy"></i> Save order</button>
+        </div>
+    }
+}
+else
+{
+    <div class="text-center mt-2">
+        <h4 class="font-weight-light">Course modules will be listed here</h4>
+        <a class="btn btn-sm btn-outline-success" href="@Url.Add("Modules",new { CourseID=Model.ID})">Add module</a>
+    </div>
+}
+
+
+@if (!string.IsNullOrWhiteSpace(Model.AttachmentsJson))
+{
+    <div class="form-inline">
+        <h4 class="font-weight-light">Attachments</h4>
+        <a class="btn btn-sm btn-outline-success ml-auto" href="@Url.Action("AddAttachment",new { Model.ID})">Add more</a>
+    </div>
+    <table class="table table-sm table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Attachment name</th>
+                <th>Date uploaded</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Attachments)
+            {
+                <tr>
+                    <td><a href="@Url.Action("Download", "Attachments", new { item.ID })">@item.Name</a></td>
+                    <td>@item.UploadDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@section Scripts{
+    <script type="text/javascript">
+        function checkData(obj) {
+            if (obj.checked) $(obj).parent().parent().addClass("bg-danger");
+            else $(obj).parent().parent().removeClass("bg-danger");
+            var checkedCount = $("input:checked[name='MID']").length;
+            if (checkedCount > 0) {
+                $("#btnDelete").show({ duration: "fast" });
+                if (checkedCount >= 1) $("#btnDelete").html("Remove this!");
+                else $("#btnDelete").html("");
+            }
+            else $("#btnDelete").hide({ duration: "fast" });
+        }
+        $(document).ready(function () {
+            $('tbody').sortable();
+        })
+    </script>
+}

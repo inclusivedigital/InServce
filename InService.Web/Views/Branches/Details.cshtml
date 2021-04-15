@@ -1,0 +1,72 @@
+﻿@model Branch
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i>Branches</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Details()"><i class="mdi mdi-chevron-left"></i> @Model.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new...</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("AddIcon",new { Model.ID})"><i class="mdi mdi-camera-image"></i> Add branch icon...</a></div>
+    </div>
+
+}
+@section sidebar{
+    @Html.Partial("_Sidebar")
+}
+<h3 class="font-weight-light">Branch details</h3>
+<div class="card shadow">
+    <div class="card-body">
+        <div class="form-group row">
+            <label class="col-md-4 font-weight-bold">Name</label>
+            <div class="col-md-8">@Model.Name</div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-4 font-weight-bold">Section</label>
+            <div class="col-md-8">@Model.Section.Name</div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-4 font-weight-bold">Creation date</label>
+            <div class="col-md-8">@Model.CreationDate.ToString("dd MMM yyy")</div>
+        </div>
+        @if (Model.IconID.HasValue)
+        {
+            <div class="">
+                <div>
+                    <img class="img-fluid mb-1" src="@Url.Action("Icon", new { Model.ID })">
+                </div>
+                <a href="@Url.Action("AddIcon",new {Model.ID })">Change icon</a>
+            </div>
+        }
+    </div>
+</div>
+@if (Model.CropCategories.Any())
+{
+    <div class="form-inline">
+        <h4 class="font-weight-light">Crop categories</h4>
+        <a class="btn btn-sm btn-outline-success ml-auto" href="@Url.Add("CropCategories",new { BranchID=Model.ID})">Add more</a>
+    </div>
+    <table class="table table-striped table-hover table-sm">
+        <thead>
+            <tr>
+                <th>Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var i in Model.CropCategories)
+            {
+                <tr>
+                    <td><a class="text-success" href="@Url.Details("CropCategories",i.ID)">@i.Name</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="text-center">
+        <h4 class="font-weight-light">Crop categories will be listed here</h4>
+        <a href="@Url.Add("CropCategories",new { BranchID=Model.ID})">Add category</a>
+    </div>
+}
+
+

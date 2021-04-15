@@ -1,0 +1,1190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{324BAFE4-C780-49FC-842B-AB45ABAD5880}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>InService.Web</RootNamespace>
+    <AssemblyName>InService.Web</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <MvcBuildViews>true</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44327</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TypeScriptToolsVersion>3.9</TypeScriptToolsVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=5.6.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.5.6.1\lib\net45\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="hbehr.recaptcha, Version=1.9.0.36338, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ReCaptcha-AspNet.1.9.0\lib\net472\hbehr.recaptcha.dll</HintPath>
+    </Reference>
+    <Reference Include="ImageProcessor, Version=2.9.1.225, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImageProcessor.2.9.1\lib\net452\ImageProcessor.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=1.4.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.1.1\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.1.1\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.1.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.1.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.4.1.1\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.4.1.1\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.4.1.1\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.4.1.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.4.1.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Paynow, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Paynow.1.0.3\lib\net45\Paynow.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http, Version=4.1.1.2, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Net.Http.4.3.3\lib\net46\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Text.Encodings.Web, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.5.0.0\lib\net461\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Json.5.0.0\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.7\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.5.0.2\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <!--Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference-->
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="API\ExtensionOfficerRegistrationsController.cs" />
+    <Compile Include="API\FarmerRegistrationsController.cs" />
+    <Compile Include="API\IconsController.cs" />
+    <Compile Include="API\LivestockCategoriesController.cs" />
+    <Compile Include="API\LivestocksController.cs" />
+    <Compile Include="API\InstructionsController.cs" />
+    <Compile Include="API\BranchesController.cs" />
+    <Compile Include="API\AttachmentsController.cs" />
+    <Compile Include="API\ArticlesController.cs" />
+    <Compile Include="API\CordinatesController.cs" />
+    <Compile Include="API\CoursePricesController.cs" />
+    <Compile Include="API\CropCategoriesController.cs" />
+    <Compile Include="API\CropsController.cs" />
+    <Compile Include="API\NonValueChainsController.cs" />
+    <Compile Include="API\NoticesController.cs" />
+    <Compile Include="API\ValueChainsController.cs" />
+    <Compile Include="API\UserExaminationDetailsController.cs" />
+    <Compile Include="API\UserExaminationsController.cs" />
+    <Compile Include="API\QuestionsController.cs" />
+    <Compile Include="API\PaymentsController.cs" />
+    <Compile Include="API\ModulesController.cs" />
+    <Compile Include="API\ExaminationPricesController.cs" />
+    <Compile Include="API\ExaminationsController.cs" />
+    <Compile Include="API\CoursesController.cs" />
+    <Compile Include="API\AnswersController.cs" />
+    <Compile Include="API\CurrenciesController.cs" />
+    <Compile Include="API\SysController.cs" />
+    <Compile Include="API\PaymentMethodsController.cs" />
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Auth\AuthExtensions.cs" />
+    <Compile Include="Auth\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Auth\DoNotAuthorize.cs" />
+    <Compile Include="Auth\InServiceIUser.cs" />
+    <Compile Include="Auth\InServiceOAuthProvider.cs" />
+    <Compile Include="Auth\InServiceUserIdentity.cs" />
+    <Compile Include="Auth\InServiceUserPrincipal.cs" />
+    <Compile Include="Auth\InServiceUserStore.cs" />
+    <Compile Include="Auth\IdentityConfig.cs" />
+    <Compile Include="Auth\Startup.Auth.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AnswersController.cs" />
+    <Compile Include="Controllers\AttachmentsController.cs" />
+    <Compile Include="Controllers\ArticlesController.cs" />
+    <Compile Include="Controllers\ContinentsController.cs" />
+    <Compile Include="Controllers\CountriesController.cs" />
+    <Compile Include="Controllers\CoursePricesController.cs" />
+    <Compile Include="Controllers\ExtensionOfficersController.cs" />
+    <Compile Include="Controllers\InstructionsController.cs" />
+    <Compile Include="Controllers\LivestocksController.cs" />
+    <Compile Include="Controllers\LivestockCategoriesController.cs" />
+    <Compile Include="Controllers\CropsController.cs" />
+    <Compile Include="Controllers\CurrenciesController.cs" />
+    <Compile Include="Controllers\BranchesController.cs" />
+    <Compile Include="Controllers\NoticesController.cs" />
+    <Compile Include="Controllers\SectionsController.cs" />
+    <Compile Include="Controllers\ExchangeRatesController.cs" />
+    <Compile Include="Controllers\UserExaminationsController.cs" />
+    <Compile Include="Controllers\ModulesController.cs" />
+    <Compile Include="Controllers\PaymentMethodsController.cs" />
+    <Compile Include="Controllers\ExaminationPricesController.cs" />
+    <Compile Include="Controllers\PaymentsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Controllers\CropCategoriesController.cs" />
+    <Compile Include="Controllers\NonValueChainsController.cs" />
+    <Compile Include="Controllers\ValueChainsController.cs" />
+    <Compile Include="Controllers\DistrictsController.cs" />
+    <Compile Include="Controllers\EmailsController.cs" />
+    <Compile Include="Controllers\QuestionsController.cs" />
+    <Compile Include="Controllers\ExaminationsController.cs" />
+    <Compile Include="Controllers\FarmersController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProvincesController.cs" />
+    <Compile Include="Controllers\RegionsController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\DepartmentsController.cs" />
+    <Compile Include="Controllers\SysController.cs" />
+    <Compile Include="Controllers\WardsController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Leaflet\GridLayerOptions.cs" />
+    <Compile Include="Leaflet\LayerOptions.cs" />
+    <Compile Include="Leaflet\MapOptions.cs" />
+    <Compile Include="Leaflet\TileLayerOptions.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\EmailSender.cs" />
+    <Compile Include="Models\FormsHelperExtensions.cs" />
+    <Compile Include="Models\HtmlHelperExtensions.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\ReCaptchaExtensions.cs" />
+    <Compile Include="Models\SiteManager.cs" />
+    <Compile Include="Models\UrlHelperExtensions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap-grid.css" />
+    <Content Include="Content\bootstrap-grid.min.css" />
+    <Content Include="Content\bootstrap-reboot.css" />
+    <Content Include="Content\bootstrap-reboot.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\boy.png" />
+    <Content Include="Content\COA.png" />
+    <Content Include="Content\css\all.min.css" />
+    <Content Include="Content\css\materialdesignicons.css" />
+    <Content Include="Content\css\materialdesignicons.min.css" />
+    <Content Include="Content\css\select2.css" />
+    <Content Include="Content\css\select2.min.css" />
+    <Content Include="Content\fonts\materialdesignicons-webfont.svg" />
+    <Content Include="Content\girl.png" />
+    <Content Include="Content\images\placeholder.png" />
+    <Content Include="Content\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\jquery-ui.css" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Content\placeholder.png" />
+    <Content Include="Content\select2-bootstrap4.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\materialdesignicons-webfont.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="fonts\materialdesignicons-webfont.eot" />
+    <Content Include="fonts\materialdesignicons-webfont.ttf" />
+    <Content Include="fonts\materialdesignicons-webfont.woff" />
+    <Content Include="fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="Content\css\materialdesignicons.css.map" />
+    <Content Include="Content\css\materialdesignicons.min.css.map" />
+    <Content Include="Content\fonts\materialdesignicons-webfont.eot" />
+    <Content Include="Content\fonts\materialdesignicons-webfont.ttf" />
+    <Content Include="Content\fonts\materialdesignicons-webfont.woff" />
+    <Content Include="Content\fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="Content\scss\materialdesignicons.scss" />
+    <Content Include="Content\scss\_animated.scss" />
+    <Content Include="Content\scss\_core.scss" />
+    <Content Include="Content\scss\_extras.scss" />
+    <Content Include="Content\scss\_functions.scss" />
+    <Content Include="Content\scss\_icons.scss" />
+    <Content Include="Content\scss\_path.scss" />
+    <Content Include="Content\scss\_variables.scss" />
+    <Content Include="Scripts\App\ko.formatter.search.js" />
+    <Content Include="Scripts\App\ko.Questions.Add.js" />
+    <Content Include="Scripts\bootstrap.bundle.js" />
+    <Content Include="Scripts\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\canvasjs.min.js" />
+    <Content Include="Scripts\circletype.min.js" />
+    <Content Include="Scripts\coursepage\css\font-awesome.min.css" />
+    <Content Include="Scripts\coursepage\css\main.css" />
+    <Content Include="Scripts\coursepage\css\normalize.min.css" />
+    <Content Include="Scripts\coursepage\fonts\fontawesome-webfont.svg" />
+    <Content Include="Scripts\coursepage\img\logo.png" />
+    <Content Include="Scripts\coursepage\js\custom.js" />
+    <Content Include="Scripts\coursepage\js\jquery-1.11.0.min.js" />
+    <Content Include="Scripts\coursepage\js\jquery.nav.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shAutoloader.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushAppleScript.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushAS3.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushBash.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushColdFusion.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushCpp.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushCSharp.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushCss.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushDelphi.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushDiff.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushErlang.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushGroovy.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushJava.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushJavaFX.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushJScript.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushPerl.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushPhp.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushPlain.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushPowerShell.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushPython.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushRuby.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushSass.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushScala.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushSql.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushVb.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shBrushXml.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shCore.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\scripts\shLegacy.js" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shCore.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shCoreDefault.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shCoreDjango.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shCoreEclipse.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shCoreEmacs.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shCoreFadeToGrey.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shCoreMDUltra.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shCoreMidnight.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shCoreRDark.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shThemeDefault.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shThemeDjango.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shThemeEclipse.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shThemeEmacs.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shThemeFadeToGrey.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shThemeMDUltra.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shThemeMidnight.css" />
+    <Content Include="Scripts\coursepage\syntax-highlighter\styles\shThemeRDark.css" />
+    <Content Include="Scripts\dropzone\basic.min.css" />
+    <Content Include="Scripts\dropzone\dropzone-amd-module.min.js" />
+    <Content Include="Scripts\dropzone\dropzone.min.css" />
+    <Content Include="Scripts\dropzone\dropzone.min.js" />
+    <Content Include="Scripts\esm\popper-utils.js" />
+    <Content Include="Scripts\esm\popper-utils.min.js" />
+    <Content Include="Scripts\esm\popper.js" />
+    <Content Include="Scripts\esm\popper.min.js" />
+    <Content Include="Scripts\font-awesome\css\all.css" />
+    <Content Include="Scripts\font-awesome\css\all.min.css" />
+    <Content Include="Scripts\font-awesome\css\brands.css" />
+    <Content Include="Scripts\font-awesome\css\brands.min.css" />
+    <Content Include="Scripts\font-awesome\css\fontawesome.css" />
+    <Content Include="Scripts\font-awesome\css\fontawesome.min.css" />
+    <Content Include="Scripts\font-awesome\css\regular.css" />
+    <Content Include="Scripts\font-awesome\css\regular.min.css" />
+    <Content Include="Scripts\font-awesome\css\solid.css" />
+    <Content Include="Scripts\font-awesome\css\solid.min.css" />
+    <Content Include="Scripts\font-awesome\css\svg-with-js.css" />
+    <Content Include="Scripts\font-awesome\css\svg-with-js.min.css" />
+    <Content Include="Scripts\font-awesome\css\v4-shims.css" />
+    <Content Include="Scripts\font-awesome\css\v4-shims.min.css" />
+    <Content Include="Scripts\font-awesome\js\all.js" />
+    <Content Include="Scripts\font-awesome\js\all.min.js" />
+    <Content Include="Scripts\font-awesome\js\brands.js" />
+    <Content Include="Scripts\font-awesome\js\brands.min.js" />
+    <Content Include="Scripts\font-awesome\js\conflict-detection.js" />
+    <Content Include="Scripts\font-awesome\js\conflict-detection.min.js" />
+    <Content Include="Scripts\font-awesome\js\fontawesome.js" />
+    <Content Include="Scripts\font-awesome\js\fontawesome.min.js" />
+    <Content Include="Scripts\font-awesome\js\regular.js" />
+    <Content Include="Scripts\font-awesome\js\regular.min.js" />
+    <Content Include="Scripts\font-awesome\js\solid.js" />
+    <Content Include="Scripts\font-awesome\js\solid.min.js" />
+    <Content Include="Scripts\font-awesome\js\v4-shims.js" />
+    <Content Include="Scripts\font-awesome\js\v4-shims.min.js" />
+    <Content Include="Scripts\font-awesome\sprites\brands.svg" />
+    <Content Include="Scripts\font-awesome\sprites\regular.svg" />
+    <Content Include="Scripts\font-awesome\sprites\solid.svg" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-brands-400.svg" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-regular-400.svg" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-solid-900.svg" />
+    <Content Include="Scripts\bootstrap.min.js.map" />
+    <Content Include="Scripts\bootstrap.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.min.js.map" />
+    <Content Include="Scripts\bootstrap.bundle.js.map" />
+    <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Content\bootstrap.css.map" />
+    <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="Content\bootstrap-reboot.css.map" />
+    <Content Include="Content\bootstrap-grid.min.css.map" />
+    <Content Include="Content\bootstrap-grid.css.map" />
+    <None Include="Scripts\jquery-3.6.0.intellisense.js" />
+    <Content Include="Scripts\jquery-3.6.0.js" />
+    <Content Include="Scripts\jquery-3.6.0.min.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.js" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\knockout-3.5.1.debug.js" />
+    <Content Include="Scripts\knockout-3.5.1.js" />
+    <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\popper-utils.js" />
+    <Content Include="Scripts\popper-utils.min.js" />
+    <Content Include="Scripts\popper.js" />
+    <Content Include="Scripts\popper.min.js" />
+    <Content Include="Scripts\quizz\jquery.quiz-min.css" />
+    <Content Include="Scripts\quizz\jquery.quiz-min.js" />
+    <Content Include="Scripts\quizz\jquery.quiz.css" />
+    <Content Include="Scripts\quizz\jquery.quiz.js" />
+    <Content Include="Scripts\SCEditor\emoticons\alien.png" />
+    <Content Include="Scripts\SCEditor\emoticons\angel.png" />
+    <Content Include="Scripts\SCEditor\emoticons\angry.png" />
+    <Content Include="Scripts\SCEditor\emoticons\blink.png" />
+    <Content Include="Scripts\SCEditor\emoticons\blush.png" />
+    <Content Include="Scripts\SCEditor\emoticons\cheerful.png" />
+    <Content Include="Scripts\SCEditor\emoticons\cool.png" />
+    <Content Include="Scripts\SCEditor\emoticons\credits.txt" />
+    <Content Include="Scripts\SCEditor\emoticons\cwy.png" />
+    <Content Include="Scripts\SCEditor\emoticons\devil.png" />
+    <Content Include="Scripts\SCEditor\emoticons\dizzy.png" />
+    <Content Include="Scripts\SCEditor\emoticons\ermm.png" />
+    <Content Include="Scripts\SCEditor\emoticons\face.png" />
+    <Content Include="Scripts\SCEditor\emoticons\getlost.png" />
+    <Content Include="Scripts\SCEditor\emoticons\grin.png" />
+    <Content Include="Scripts\SCEditor\emoticons\happy.png" />
+    <Content Include="Scripts\SCEditor\emoticons\heart.png" />
+    <Content Include="Scripts\SCEditor\emoticons\kissing.png" />
+    <Content Include="Scripts\SCEditor\emoticons\laughing.png" />
+    <Content Include="Scripts\SCEditor\emoticons\ninja.png" />
+    <Content Include="Scripts\SCEditor\emoticons\pinch.png" />
+    <Content Include="Scripts\SCEditor\emoticons\pouty.png" />
+    <Content Include="Scripts\SCEditor\emoticons\sad.png" />
+    <Content Include="Scripts\SCEditor\emoticons\shocked.png" />
+    <Content Include="Scripts\SCEditor\emoticons\sick.png" />
+    <Content Include="Scripts\SCEditor\emoticons\sideways.png" />
+    <Content Include="Scripts\SCEditor\emoticons\silly.png" />
+    <Content Include="Scripts\SCEditor\emoticons\sleeping.png" />
+    <Content Include="Scripts\SCEditor\emoticons\smile.png" />
+    <Content Include="Scripts\SCEditor\emoticons\tongue.png" />
+    <Content Include="Scripts\SCEditor\emoticons\unsure.png" />
+    <Content Include="Scripts\SCEditor\emoticons\w00t.png" />
+    <Content Include="Scripts\SCEditor\emoticons\wassat.png" />
+    <Content Include="Scripts\SCEditor\emoticons\whistling.png" />
+    <Content Include="Scripts\SCEditor\emoticons\wink.png" />
+    <Content Include="Scripts\SCEditor\emoticons\wub.png" />
+    <Content Include="Scripts\SCEditor\formats\bbcode.js" />
+    <Content Include="Scripts\SCEditor\formats\xhtml.js" />
+    <Content Include="Scripts\SCEditor\icons\material.js" />
+    <Content Include="Scripts\SCEditor\icons\monocons.js" />
+    <Content Include="Scripts\SCEditor\jquery.sceditor.bbcode.min.js" />
+    <Content Include="Scripts\SCEditor\jquery.sceditor.min.js" />
+    <Content Include="Scripts\SCEditor\jquery.sceditor.xhtml.min.js" />
+    <Content Include="Scripts\SCEditor\plugins\autosave.js" />
+    <Content Include="Scripts\SCEditor\plugins\autoyoutube.js" />
+    <Content Include="Scripts\SCEditor\plugins\dragdrop.js" />
+    <Content Include="Scripts\SCEditor\plugins\format.js" />
+    <Content Include="Scripts\SCEditor\plugins\plaintext.js" />
+    <Content Include="Scripts\SCEditor\plugins\strictbbcode.js" />
+    <Content Include="Scripts\SCEditor\plugins\undo.js" />
+    <Content Include="Scripts\SCEditor\plugins\v1compat.js" />
+    <Content Include="Scripts\SCEditor\sceditor.min.js" />
+    <Content Include="Scripts\SCEditor\themes\content\default.min.css" />
+    <Content Include="Scripts\SCEditor\themes\default.min.css" />
+    <Content Include="Scripts\SCEditor\themes\defaultdark.min.css" />
+    <Content Include="Scripts\SCEditor\themes\famfamfam.png" />
+    <Content Include="Scripts\SCEditor\themes\modern.min.css" />
+    <Content Include="Scripts\SCEditor\themes\office-toolbar.min.css" />
+    <Content Include="Scripts\SCEditor\themes\office.min.css" />
+    <Content Include="Scripts\SCEditor\themes\square.min.css" />
+    <Content Include="Scripts\select2.js" />
+    <Content Include="Scripts\select2.min.js" />
+    <Content Include="Scripts\site\css\bootstrap.css" />
+    <Content Include="Scripts\site\css\breadcrumb.css" />
+    <Content Include="Scripts\site\css\font-awesome.min.css" />
+    <Content Include="Scripts\site\css\style.css" />
+    <Content Include="Scripts\site\js\bootstrap.min.js" />
+    <Content Include="Scripts\site\js\contact.js" />
+    <Content Include="Scripts\site\js\countdown.js" />
+    <Content Include="Scripts\site\js\gmaps.min.js" />
+    <Content Include="Scripts\site\js\jquery-3.2.1.min.js" />
+    <Content Include="Scripts\site\js\jquery.ajaxchimp.min.js" />
+    <Content Include="Scripts\site\js\jquery.form.js" />
+    <Content Include="Scripts\site\js\jquery.validate.min.js" />
+    <Content Include="Scripts\site\js\mail-script.js" />
+    <Content Include="Scripts\site\js\owl-carousel-thumb.min.js" />
+    <Content Include="Scripts\site\js\popper.js" />
+    <Content Include="Scripts\site\js\stellar.js" />
+    <Content Include="Scripts\site\js\theme.js" />
+    <Content Include="Scripts\site\vendors\animate-css\animate.css" />
+    <Content Include="Scripts\site\vendors\animate-css\wow.min.js" />
+    <Content Include="Scripts\site\vendors\bootstrap-datepicker\bootstrap-datetimepicker.min.css" />
+    <Content Include="Scripts\site\vendors\bootstrap-datepicker\bootstrap-datetimepicker.min.js" />
+    <Content Include="Scripts\site\vendors\bootstrap-datepicker\bootstrap-select.css" />
+    <Content Include="Scripts\site\vendors\bootstrap-datepicker\bootstrap-select.js" />
+    <Content Include="Scripts\site\vendors\counter-up\jquery.counterup.js" />
+    <Content Include="Scripts\site\vendors\counter-up\jquery.waypoints.min.js" />
+    <Content Include="Scripts\site\vendors\flipclock\timer.js" />
+    <Content Include="Scripts\site\vendors\isotope\imagesloaded.pkgd.min.js" />
+    <Content Include="Scripts\site\vendors\isotope\isotope-min.js" />
+    <Content Include="Scripts\site\vendors\jquery-ui\jquery-ui.css" />
+    <Content Include="Scripts\site\vendors\jquery-ui\jquery-ui.js" />
+    <Content Include="Scripts\site\vendors\lightbox\simpleLightbox.css" />
+    <Content Include="Scripts\site\vendors\lightbox\simpleLightbox.min.js" />
+    <Content Include="Scripts\site\vendors\linericon\fonts\Linearicons-Free.svg" />
+    <Content Include="Scripts\site\vendors\linericon\style.css" />
+    <Content Include="Scripts\site\vendors\nice-select\css\nice-select.css" />
+    <Content Include="Scripts\site\vendors\nice-select\css\style.css" />
+    <Content Include="Scripts\site\vendors\nice-select\js\jquery.nice-select.js" />
+    <Content Include="Scripts\site\vendors\nice-select\js\jquery.nice-select.min.js" />
+    <Content Include="Scripts\site\vendors\owl-carousel\assets\ajax-loader.gif" />
+    <Content Include="Scripts\site\vendors\owl-carousel\assets\animated.css" />
+    <Content Include="Scripts\site\vendors\owl-carousel\assets\owl.carousel.css" />
+    <Content Include="Scripts\site\vendors\owl-carousel\owl.carousel.min.css" />
+    <Content Include="Scripts\site\vendors\owl-carousel\owl.carousel.min.js" />
+    <Content Include="Scripts\src\index.js" />
+    <Content Include="Scripts\src\methods\defaults.js" />
+    <Content Include="Scripts\src\methods\destroy.js" />
+    <Content Include="Scripts\src\methods\disableEventListeners.js" />
+    <Content Include="Scripts\src\methods\enableEventListeners.js" />
+    <Content Include="Scripts\src\methods\placements.js" />
+    <Content Include="Scripts\src\methods\update.js" />
+    <Content Include="Scripts\src\modifiers\applyStyle.js" />
+    <Content Include="Scripts\src\modifiers\arrow.js" />
+    <Content Include="Scripts\src\modifiers\computeStyle.js" />
+    <Content Include="Scripts\src\modifiers\flip.js" />
+    <Content Include="Scripts\src\modifiers\hide.js" />
+    <Content Include="Scripts\src\modifiers\index.js" />
+    <Content Include="Scripts\src\modifiers\inner.js" />
+    <Content Include="Scripts\src\modifiers\keepTogether.js" />
+    <Content Include="Scripts\src\modifiers\offset.js" />
+    <Content Include="Scripts\src\modifiers\preventOverflow.js" />
+    <Content Include="Scripts\src\modifiers\shift.js" />
+    <Content Include="Scripts\src\utils\clockwise.js" />
+    <Content Include="Scripts\src\utils\computeAutoPlacement.js" />
+    <Content Include="Scripts\src\utils\debounce.js" />
+    <Content Include="Scripts\src\utils\find.js" />
+    <Content Include="Scripts\src\utils\findCommonOffsetParent.js" />
+    <Content Include="Scripts\src\utils\findIndex.js" />
+    <Content Include="Scripts\src\utils\getBordersSize.js" />
+    <Content Include="Scripts\src\utils\getBoundaries.js" />
+    <Content Include="Scripts\src\utils\getBoundingClientRect.js" />
+    <Content Include="Scripts\src\utils\getClientRect.js" />
+    <Content Include="Scripts\src\utils\getFixedPositionOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetParent.js" />
+    <Content Include="Scripts\src\utils\getOffsetRect.js" />
+    <Content Include="Scripts\src\utils\getOffsetRectRelativeToArbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getOppositePlacement.js" />
+    <Content Include="Scripts\src\utils\getOppositeVariation.js" />
+    <Content Include="Scripts\src\utils\getOuterSizes.js" />
+    <Content Include="Scripts\src\utils\getParentNode.js" />
+    <Content Include="Scripts\src\utils\getPopperOffsets.js" />
+    <Content Include="Scripts\src\utils\getReferenceNode.js" />
+    <Content Include="Scripts\src\utils\getReferenceOffsets.js" />
+    <Content Include="Scripts\src\utils\getRoot.js" />
+    <Content Include="Scripts\src\utils\getRoundedOffsets.js" />
+    <Content Include="Scripts\src\utils\getScroll.js" />
+    <Content Include="Scripts\src\utils\getScrollParent.js" />
+    <Content Include="Scripts\src\utils\getStyleComputedProperty.js" />
+    <Content Include="Scripts\src\utils\getSupportedPropertyName.js" />
+    <Content Include="Scripts\src\utils\getViewportOffsetRectRelativeToArtbitraryNode.js" />
+    <Content Include="Scripts\src\utils\getWindow.js" />
+    <Content Include="Scripts\src\utils\getWindowSizes.js" />
+    <Content Include="Scripts\src\utils\includeScroll.js" />
+    <Content Include="Scripts\src\utils\index.js" />
+    <Content Include="Scripts\src\utils\isBrowser.js" />
+    <Content Include="Scripts\src\utils\isFixed.js" />
+    <Content Include="Scripts\src\utils\isFunction.js" />
+    <Content Include="Scripts\src\utils\isIE.js" />
+    <Content Include="Scripts\src\utils\isModifierEnabled.js" />
+    <Content Include="Scripts\src\utils\isModifierRequired.js" />
+    <Content Include="Scripts\src\utils\isNumeric.js" />
+    <Content Include="Scripts\src\utils\isOffsetContainer.js" />
+    <Content Include="Scripts\src\utils\removeEventListeners.js" />
+    <Content Include="Scripts\src\utils\runModifiers.js" />
+    <Content Include="Scripts\src\utils\setAttributes.js" />
+    <Content Include="Scripts\src\utils\setStyles.js" />
+    <Content Include="Scripts\src\utils\setupEventListeners.js" />
+    <Content Include="Scripts\summernote\js\summernote.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ar-AR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ar-AR.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ar-AR.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-az-AZ.js" />
+    <Content Include="Scripts\summernote\lang\summernote-az-AZ.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-az-AZ.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-bg-BG.js" />
+    <Content Include="Scripts\summernote\lang\summernote-bg-BG.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-bg-BG.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-ca-ES.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ca-ES.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ca-ES.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-cs-CZ.js" />
+    <Content Include="Scripts\summernote\lang\summernote-cs-CZ.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-cs-CZ.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-da-DK.js" />
+    <Content Include="Scripts\summernote\lang\summernote-da-DK.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-da-DK.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-de-DE.js" />
+    <Content Include="Scripts\summernote\lang\summernote-de-DE.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-de-DE.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-el-GR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-el-GR.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-el-GR.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-es-ES.js" />
+    <Content Include="Scripts\summernote\lang\summernote-es-ES.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-es-ES.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-es-EU.js" />
+    <Content Include="Scripts\summernote\lang\summernote-es-EU.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-es-EU.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-fa-IR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-fa-IR.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-fa-IR.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-fi-FI.js" />
+    <Content Include="Scripts\summernote\lang\summernote-fi-FI.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-fi-FI.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-fr-FR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-fr-FR.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-fr-FR.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-gl-ES.js" />
+    <Content Include="Scripts\summernote\lang\summernote-gl-ES.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-gl-ES.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-he-IL.js" />
+    <Content Include="Scripts\summernote\lang\summernote-he-IL.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-he-IL.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-hr-HR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-hr-HR.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-hr-HR.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-hu-HU.js" />
+    <Content Include="Scripts\summernote\lang\summernote-hu-HU.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-hu-HU.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-id-ID.js" />
+    <Content Include="Scripts\summernote\lang\summernote-id-ID.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-id-ID.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-it-IT.js" />
+    <Content Include="Scripts\summernote\lang\summernote-it-IT.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-it-IT.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-ja-JP.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ja-JP.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ja-JP.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-ko-KR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ko-KR.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ko-KR.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-lt-LT.js" />
+    <Content Include="Scripts\summernote\lang\summernote-lt-LT.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-lt-LT.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-lt-LV.js" />
+    <Content Include="Scripts\summernote\lang\summernote-lt-LV.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-lt-LV.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-mn-MN.js" />
+    <Content Include="Scripts\summernote\lang\summernote-mn-MN.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-mn-MN.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-nb-NO.js" />
+    <Content Include="Scripts\summernote\lang\summernote-nb-NO.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-nb-NO.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-nl-NL.js" />
+    <Content Include="Scripts\summernote\lang\summernote-nl-NL.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-nl-NL.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-pl-PL.js" />
+    <Content Include="Scripts\summernote\lang\summernote-pl-PL.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-pl-PL.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-pt-BR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-pt-BR.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-pt-BR.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-pt-PT.js" />
+    <Content Include="Scripts\summernote\lang\summernote-pt-PT.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-pt-PT.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-ro-RO.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ro-RO.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ro-RO.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-ru-RU.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ru-RU.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ru-RU.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-sk-SK.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sk-SK.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sk-SK.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-sl-SI.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sl-SI.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sl-SI.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-sr-RS-Latin.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sr-RS-Latin.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sr-RS-Latin.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-sr-RS.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sr-RS.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sr-RS.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-sv-SE.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sv-SE.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-sv-SE.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-ta-IN.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ta-IN.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-ta-IN.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-th-TH.js" />
+    <Content Include="Scripts\summernote\lang\summernote-th-TH.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-th-TH.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-tr-TR.js" />
+    <Content Include="Scripts\summernote\lang\summernote-tr-TR.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-tr-TR.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-uk-UA.js" />
+    <Content Include="Scripts\summernote\lang\summernote-uk-UA.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-uk-UA.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-uz-UZ.js" />
+    <Content Include="Scripts\summernote\lang\summernote-uz-UZ.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-uz-UZ.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-vi-VN.js" />
+    <Content Include="Scripts\summernote\lang\summernote-vi-VN.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-vi-VN.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-zh-CN.js" />
+    <Content Include="Scripts\summernote\lang\summernote-zh-CN.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-zh-CN.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\lang\summernote-zh-TW.js" />
+    <Content Include="Scripts\summernote\lang\summernote-zh-TW.min.js" />
+    <Content Include="Scripts\summernote\lang\summernote-zh-TW.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\plugin\databasic\summernote-ext-databasic.css" />
+    <Content Include="Scripts\summernote\plugin\databasic\summernote-ext-databasic.js" />
+    <Content Include="Scripts\summernote\plugin\hello\summernote-ext-hello.js" />
+    <Content Include="Scripts\summernote\plugin\specialchars\summernote-ext-specialchars.js" />
+    <Content Include="Scripts\summernote\summernote-bs4.css" />
+    <Content Include="Scripts\summernote\summernote-bs4.js" />
+    <Content Include="Scripts\summernote\summernote-bs4.min.css" />
+    <Content Include="Scripts\summernote\summernote-bs4.min.js" />
+    <Content Include="Scripts\summernote\summernote-bs4.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\summernote-init.js" />
+    <Content Include="Scripts\summernote\summernote-lite.css" />
+    <Content Include="Scripts\summernote\summernote-lite.js" />
+    <Content Include="Scripts\summernote\summernote-lite.min.css" />
+    <Content Include="Scripts\summernote\summernote-lite.min.js" />
+    <Content Include="Scripts\summernote\summernote-lite.min.js.LICENSE.txt" />
+    <Content Include="Scripts\summernote\summernote.css" />
+    <Content Include="Scripts\summernote\summernote.js" />
+    <Content Include="Scripts\summernote\summernote.min.css" />
+    <Content Include="Scripts\summernote\summernote.min.js" />
+    <Content Include="Scripts\summernote\summernote.min.js.LICENSE.txt" />
+    <Content Include="Scripts\umd\popper-utils.js" />
+    <Content Include="Scripts\umd\popper-utils.min.js" />
+    <Content Include="Scripts\umd\popper.js" />
+    <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Web.config" />
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
+    <Content Include="Views\Account\ConfirmEmail.cshtml" />
+    <Content Include="Views\Account\ExternalLoginConfirmation.cshtml" />
+    <Content Include="Views\Account\ExternalLoginFailure.cshtml" />
+    <Content Include="Views\Account\ForgotPassword.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\SendCode.cshtml" />
+    <Content Include="Views\Account\VerifyCode.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LayoutPartial.cshtml" />
+    <Content Include="Views\Continents\Add.cshtml" />
+    <Content Include="Views\Continents\Details.cshtml" />
+    <Content Include="Views\Continents\Edit.cshtml" />
+    <Content Include="Views\Continents\Index.cshtml" />
+    <Content Include="Views\Countries\Add.cshtml" />
+    <Content Include="Views\Countries\Details.cshtml" />
+    <Content Include="Views\Countries\Edit.cshtml" />
+    <Content Include="Views\Countries\Index.cshtml" />
+    <Content Include="Views\Districts\Add.cshtml" />
+    <Content Include="Views\Districts\Details.cshtml" />
+    <Content Include="Views\Districts\Edit.cshtml" />
+    <Content Include="Views\Provinces\Add.cshtml" />
+    <Content Include="Views\Provinces\Details.cshtml" />
+    <Content Include="Views\Provinces\Edit.cshtml" />
+    <Content Include="Views\Regions\Add.cshtml" />
+    <Content Include="Views\Regions\Details.cshtml" />
+    <Content Include="Views\Regions\Edit.cshtml" />
+    <Content Include="Views\Regions\Index.cshtml" />
+    <Content Include="Views\Wards\Add.cshtml" />
+    <Content Include="Views\Wards\Details.cshtml" />
+    <Content Include="Views\Wards\Edit.cshtml" />
+    <Content Include="Views\Emails\Add.cshtml" />
+    <Content Include="Views\Emails\Details.cshtml" />
+    <Content Include="Views\Emails\Edit.cshtml" />
+    <Content Include="Views\Emails\Index.cshtml" />
+    <Content Include="Views\Emails\Test.cshtml" />
+    <Content Include="Views\Farmers\Add.cshtml" />
+    <Content Include="Views\Farmers\Details.cshtml" />
+    <Content Include="Views\Farmers\Edit.cshtml" />
+    <Content Include="Views\Farmers\Index.cshtml" />
+    <Content Include="Views\Farmers\Insights.cshtml" />
+    <Content Include="Views\Farmers\_Sidebar.cshtml" />
+    <Content Include="Views\Courses\Add.cshtml" />
+    <Content Include="Views\Courses\Details.cshtml" />
+    <Content Include="Views\Courses\Edit.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Departments\Add.cshtml" />
+    <Content Include="Views\Departments\Delete.cshtml" />
+    <Content Include="Views\Departments\Details.cshtml" />
+    <Content Include="Views\Departments\Edit.cshtml" />
+    <Content Include="Views\Departments\Index.cshtml" />
+    <Content Include="Views\Attachments\Add.cshtml" />
+    <Content Include="Views\Attachments\Details.cshtml" />
+    <Content Include="Views\Attachments\Edit.cshtml" />
+    <Content Include="Views\Attachments\Index.cshtml" />
+    <Content Include="Views\Questions\Add.cshtml" />
+    <Content Include="Views\Questions\Details.cshtml" />
+    <Content Include="Views\Questions\Edit.cshtml" />
+    <Content Include="Views\Examinations\Add.cshtml" />
+    <Content Include="Views\Examinations\AddAttachment.cshtml" />
+    <Content Include="Views\Examinations\Details.cshtml" />
+    <Content Include="Views\Examinations\Edit.cshtml" />
+    <Content Include="Views\Examinations\Index.cshtml" />
+    <Content Include="Views\ValueChains\Add.cshtml" />
+    <Content Include="Views\ValueChains\Details.cshtml" />
+    <Content Include="Views\ValueChains\Edit.cshtml" />
+    <Content Include="Views\ValueChains\Index.cshtml" />
+    <Content Include="Views\Modules\Add.cshtml" />
+    <Content Include="Views\Modules\Delete.cshtml" />
+    <Content Include="Views\Modules\Details.cshtml" />
+    <Content Include="Views\Modules\Edit.cshtml" />
+    <Content Include="Views\Modules\Index.cshtml" />
+    <Content Include="Views\Currencies\Add.cshtml" />
+    <Content Include="Views\Currencies\Details.cshtml" />
+    <Content Include="Views\Currencies\Edit.cshtml" />
+    <Content Include="Views\Currencies\Index.cshtml" />
+    <Content Include="Views\PaymentMethods\Add.cshtml" />
+    <Content Include="Views\PaymentMethods\Details.cshtml" />
+    <Content Include="Views\PaymentMethods\Edit.cshtml" />
+    <Content Include="Views\PaymentMethods\Index.cshtml" />
+    <Content Include="Views\UserExaminations\Attempt.cshtml" />
+    <Content Include="Views\UserExaminations\Results.cshtml" />
+    <Content Include="Views\Examinations\Instructions.cshtml" />
+    <Content Include="Views\ExaminationPrices\Add.cshtml" />
+    <Content Include="Views\ExaminationPrices\Details.cshtml" />
+    <Content Include="Views\ExaminationPrices\Edit.cshtml" />
+    <Content Include="Views\ExaminationPrices\Index.cshtml" />
+    <Content Include="Views\ExchangeRates\Add.cshtml" />
+    <Content Include="Views\ExchangeRates\Details.cshtml" />
+    <Content Include="Views\ExchangeRates\Index.cshtml" />
+    <Content Include="Views\Payments\Success.cshtml" />
+    <Content Include="Views\Users\Add.cshtml" />
+    <Content Include="Views\Users\Details.cshtml" />
+    <Content Include="Views\Users\Edit.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\Reset.cshtml" />
+    <Content Include="Views\Users\ResetDone.cshtml" />
+    <Content Include="Views\Districts\Index.cshtml" />
+    <Content Include="Views\Countries\_Sidebar.cshtml" />
+    <Content Include="Views\Provinces\Index.cshtml" />
+    <Content Include="Views\Answers\Edit.cshtml" />
+    <Content Include="Views\Sections\Add.cshtml" />
+    <Content Include="Views\Sections\Delete.cshtml" />
+    <Content Include="Views\Sections\Details.cshtml" />
+    <Content Include="Views\Sections\Edit.cshtml" />
+    <Content Include="Views\Sections\Index.cshtml" />
+    <Content Include="Views\Branches\Add.cshtml" />
+    <Content Include="Views\Branches\Delete.cshtml" />
+    <Content Include="Views\Branches\Details.cshtml" />
+    <Content Include="Views\Branches\Edit.cshtml" />
+    <Content Include="Views\Branches\Index.cshtml" />
+    <Content Include="Views\Departments\_Sidebar.cshtml" />
+    <Content Include="Views\Branches\_Sidebar.cshtml" />
+    <Content Include="Views\CropCategories\Add.cshtml" />
+    <Content Include="Views\CropCategories\Details.cshtml" />
+    <Content Include="Views\CropCategories\Edit.cshtml" />
+    <Content Include="Views\CropCategories\Index.cshtml" />
+    <Content Include="Views\Crops\Add.cshtml" />
+    <Content Include="Views\Crops\Details.cshtml" />
+    <Content Include="Views\Crops\Edit.cshtml" />
+    <Content Include="Views\Crops\Index.cshtml" />
+    <Content Include="Views\LivestockCategories\Add.cshtml" />
+    <Content Include="Views\LivestockCategories\Details.cshtml" />
+    <Content Include="Views\LivestockCategories\Edit.cshtml" />
+    <Content Include="Views\LivestockCategories\Index.cshtml" />
+    <Content Include="Views\Livestocks\Add.cshtml" />
+    <Content Include="Views\Livestocks\Details.cshtml" />
+    <Content Include="Views\Livestocks\Edit.cshtml" />
+    <Content Include="Views\Livestocks\Index.cshtml" />
+    <Content Include="Views\Payments\Index.cshtml" />
+    <Content Include="Views\Payments\Add.cshtml" />
+    <Content Include="Views\Payments\Details.cshtml" />
+    <Content Include="Views\Payments\Edit.cshtml" />
+    <Content Include="Views\Instructions\Details.cshtml" />
+    <Content Include="Views\Instructions\Edit.cshtml" />
+    <Content Include="Views\Instructions\Add.cshtml" />
+    <Content Include="Views\Instructions\Index.cshtml" />
+    <Content Include="Views\Examinations\Delete.cshtml" />
+    <Content Include="Views\Articles\Add.cshtml" />
+    <Content Include="Views\Articles\Index.cshtml" />
+    <Content Include="Views\Articles\Details.cshtml" />
+    <Content Include="Views\Shared\_SiteLayoutPartial.cshtml" />
+    <Content Include="Views\Shared\_SiteLayout.cshtml" />
+    <Content Include="Views\Home\Article.cshtml" />
+    <Content Include="Views\Home\Course.cshtml" />
+    <Content Include="Views\Home\_Course_Leftbar.cshtml" />
+    <Content Include="Views\NonValueChains\Add.cshtml" />
+    <Content Include="Views\NonValueChains\Details.cshtml" />
+    <Content Include="Views\NonValueChains\Edit.cshtml" />
+    <Content Include="Views\NonValueChains\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout_Course.cshtml" />
+    <Content Include="Views\Courses\_Sidebar.cshtml" />
+    <Content Include="Views\Modules\AddAttachment.cshtml" />
+    <Content Include="Views\Articles\Edit.cshtml" />
+    <Content Include="Views\CoursePrices\Add.cshtml" />
+    <Content Include="Views\CoursePrices\Details.cshtml" />
+    <Content Include="Views\CoursePrices\Edit.cshtml" />
+    <Content Include="Views\CoursePrices\Index.cshtml" />
+    <Content Include="Views\Courses\EditGlossary.cshtml" />
+    <Content Include="Views\Home\Branch.cshtml" />
+    <Content Include="Views\Courses\AddAttachment.cshtml" />
+    <Content Include="Views\Home\Courses.cshtml" />
+    <Content Include="Views\Home\ValueChains.cshtml" />
+    <Content Include="Views\Branches\AddIcon.cshtml" />
+    <Content Include="Views\Crops\AddIcon.cshtml" />
+    <Content Include="Views\Livestocks\AddIcon.cshtml" />
+    <Content Include="Views\CropCategories\AddIcon.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <Content Include="Scripts\coursepage\fonts\fontawesome-webfont.eot" />
+    <Content Include="Scripts\coursepage\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Scripts\coursepage\fonts\fontawesome-webfont.woff" />
+    <Content Include="Scripts\coursepage\fonts\FontAwesome.otf" />
+    <Content Include="Scripts\coursepage\fonts\_DS_Store" />
+    <Content Include="Scripts\esm\popper-utils.js.map" />
+    <Content Include="Scripts\esm\popper-utils.min.js.map" />
+    <Content Include="Scripts\esm\popper.js.map" />
+    <Content Include="Scripts\esm\popper.min.js.map" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-brands-400.eot" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-brands-400.ttf" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-brands-400.woff" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-brands-400.woff2" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-regular-400.eot" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-regular-400.ttf" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-regular-400.woff" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-regular-400.woff2" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-solid-900.eot" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-solid-900.ttf" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-solid-900.woff" />
+    <Content Include="Scripts\font-awesome\webfonts\fa-solid-900.woff2" />
+    <Content Include="Scripts\index.js.flow" />
+    <Content Include="Scripts\popper-utils.js.map" />
+    <Content Include="Scripts\popper-utils.min.js.map" />
+    <Content Include="Scripts\popper.js.map" />
+    <Content Include="Scripts\popper.min.js.map" />
+    <Content Include="Scripts\README.md" />
+    <Content Include="Scripts\site\css\.DS_Store" />
+    <Content Include="Scripts\site\css\style.css.map" />
+    <Content Include="Scripts\site\vendors\linericon\fonts\Linearicons-Free.eot" />
+    <Content Include="Scripts\site\vendors\linericon\fonts\Linearicons-Free.ttf" />
+    <Content Include="Scripts\site\vendors\linericon\fonts\Linearicons-Free.woff" />
+    <Content Include="Scripts\site\vendors\linericon\fonts\Linearicons-Free.woff2" />
+    <Content Include="Scripts\summernote\font\summernote.eot" />
+    <Content Include="Scripts\summernote\font\summernote.ttf" />
+    <Content Include="Scripts\summernote\font\summernote.woff" />
+    <Content Include="Scripts\summernote\font\summernote.woff2" />
+    <Content Include="Scripts\summernote\summernote-bs4.js.map" />
+    <Content Include="Scripts\summernote\summernote-bs4.min.js.map" />
+    <Content Include="Scripts\summernote\summernote-lite.js.map" />
+    <Content Include="Scripts\summernote\summernote-lite.min.js.map" />
+    <Content Include="Scripts\summernote\summernote.js.map" />
+    <Content Include="Scripts\summernote\summernote.min.js.map" />
+    <Content Include="Scripts\umd\popper-utils.js.map" />
+    <Content Include="Scripts\umd\popper-utils.min.js.map" />
+    <Content Include="Scripts\umd\popper.js.flow" />
+    <Content Include="Scripts\umd\popper.js.map" />
+    <Content Include="Scripts\umd\popper.min.js.map" />
+    <Content Include="Views\Courses\AddIcon.cshtml" />
+    <Content Include="Views\Modules\AddIcon.cshtml" />
+    <Content Include="Views\LivestockCategories\AddIcon.cshtml" />
+    <Content Include="Views\Notices\Add.cshtml" />
+    <Content Include="Views\Notices\Details.cshtml" />
+    <Content Include="Views\Notices\Edit.cshtml" />
+    <Content Include="Views\Notices\Index.cshtml" />
+    <Content Include="Views\Articles\AddAttachment.cshtml" />
+    <Content Include="Views\ExtensionOfficers\_Sidebar.cshtml" />
+    <Content Include="Views\ExtensionOfficers\Add.cshtml" />
+    <Content Include="Views\ExtensionOfficers\Details.cshtml" />
+    <Content Include="Views\ExtensionOfficers\Edit.cshtml" />
+    <Content Include="Views\ExtensionOfficers\Index.cshtml" />
+    <Content Include="Views\ExtensionOfficers\Insights.cshtml" />
+    <Content Include="Views\ExtensionOfficers\Upload.cshtml" />
+    <Content Include="Views\Notices\AddAttachment.cshtml" />
+    <Content Include="Scripts\jquery-3.6.0.slim.min.map" />
+    <Content Include="Scripts\jquery-3.6.0.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InService.Data\InService.Data.csproj">
+      <Project>{7BB8F331-9486-4998-B71E-D3AA94B19F7C}</Project>
+      <Name>InService.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InService.Lib\InService.Lib.csproj">
+      <Project>{1FD4FCB2-C654-421D-B65D-8CD179B4D1E0}</Project>
+      <Name>InService.Lib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>6420</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost/InService/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

@@ -1,0 +1,5 @@
+﻿@model Branch
+<div class="list-group-flush list-group mt-3" style="width:100%">
+    <a href="@Url.Index("ValueChains",new { BranchID=Model.ID})" class="list-group-item list-group-item-light justify-content-between d-flex align-items-center"><div>Value chains</div><span class="badge badge-danger">@Model.ValueChains.Count()</span></a>
+    <a href="@Url.Index("CropCategories",new { BranchID=Model.ID})" class="list-group-item list-group-item-light justify-content-between d-flex align-items-center"><div>Crop categories</div><span class="badge badge-danger">@Model.CropCategories.Count()</span></a>
+</div>

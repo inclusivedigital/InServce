@@ -1,0 +1,94 @@
+﻿@model User
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i> Users</a></div>
+        <div class="nav-item"><a class="nav-link " href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new..</a></div>
+    </div>
+}
+<h3 class="font-weight-light">Add user</h3>
+<div class="row">
+    <div class="col-md-9">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            <div class="card border-primary">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group row">
+                                <label class="col-md-4">Full name</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control", required = "" })
+                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">User name</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.LoginID, new { @class = "form-control", required = "" })
+                                    @Html.ValidationMessageFor(model => model.LoginID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Email</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Mobile</label>
+                                <div class="col-md-8">
+                                    @Html.TextBoxFor(model => model.Mobile, new { @class = "form-control" })
+                                    @Html.ValidationMessageFor(model => model.Mobile, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Role</label>
+                                <div class="col-md-8">
+                                    @Html.EnumDropDownListFor(m => m.Role, "Select", new { @class = "form-control options", required = "" })
+                                    @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-md-4">Country</label>
+                                <div class="col-md-8">
+                                    @Html.DropDownListFor(c => c.CountryID, (SelectList)ViewBag.Countries, "Select", new { @class = "form-control options" })
+                                    @Html.ValidationMessageFor(model => model.CountryID, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-check float-right">
+                                <input class="form-check-input" type="checkbox" id="chkAll" name="chkAll" onclick="toggleCheckBoxes(this)" />
+                                <label class="form-check-label" for="chkAll">All</label>
+                            </div>
+                            <h5>Access rights</h5>
+                            <hr />
+                            @foreach (AccessRight item in Enum.GetValues(typeof(AccessRight)))
+                            {
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="Rights" value="@((int)item)" id="@((int)item)">
+                                    <label class="form-check-label" for="@((int)item)">@item.ToEnumString()</label>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-primary">Submit <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#chkAll").click(function () {
+                $("input:checkbox:not(#chkAll)").attr("checked", $(this).is(":checked"));
+            });
+        });
+    </script>
+}

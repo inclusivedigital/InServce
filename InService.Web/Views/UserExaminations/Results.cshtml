@@ -1,0 +1,127 @@
+﻿@model UserExamination
+@{
+    int count = 1;
+}
+@section subnav{
+    <div class="navbar-nav">
+        @if (Request.IsAuthenticated)
+        {
+            <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Details("Examinations",new { Model.Examination.ID})"><i class="mdi mdi-chevron-double-left"></i>@Model.Examination.Topic</a></div>
+            <div class="nav-item"><a class="nav-link " href="@Url.Action("Results",new { Model.ID})">@Model.User.Name</a></div>
+        }
+        else
+        {
+            <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Details("Users",new { Model.User.ID})"><i class="mdi mdi-chevron-double-left"></i>Home</a></div>
+        }
+    </div>
+}
+<ul class="list-group list-group-flush bg-light px-0">
+    <li class="list-group-item bg-light">
+        <a id="myid" class="h5 text-info bg-light font-weight-light" data-toggle="collapse" href="#collapsef" role="button" aria-expanded="true" aria-controls="collapseExample">
+            <i class="mdi mdi-file-document-box"></i> Results
+        </a>
+        <div class="pr-0 collapse mb-2" id="collapsef" data-parent="#myid">
+            <div class="list-group mt-2 text-left list-group-flush">
+                <div class="form-group">
+                    <label class="font-weight-bold mb-0 text-muted">Farmer</label>
+                    <div>@Model.User.Name</div>
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold mb-0 text-muted">Start time</label>
+                    <div>@Model.StartTime.ToString("HH:mm") <small>@Model.StartTime.ToString("dd MMM yyy")</small></div>
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold mb-0 text-muted">Finish time</label>
+                    <div>@Model.CreationDate.ToString("HH:mm") <small>@Model.CreationDate.ToString("dd MMM yyy")</small></div>
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold mb-0 text-muted">Time taken</label>
+                    <div>
+                        @if ((Model.CreationDate - Model.StartTime).Hours > 0)
+                        {
+                            @((Model.CreationDate - Model.StartTime).Hours) <small> hours</small>
+                        }
+                        @if ((Model.CreationDate - Model.StartTime).Minutes > 0)
+                        {
+                            @((Model.CreationDate - Model.StartTime).Minutes)<small> minutes</small>
+                        }
+                        @if ((Model.CreationDate - Model.StartTime).Seconds > 0)
+                        {
+                            @((Model.CreationDate - Model.StartTime).Seconds)<small> seconds</small>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>
+@if (Model.UserExaminationDetails.Any())
+{
+    if (Request.IsAuthenticated)
+    {
+        <div>
+            <label>Score:  @Model.UserExaminationDetails.Where(c => c.AnswerID.HasValue && c.Answer.IsCorrect).Select(c => c.Question.Score).Sum() out of @Model.Examination.Questions.Select(c=>c.Score).DefaultIfEmpty(0).Sum().ToString("0") </label>
+        </div>
+    }
+    else
+    {
+        <h4 class="font-weight-light">My score is @Model.UserExaminationDetails.Where(c => c.AnswerID.HasValue && c.Answer.IsCorrect).Select(c => c.Question.Score).Sum() out of @Model.Examination.Questions.Select(c=>c.Score).DefaultIfEmpty(0).Sum().ToString("0")</h4>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            @foreach (var i in Model.UserExaminationDetails)
+            {
+                <div class="card shadow mt-1">
+                    <div class="card-header form-inline">
+                        <span class="badge"><a class="text-success" href="@Url.Action("Details", "Questions", new { i.Question.ID })">Question @count</a></span>
+                        <small class="ml-auto">[@i.Question.Score]</small>
+                    </div>
+                    <div class="card-body">
+                        @Html.Raw(i.Question.Name)
+                        <h4>Answers</h4>
+                        <hr class="bg-success" />
+                        <table class="table table-sm table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Answer</th>
+                                    <th>State</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="lead">
+                                        @if (i.AnswerID.HasValue)
+                                        {
+                                            @Html.Raw(i.Answer.Name)
+                                        }
+                                    </td>
+                                    <td>
+                                        @if (i.AnswerID.HasValue)
+                                        {
+                                            if (i.Answer.IsCorrect)
+                                            {
+                                                <i class="mdi mdi-check-all text-success mdi-48px"></i>
+                                            }
+                                            else
+                                            {
+                                                <i class="mdi mdi-close text-danger mdi-48px"></i>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <i class="mdi mdi-flask-empty-outline mdi-48px"></i>
+                                        }
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                count++;
+
+            }
+
+        </div>
+    </div>
+}
+

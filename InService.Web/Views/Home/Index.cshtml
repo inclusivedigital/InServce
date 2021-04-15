@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron mt-0 text-center">
+    <h1>IN SERVICE TRAINING PLATFORM</h1>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 col-sm-6 mb-3 text-center">
+        <a href="@Url.Index("ExtensionOfficers")" class="btn btn-light border-success" style="width:100%; height:8em">
+            <h5><i class="fa fa-users text-success"></i> Extension officers</h5>
+            <div class="text-muted small">@(((IEnumerable<ExtensionOfficer>)ViewBag.officers).Count())</div>
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3 text-center">
+        <a href="@Url.Index("Farmers")" class="btn btn-light border-success" style="width:100%; height:8em">
+            <h5><i class="fa fa-users text-success"></i> Farmers</h5>
+            <div class="text-muted small">@(((IEnumerable<Farmer>)ViewBag.farmer).Count())</div>
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3 text-center">
+        <a href="@Url.Index("Courses")" class="btn btn-light border-success" style="width:100%; height:8em">
+            <h5><i class="fa fa-book-open"></i> Courses</h5>
+            <div class="text-muted small">@(((IEnumerable<Course>)ViewBag.courses).Count())</div>
+        </a>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3 text-center">
+        <a href="@Url.Index("Examinations")" class="btn btn-light border-success" style="width:100%; height:8em">
+            <h5><i class="fa fa-book-reader"></i> Examinations</h5>
+            <div class="text-muted small">@(((IEnumerable<Examination>)ViewBag.examinations).Count())</div>
+        </a>
+    </div>
+</div>
+

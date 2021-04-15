@@ -1,0 +1,39 @@
+﻿@model Attachment
+@section subnav{
+    <div class="navbar-nav mr-auto">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Attachments</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("Download",new { Model.ID})"><i class="mdi mdi-download"></i> Download..</a></div>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-7">
+        <h3 class="font-weight-light">Attachment details </h3>
+        <div class="card shadow">
+            <div class="card-body">
+                @if (!string.IsNullOrWhiteSpace(Model.Name))
+                {
+                    <div class="form-group">
+                        <label class="text-muted mb-0 h5">Name</label>
+                        <div>@Model.Name</div>
+                    </div>
+                }
+                @if (!String.IsNullOrEmpty(Model.Description))
+                {
+                    <div class="form-group">
+                        <label class="text-muted mb-0 h5">Description</label>
+                        <div>@Html.Raw(Model.Description)</div>
+                    </div>
+                }
+                <div class="form-group">
+                    <label class="text-muted mb-0 h5">Size</label>
+                    <h5> @(((Model.Size / 1024f) / 1024f).ToString("0.00"))MB</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

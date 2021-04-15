@@ -1,0 +1,404 @@
+﻿@model Examination
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i>Examinations</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Details()">@(Model.Module?.Name??Model.Topic)</a></div>
+        @if (User.Identity.IsAuthenticated)
+        {
+            if (Model.TimeToClose.TotalSeconds > 0)
+            {
+                if (!User.IsInRole(nameof(UserRole.FARMER)))
+                {
+                    <div class="nav-item"><a class="nav-link" href="@Url.Add("Questions", new { Model.ID })"><i class="mdi mdi-plus"></i>Add question...</a></div>
+                    <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+                    <div class="nav-item"><a class="nav-link" href="@Url.Delete()"><i class="mdi mdi-delete text-danger"></i> Delete</a></div>
+                }
+            }
+        }
+    </div>
+}
+@{
+    int count = 1;
+    var Currencies = (IEnumerable<Currency>)ViewBag.currencies;
+    var paymentMethods = (IEnumerable<PaymentMethod>)ViewBag.paymentmethods;
+    var ExchangeRates = ((IEnumerable<ExchangeRate>)ViewBag.ExchngeRates).OrderByDescending(c => c.CreationDate);
+    var defaultPrice = Model.ExaminationPrices.OrderByDescending(c => c.CreationDate).FirstOrDefault(c => c.Currency.IsDefault);
+}
+
+@if (Model.Flags.HasFlag(ExaminationFlags.PREMIUM_EXAMINATION))
+{
+    if (!Model.ExaminationPrices.Any())
+    {
+        <div class="alert alert-danger alert-dismissible mt-4" role="alert">
+            <h4 class="alert-heading">Attention!</h4>
+            <p>The examination does not have a price. <a class="btn btn-sm btn-outline-dark" href="@Url.Add("ExaminationPrices",new { Model.ID})"><i class="mdi mdi-plus"></i> Add price</a> </p>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    }
+}
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="alert @(Model.TimeToClose.TotalSeconds>0?"alert-info":"alert-danger")  alert-dismissible mt-4" role="alert">
+            <h4 class="alert-heading">Warning <i class="mdi mdi-information text-success"></i></h4>
+            @if (Model.TimeToClose.TotalSeconds > 0)
+            {
+                <p class="mb-0">@Model.Type.ToEnumString() will be removed in:</p>
+                <p id="timer" class="mb-0 font-weight-bold text-black-50"></p>
+            }
+            else
+            {
+                <p class="mb-0">Its no longer available to students</p>
+            }
+            <button type="button" class="close text-danger" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+</div>
+@if (Model.IsInProgress)
+{
+    <h6 class="font-weight-light text-danger">Now in progress...<i class="mdi mdi-pencil"></i></h6>
+}
+
+
+<div class="card card-border shadow mb-3">
+    <div class="card-header border-0 rounded">
+        <ul class="nav nav-tabs card-header-tabs" role="tablist" id="tabList">
+            <li class="nav-item"><a class="nav-link active" href="#Details" data-toggle="tab">Details</a></li>
+            <li class="nav-item"><a class="nav-link" href="#Prices" data-toggle="tab">Prices</a></li>
+        </ul>
+    </div>
+    <div class="card-body">
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="Details">
+                <ul class="list-group list-group-flush bg-light px-0">
+                    <li class="list-group-item bg-light">
+                        <a id="myid" class="h5 text-info bg-light font-weight-light" data-toggle="collapse" href="#collapse" role="button" aria-expanded="true" aria-controls="collapseExample">
+                            <i class="mdi mdi-file-document-box"></i> @(Model.Module?.Name??Model.Topic)
+                        </a>
+                        <div class="pr-0 collapse mb-2" id="collapse" data-parent="#myid">
+                            <div class="list-group mt-2 text-left list-group-flush">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        @if (!String.IsNullOrEmpty(Model.Topic))
+                                        {
+                                            <div class="form-group">
+                                                <label class="text-muted font-weight-bold mb-0">Topic</label>
+                                                <div>@(Model.Module?.Name??Model.Topic)</div>
+                                            </div>
+                                        }
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="text-muted font-weight-bold mb-0">Duration</label>
+                                            <div>@((Model.Duration / 60) > 0 ? $"{(Model.Duration / 60).ToString("0.0")} hour(s) {(Model.Duration % 60)} minutes" : $"{Model.Duration % 60} minutes" )</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="text-muted font-weight-bold mb-0">Start date</label>
+                                            <div>@Model.StartDate.ToString("dd MMM yyy HH:mm")</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="text-muted font-weight-bold mb-0">Due date</label>
+                                            <div>@Model.EndDate.ToString("dd MMM yyy HH:mm")</div>
+                                        </div>
+                                    </div>
+                                    @if (Model.CourseID.HasValue)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="text-muted font-weight-bold mb-0">Course</label>
+                                                <div><a href="@Url.Details("Courses", new { Model.Course.ID })">@Model.Course.Name</a></div>
+                                            </div>
+                                        </div>
+                                    }
+                                    @if (Model.ModuleID.HasValue)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="text-muted font-weight-bold mb-0">Module</label>
+                                                <div><a href="@Url.Details("Modules", new { Model.Module.ID })">@Model.Module.Name</a></div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="text-muted font-weight-bold mb-0">Examination type</label>
+                                            <div>@Model.Type.ToEnumString()</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="text-muted font-weight-bold mb-0">Question paper format</label>
+                                            <div>@Model.PaperFormat.ToEnumString()</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        @if (Model.MaxAttempts.HasValue)
+                                        {
+                                            <div class="form-group">
+                                                <label class="text-muted font-weight-bold mb-0">Maximum allowed attempts</label>
+                                                <div>@Model.MaxAttempts</div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    @if (Model.ValueChainID.HasValue)
+                                    {
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label class="text-muted font-weight-bold mb-0">Value chain</label>
+                                                <div><a href="@Url.Details("ValueChains", new { Model.ValueChain.ID })">@Model.ValueChain.Name</a></div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="text-muted font-weight-bold mb-0">Target audience</label>
+                                            <div>@Model.Audience.ToEnumString()</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="text-muted font-weight-bold mb-0">Number of questions</label>
+                                            <div>@Model.NumberOfQuestions</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item bg-light">
+                        <a id="myid" class="h5 text-info bg-light font-weight-light" data-toggle="collapse" href="#collapse4" role="button" aria-expanded="true" aria-controls="collapseExample">
+                            <i class="fa fa-exclamation-triangle text-warning"></i> Instructions
+                        </a>
+                        <div class="pr-0 collapse mb-2" id="collapse4" data-parent="#myid">
+                            <div class="list-group mt-2 text-left list-group-flush">
+                                <div class="lead">
+                                    @if (ViewBag.instructions != null)
+                                    {
+                                        var instruction = (Instruction)ViewBag.instructions;
+                                        @Html.Raw(instruction.Description)
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="list-group-item bg-light">
+                        <a id="myid" class="h5 text-info bg-light font-weight-light" data-toggle="collapse" href="#collapsep00" role="button" aria-expanded="true" aria-controls="collapseExample">
+                            <i class="mdi mdi-attachment"></i>@Model.Type.ToEnumString() Attachments
+                        </a>
+                        <div class="pr-0 collapse mb-2" id="collapsep00" data-parent="#myid">
+                            @if (!User.IsInRole(nameof(UserRole.FARMER)))
+                            {
+                                <a class="btn btn-sm btn-outline-success" href="@Url.Action("AddAttachment", new { Model.ID })">Add more..</a>
+                            }
+                            <div class="list-group mt-2 text-left list-group-flush">
+                                @if (!string.IsNullOrWhiteSpace(Model.AttachmentsJson))
+                                {
+                                    <table class="table table-sm table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Title</th>
+                                                <th>Upload date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var i in Model.Attachments)
+                                            {
+                                                <tr>
+                                                    <td><a href="@Url.Details("Attachments",i.ID)">@i.Name</a></td>
+                                                    <td>@i.UploadDate.ToString("dd/MMM/yyy")</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                @if (!User.IsInRole(nameof(UserRole.FARMER)))
+                {
+                    <div class="mt-4">
+                        <div class="form-inline">
+                            <h4 class="text-muted"><i class="mdi mdi-question-mark-circle text-success"></i> Questions  <span class="badge badge-pill badge-success small">@Model.Questions.Count()</span></h4>
+                            @if (Model.TimeToClose.TotalSeconds > 0)
+                            {
+                                <a class="ml-3 btn btn-success btn-sm ml-auto" href="@Url.Add("Questions", new { Model.ID })"><i class="mdi mdi-plus-circle"></i> Add new...</a>
+                            }
+                        </div>
+                    </div>
+
+                    foreach (var question in Model.Questions)
+                    {
+                        <div class="card shadow mt-1">
+                            <div class="card-header form-inline">
+                                <span class="badge"><a class="text-success" href="@Url.Edit("Questions", new { question.ID })">Question @count</a></span>
+                                <small class="ml-auto">[@question.Score]</small>
+                            </div>
+                            <div class="card-body">
+                                @Html.Raw(question.Name)
+                                @if (question.Answers.Any())
+                                {
+                                    <h4>Answers</h4>
+                                    <hr class="bg-success" />
+                                    <table class="table table-sm table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:60%;">Answer</th>
+                                                @if (User.IsInRole(nameof(UserRole.ADMINISTRATOR)))
+                                                {
+                                                    <th style="width:10%;">State</th>
+                                                    <th style="width:30%;">Comments</th>
+                                                }
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var i in question.Answers)
+                                            {
+                                                <tr>
+                                                    <td>@i.Name</td>
+                                                    @if (User.IsInRole(nameof(UserRole.ADMINISTRATOR)))
+                                                    {
+                                                        <td>
+                                                            <span class="badge badge-pill badge-@(i.IsCorrect ? "success" : "danger")"><i class="mdi mdi-@(i.IsCorrect ? "check" : "cancel")"></i></span>
+                                                        </td>
+                                                        <td>
+
+                                                            <p>
+                                                                @if (!string.IsNullOrWhiteSpace(i.Comments))
+                                                                {
+                                                                    @i.Comments
+                                                                }
+
+                                                                @if (i.IsCorrect)
+                                                                {
+                                                                    <a class="" href="@Url.Edit("Answers", i.ID)">...<i class="mdi mdi-pencil"></i></a>
+                                                                }
+                                                            </p>
+                                                        </td>
+                                                    }
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                }
+                            </div>
+                        </div>
+                        count++;
+                    }
+                }
+
+            </div>
+            <div class="tab-pane fade show" id="Prices">
+                @if (!Model.ExaminationPrices.Any())
+                {
+                    <div class="alert alert-danger alert-dismissible mt-4" role="alert">
+                        <h4 class="alert-heading">Attention!</h4>
+                        <p>The examination does not have a price. <a class="btn btn-sm btn-outline-dark" href="@Url.Add("ExaminationPrices",new { Model.ID})"><i class="mdi mdi-plus"></i> Add price</a> </p>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                }
+                else
+                {
+                    <div class="mt-1 form-inline">
+                        <h4 class="font-weight-light">Price list</h4>
+                        <a class="btn btn-sm btn-outline-success ml-auto" href="@Url.Add("ExaminationPrices",new { Model.ID})">Add/review price</a>
+                    </div>
+                    <table class="table table-sm table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                @foreach (var i in paymentMethods)
+                                {
+                                    <th class="text-center">@i.Name</th>
+                                }
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var currency in Currencies)
+                            {
+                                <tr>
+                                    <th>@currency.Name</th>
+                                    @foreach (var p in paymentMethods)
+                                    {
+                                        var rate = ExchangeRates.OrderByDescending(c => c.CreationDate).FirstOrDefault(c => c.CurrencyID == currency.ID && c.PaymentMethodID == p.ID);
+                                        if (rate == null) { rate = ExchangeRates.OrderByDescending(c => c.CreationDate).FirstOrDefault(c => c.CurrencyID == currency.ID && !c.PaymentMethodID.HasValue); }
+                                        var currentPrice = Model.ExaminationPrices.OrderByDescending(c => c.CreationDate).FirstOrDefault(c => c.CurrencyID == currency.ID && c.PaymentMethodID == p.ID);
+                                        if (currentPrice == null) { currentPrice = Model.ExaminationPrices.OrderByDescending(c => c.CreationDate).FirstOrDefault(c => c.CurrencyID == currency.ID && c.PaymentMethodID == p.ID); }
+                                        if (currentPrice == null) { currentPrice = Model.ExaminationPrices.OrderByDescending(c => c.CreationDate).FirstOrDefault(c => c.CurrencyID == currency.ID && !c.PaymentMethodID.HasValue); }
+                                        <td class="text-center">
+                                            @if (currentPrice == null)
+                                            {
+                                                if (defaultPrice != null && rate != null)
+                                                {
+                                                    <div class="font-weight-bold">@((defaultPrice.Amount / rate.Rate).ToString("N2"))</div>
+                                                    <small class="small text-muted">Rate: @((1 / rate.Rate).ToString("N2"))</small>
+                                                }
+                                            }
+                                            else
+                                            {
+                                                <div class="font-weight-bold"> @(currentPrice.Amount)</div>
+                                            }
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="card-footer bg-white">
+    </div>
+</div>
+
+
+
+
+
+
+
+
+@section Scripts{
+    <script type="text/javascript">
+            function startTimer(duration, display) {
+        var timer = duration, days, hours, minutes, seconds;
+        setInterval(function () {
+            days = parseInt(timer / 86400, 10);
+            hours = parseInt((timer - days * 86400) / 3600, 10);
+            minutes = parseInt((timer - days * 86400 - hours * 3600) / 60, 10);
+            seconds = parseInt(timer % 60, 10);
+
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
+
+            display.innerHTML = ((days > 0 ? "<strong>" + days + "</strong>" + (days == 1 ? " day " : "days ") + "<strong>" + hours + "</strong>" + (hours == 1 ? "hr " : "hrs ") : hours > 0 ? "<strong>" + hours + "</strong>" + (hours == 1 ? "hr " : "hrs ") : "") + "<strong>" + minutes + "</strong>min. " + "<strong>" + seconds + "</strong>s");
+            timer = timer - 1;
+            if (timer == 0) location.reload(true);
+        }, 1000);
+    }
+    @if (Model.TimeToClose.TotalSeconds > 0)
+        {
+            @:startTimer(@((int)Model.TimeToClose.TotalSeconds), document.getElementById("timer"));
+        }
+    </script>
+}
+
+

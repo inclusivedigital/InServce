@@ -1,0 +1,64 @@
+﻿@model Section
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i>Sections</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Details()"><i class="mdi mdi-chevron-left"></i> @Model.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new...</a></div>
+    </div>
+
+}
+<h3 class="font-weight-light">Section details</h3>
+<div class="row">
+    <div class="col-md-7">
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Name</label>
+                    <div class="col-md-8">@Model.Name</div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Department</label>
+                    <div class="col-md-8">@Model.Department.Name</div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 font-weight-bold">Creation date</label>
+                    <div class="col-md-8">@Model.CreationDate.ToString("dd MMM yyy")</div>
+                </div>
+            </div>
+        </div>
+        @if (Model.Branches.Any())
+        {
+            <div class="form-inline">
+                <h4 class="font-weight-light">Branches</h4>
+                <a class="btn btn-sm btn-outline-success ml-auto" href="@Url.Add("Sections",new { SectionID = Model.ID })">Add branch</a>
+            </div>
+            <table class="table table-sm table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Creation Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model.Branches)
+                    {
+                        <tr>
+                            <td><a class="text-success" href="@Url.Details("Branches",new { i.ID})">@i.Name</a></td>
+                            <td>@i.CreationDate.ToString("dd MMM yyy HH:mm")</td>
+                        </tr>
+                    }
+            </table>
+        }
+        else
+        {
+            <div class="text-center">
+                <h3 class="font-weight-light">Branches will be listed here</h3>
+                <a class="btn btn-sm btn-outline-success" href="@Url.Add("Branches",new {SectionID= Model.ID })">Add branch</a>
+            </div>
+        }
+    </div>
+</div>
+
+

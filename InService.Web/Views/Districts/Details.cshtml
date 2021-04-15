@@ -1,0 +1,69 @@
+﻿@model District
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"> <a class="nav-link" href="@Url.Index("Countries")">Countries</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Details("Countries",new { Model.Province.Country.ID})">@Model.Province.Country.Name</a></div>
+        <div class="nav-item"> <a class="nav-link" href="@Url.Details("Provinces",new { Model.Province.ID})">@Model.Province.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Details()">@Model.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i>Edit</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add("Wards",new { Model.ID})"><i class="mdi mdi-plus"></i>Add ward</a></div>
+    </div>
+    <div class="navbar-nav ml-auto">
+        <div class="nav-item"><a class="nav-link" href="@Url.Add(new { Model.Province.ID})"><i class="mdi mdi-plus"></i>Add another district</a></div>
+    </div>
+}
+
+
+<h3 class="font-weight-light">District details</h3>
+<div class="row">
+    <div class="col-md-7">
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="text-muted font-weight-bold mb-0">Name</label>
+                    <div>@Model.Name</div>
+                </div>
+                <div class="form-group">
+                    <label class="font-weight-bold text-muted mb-0">Code</label>
+                    <div>@Model.Code</div>
+                </div>
+                <div class="form-group">
+                    <label class="text-muted font-weight-bold mb-0">Province</label>
+                    <div><a href="@Url.Details("Provinces",new { Model.Province.ID})">@Model.Province.Name</a></div>
+                </div>
+                <div class="form-group">
+                    <label class="text-muted font-weight-bold mb-0">Country</label>
+                    <div><a href="@Url.Details("Countries",new { Model.Province.Country.ID})">@Model.Province.Country.Name</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-5 bg-light">
+        @if (Model.Wards.Any())
+        {
+            <div class="form-inline mt-1">
+                <h4 class="text-muted"><i class="mdi mdi-format-list-bulleted"></i>Wards</h4>
+                <a class="ml-auto btn btn-outline-success btn-sm" href="@Url.Add("Wards",new { Model.ID})"><i class="mdi mdi-plus"></i>Add ward</a>
+            </div>
+            <table class="table table-striped table-hover table-sm">
+                <tbody>
+                    @foreach (var item in Model.Wards.OrderBy(c => c.CreationDate))
+                    {
+                        <tr>
+                            <td><a href="@Url.Details("Wards",new { item.ID})">@item.Name</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text-center">
+                <h4 class="text-danger font-weight-light">No wards found</h4>
+                <a class="btn btn-outline-success btn-sm" href="@Url.Add("Wards",new { Model.ID})"><i class="mdi mdi-plus"></i> Add ward</a>
+            </div>
+        }
+    </div>
+</div>

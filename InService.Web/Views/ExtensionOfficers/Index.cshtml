@@ -1,0 +1,54 @@
+﻿@model IPagedList<ExtensionOfficer>
+@section subnav{
+    <div class="navbar-nav mr-auto">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Extension Officers</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new..</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("Upload")"><i class="mdi mdi-upload"></i> Upload..</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("Insights")"><i class="mdi mdi-chart-bar"></i> Insights.</a></div>
+    </div>
+}
+@if (Model.TotalItemCount > 0)
+{
+    <h3 class="font-weight-light mt-3">Extension Officers  <span class="badge badge-pill badge-success">@Model.TotalItemCount</span></h3>
+    <table class="table table-striped table-hover table-sm">
+        <thead>
+            <tr>
+                <th>Full Name</th>
+                <th>EC number</th>
+                <th>ID number</th>
+                <th>Mobile</th>
+                <th>Email</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var c in Model.OrderByDescending(c => c.CreationDate))
+            {
+                <tr>
+                    <td>
+                        <div>
+                            <div style="width: 48px; height: 48px; padding-top:10px !important" class="font-weight-bold text-center float-left mr-2 p-2 border border-success rounded-circle bg-light">@c.Initials</div>
+                            <div>
+                                <div>@c.Fullname</div>
+                                <div class="text-white-50 small"><a href="@Url.Details(c.ID)">@c.Fullname</a></div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>@Html.DisplayFor(m => c.ECNumber)</td>
+                    <td>@Html.DisplayFor(m => c.NationalID)</td>
+                    <td>@Html.DisplayFor(m => c.Mobile)</td>
+                    <td>@Html.DisplayFor(m => c.Email)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @Html.PagedListPager(Model, p => Url.Query(new { p }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded, DisplayPageCountAndCurrentLocation = true })
+
+}
+else
+{
+    <div class="text-center">
+        <h4 class="font-weight-light text-danger">Extension Officers will be listed here</h4>
+        <a class="btn btn-outline-success btn-sm" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new..</a>
+    </div>
+}

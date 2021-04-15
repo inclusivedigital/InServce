@@ -1,0 +1,63 @@
+﻿@model Attachment
+@{
+    var examination = (Examination)ViewBag.examination;
+}
+@section subnav{
+    <div class="navbar-nav mr-auto">
+        @if (ViewBag.examination != null)
+        {
+            <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Details(new { examination.ID})"><i class="mdi mdi-chevron-left"></i>@(examination.Topic)</a></div>
+        }
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-7">
+        <h3 class="font-weight-light">Add new attachment</h3>
+        <h4 class="font-weight-light">@(examination.Topic)</h4>
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        @using (Html.BeginForm("AddAttachment", "Examinations", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Examination</label>
+                        <div class="col-md-8">
+                            @if (ViewBag.examination != null)
+                            {
+                                <input type="hidden" name="ID" value="@examination.ID" />
+                                <input class="form-control" type="text" value="@(examination.Topic)" disabled />
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Attachment name</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Description</label>
+                        <div class="col-md-8">
+                            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label">Attach</label>
+                        <div class="col-md-8">
+                            <input type="file" name="file" class="form-control" required>
+                            @Html.ValidationMessage("file", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-success">Submit <i class="mdi mdi-check-circle"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+

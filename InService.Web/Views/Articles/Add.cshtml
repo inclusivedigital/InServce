@@ -1,0 +1,173 @@
+﻿@model Article
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()">Articles</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i>Add new</a></div>
+    </div>
+}
+
+<h3 class="font-weight-light text-center">Add an article</h3>
+@using (Html.BeginMultiPartForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="">
+        <div class="form-group row">
+            <label class="col-md-4">Article name or title</label>
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control", required = "", placeholder = "Give your article a name or title" })
+                @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger small" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-md-4">Module</label>
+            <div class="col-md-8">
+                <select class="form-control" required name="ModuleID" id="ModuleID">
+                    @if (ViewBag.module != null)
+                    {
+                        <option value="@(((Module)ViewBag.module).ID)">@(((Module)ViewBag.module).Name)</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label class="col-md-4">Upload attachment</label>
+            <div class="col-md-8">
+                <div class="input-group">
+                    <label class="input-group-prepend">
+                        <span class="btn btn-outline-success">
+                            Browse&hellip; <input type="file" name="file" style="display: none;" accept="*">
+                        </span>
+                    </label>
+                    <input type="text" class="form-control" readonly>
+                </div>
+                @Html.ValidationMessage("file", new { @class = "text-danger small" })
+            </div>
+        </div>
+
+
+
+        <div class="form-inline">
+            <div class="form-group">
+                <div class="form-check">
+                    <input id="Doc" class="form-check-input" type="checkbox" data-bind="checked:addMore" />
+                    <label class="form-check-label" for="Doc">Add more content</label>
+                </div>
+            </div>
+        </div>
+        <div data-bind="visible:canAddAdvanced">
+            <div class="form-group">
+                <div class="mt-2">
+                    @Html.TextAreaFor(model => model.Description, new { @class = "form-control", @row = 5 })
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-group text-right">
+            <button class="btn btn-success" id="btnSubmit" type="submit">
+                Submit
+            </button>
+        </div>
+
+    </div>
+}
+
+@section styles{
+    <link href="~/Scripts/summernote/summernote.css" rel="stylesheet" />
+}
+
+@section scripts{
+    <!-- Summernote -->
+    <script src="~/Scripts/summernote/summernote.js"></script>
+    <!-- Summernote init -->
+    <script src="~/Scripts/summernote/summernote-init.js"></script>
+
+    <script>
+        function MyModel() {
+            var self = this;
+            self.addMore = ko.observable(false);
+            self.canAddAdvanced = ko.computed(() => {
+                return self.addMore() == true;
+            }, self);
+        }
+        $(document).ready(function () {
+            ko.applyBindings(new MyModel());
+            $(function () {
+                $(document).on('change', ':file', function () {
+                    var input = $(this),
+                        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                });
+
+                $(':file').on('fileselect', function (event, numFiles, label) {
+                    var input = $(this).parents('.input-group').find(':text'),
+                        log = numFiles > 1 ? numFiles + ' files selected' : label;
+                    if (input.length) {
+                        input.val(log);
+                    } else {
+                        if (log) alert(log);
+                    }
+                });
+            });
+           // $('#sidebar').addClass('active');
+            $('#ModuleID').select2({
+                placeholder: "Search module..",
+                minimumInputLength: 1,
+                theme: "bootstrap4",
+                ajax: {
+                    dataType: 'json',
+                    url: "@Url.Action("Search","Modules")",
+                    type:"GET",
+                    processResults: function (data) {
+                        return {
+                            results: data
+                        };
+                    }
+                },
+
+            });
+        })
+        $('#Description').summernote({
+            height: 300,                 // set editor height
+            minHeight: null,             // set minimum height of editor
+            maxHeight: null,             // set maximum height of editor
+            focus: true,                  // set focus to editable area after initializing summernote
+            callbacks: {
+                onImageUpload: function (files) {
+                    for (let i = 0; i < files.length; i++) {
+                        UploadImage(files[i]);
+                    }
+                }
+            }
+        });
+
+        function UploadImage(file) {
+        var url = '@Url.Action("UploadFile", "Articles")';
+
+        formData = new FormData();
+        formData.append("aUploadedFile", file);
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+               // alert(data);
+                var imgNode = document.createElement('img');
+                imgNode.src = '@Url.Action("Image", "Articles")?data=' + data;
+                $('#Description').summernote('insertNode', imgNode);
+            },
+            error: function (data) {
+                alert(data.responseText);
+            }
+        });
+    }
+    </script>
+}
+
+
+

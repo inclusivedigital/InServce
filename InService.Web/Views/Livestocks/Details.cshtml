@@ -1,0 +1,96 @@
+﻿@model Livestock
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i> Livestock categories</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Edit()"><i class="mdi mdi-pencil"></i> Edit..</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new..</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("AddIcon",new { Model.ID})"><i class="mdi mdi-camera-image"></i> Add icon...</a></div>
+    </div>
+}
+
+<h3 class="font-weight-light"><i class="mdi mdi-folder"></i>Livestock: @Model.Name</h3>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card shadow">
+            <div class="card-body">
+                <div class="form-group">
+                    <label class="mb-0 text-muted font-weight-bold">Name</label>
+                    <div>@Model.Name</div>
+                </div>
+                <div class="form-group">
+                    <label class="mb-0 text-muted font-weight-bold">Category</label>
+                    <div>@Model.LivestockCategory.Name</div>
+                </div>
+                @if (Model.CourseID.HasValue)
+                {
+                    <div class="form-group">
+                        <label class="mb-0 text-muted font-weight-bold">Course</label>
+                        <div>@Model.Course.Name</div>
+                    </div>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model.Description))
+                {
+                    <div class="form-group">
+                        <label class="mb-0 text-muted font-weight-bold">Short description</label>
+                        <div>@Model.Description.ToHTmlContentString()</div>
+                    </div>
+                }
+                @if (Model.IconID.HasValue)
+                {
+                    <div class="">
+                        <div>
+                            <img class="img-fluid mb-1" src="@Url.Action("Icon", new { Model.ID })">
+                        </div>
+                        <a href="@Url.Action("AddIcon",new {Model.ID })">Change icon</a>
+                    </div>
+                }
+            </div>
+        </div>
+        @if (Model.livestocks.Any())
+        {
+            <div class="form-inline">
+                <h4 class="font-weight-light">Sub categories</h4>
+                <a class="btn btn-outline-success btn-sm ml-auto" href="@Url.Add(new { ParentID=Model.ID})">Add more</a>
+            </div>
+            <table class="table table-striped table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Category</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model.livestocks.OrderBy(c => c.CategoryID))
+                    {
+                        <tr>
+                            <td><a class="text-success" href="@Url.Details(i.ID)">@i.Name</a></td>
+                            <td>@i.LivestockCategory.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="text-center">
+                <h5 class="font-weight-light">Sub categories will be listed here</h5>
+                <a class="btn btn-outline-success btn-sm" href="@Url.Add(new { ParentID=Model.ID})">Add new</a>
+            </div>
+        }
+    </div>
+</div>
+
+<script type="text/javascript">
+    function checkData(obj) {
+        if (obj.checked) $(obj).parent().parent().addClass("bg-danger");
+        else $(obj).parent().parent().removeClass("bg-danger");
+        var checkedCount = $("input:checked[name='MID']").length;
+        if (checkedCount > 0) {
+            $("#btnDelete").show({ duration: "fast" });
+            if (checkedCount >= 1) $("#btnDelete").html("Remove this!");
+            else $("#btnDelete").html("");
+        }
+        else $("#btnDelete").hide({ duration: "fast" });
+    }
+</script>

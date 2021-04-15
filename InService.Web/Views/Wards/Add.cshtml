@@ -1,0 +1,52 @@
+﻿@model Ward
+
+@{
+    var province = (District)ViewBag.district;
+}
+
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"> <a class="nav-link" href="@Url.Action("Index", "Countries")">Countries</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("Details", "Countries",new {province.Province.Country.ID})">@province.Province.Country.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("Details", "Provinces",new { province.Province.ID})">@province.Province.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("Details", "Districts",new { province.ID})">@province.Name</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Action("Add", "Wards",new {province.ID})">Add ward...</a></div>
+    </div>
+}
+
+<h3 class="font-weight-light">Add a ward</h3>
+<div class="row">
+    <div class="col-md-7">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="DistrictID" value="@province.ID" />
+            <div class="card shadow">
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Name</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Number</label>
+                        <div class="col-md-4">
+                            @Html.TextBoxFor(m => m.Number, new { @class = "form-control",  type = "number", min = "1", max = "40" })
+                            @Html.ValidationMessageFor(m => m.Number, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="text-right">
+                        <button class="btn btn-success">Submit <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

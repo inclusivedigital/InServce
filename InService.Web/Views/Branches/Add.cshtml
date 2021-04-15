@@ -1,0 +1,48 @@
+﻿@model Branch
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Index()"><i class="mdi mdi-chevron-double-left"></i> Branches</a></div>
+        <div class="nav-item"><a class="nav-link" href="@Url.Add()"><i class="mdi mdi-plus"></i> Add new...</a></div>
+    </div>
+
+}
+<h3 class="font-weight-light">Add branch </h3>
+<div class="row">
+    <div class="col-md-7">
+        @using (Html.BeginForm())
+        {
+
+            @Html.AntiForgeryToken()
+            if (ViewBag.SectionID != null)
+            {
+                <input type="hidden" name="SectionID" value="@ViewBag.SectionID" />
+            }
+            <div class="card shadow">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger small" })
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Name</label>
+                        <div class="col-md-8">
+                            @Html.TextBoxFor(model => model.Name, new { @class = "form-control", required = "" })
+                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Section</label>
+                        <div class="col-md-8">
+                            @Html.DropDownListFor(m => m.SectionID, (SelectList)ViewBag.sections, "Select..", new { @class = "form-control options", reqiored = "" })
+                            @Html.ValidationMessageFor(m => m.SectionID, "", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-success">Submit <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

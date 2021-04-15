@@ -1,0 +1,116 @@
+﻿@{
+    var course = (Course)ViewBag.course;
+}
+@section subnav{
+    <div class="navbar-nav">
+        <div class="nav-item"><a class="nav-link navbar-brand" href="@Url.Details(new { course.ID})">@course.Name</a></div>
+        <div class="nav-item"><a class="nav-link " href="@Url.Action("AddIcon",new { course.ID})"><i class="mdi mdi-image-area"></i>Add icon</a></div>
+    </div>
+}
+<h3 class="font-weight-light">Add course icon: @course.Name</h3>
+<div class="row">
+    <div class="col-md-6">
+        @using (Html.BeginMultiPartForm())
+        {
+            @Html.AntiForgeryToken()
+            <div class="card shadow">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Upload icon</label>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <label class="input-group-prepend">
+                                    <span class="btn btn-outline-success">
+                                        Browse&hellip; <input required type="file" name="file" style="display: none;" onchange="readURL(this);" accept="image/*">
+                                    </span>
+                                </label>
+                                <input type="text" class="form-control" readonly>
+                            </div>
+                            @Html.ValidationMessage("file", new { @class = "text-danger small" })
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-success">Submit <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+    <div class=" col-md-6 collapse" id="preview">
+        <div class="panel">
+            <div class="form-inline">
+                <h5 class="font-weight-light">Preview</h5>
+                <ul class="list-inline panel-actions ml-auto">
+                    <li><a href="#" id="panel-fullscreen" role="button" title="Toggle fullscreen"><i class="mdi mdi-fullscreen"></i></a></li>
+                </ul>
+            </div>
+            <div class="collapse" id="image">
+                <img class="img-fluid" id="img" alt="Uploaded image" />
+            </div>
+            <div class="collapse iframe-container" id="document">
+                <iframe id="data"> </iframe>
+            </div>
+            <div class="collapse" id="doc">
+                <textarea id="text" class="form-control"></textarea>
+            </div>
+        </div>
+    </div>
+
+</div>
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $(function () {
+                $(document).on('change', ':file', function () {
+                    var input = $(this),
+                        numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                        label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                    input.trigger('fileselect', [numFiles, label]);
+                });
+
+                $(':file').on('fileselect', function (event, numFiles, label) {
+                    var input = $(this).parents('.input-group').find(':text'),
+                        log = numFiles > 1 ? numFiles + ' files selected' : label;
+                    if (input.length) {
+                        input.val(log);
+                    } else {
+                        if (log) alert(log);
+                    }
+                });
+            });
+        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                $("#preview").show({ duration: "fast" });
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    if (input.files[0]['type'].split('/')[0] === 'image') {
+                        $("#image").show({ duration: "fast" });
+                        $('#img').attr('src', e.target.result);
+                    }
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+            else {
+                $.rcrop('destroy');
+                $("#preview").hide({ duration: "fast" });
+            }
+
+            $("#panel-fullscreen").click(function (e) {
+                e.preventDefault();
+                var $this = $(this);
+                if ($this.children('i').hasClass('mdi-fullscren')) {
+                    $this.children('i').removeClass('mdi-fullscren');
+                    $this.children('i').addClass('mdi-fullscren-exit');
+                }
+                else if ($this.children('i').hasClass('mdi-fullscren-exit')) {
+                    $this.children('i').removeClass('mdi-fullscren-exit');
+                    $this.children('i').addClass('mdi-fullscren');
+                }
+                $(this).closest('.panel').toggleClass('panel-fullscreen');
+            });
+        }
+
+    </script>
+}

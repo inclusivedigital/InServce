@@ -1,0 +1,24 @@
+<resources>
+
+	<!--Skip this-->
+	<string name="server_address">http://102.130.119.247:83/</string>
+	<!--string name="server_address">http://192.168.1.209:5000/inservice/</string-->
+
+	<!--Skip-->
+
+	<string name="app_name">In-service Training App</string>
+	<string name="app_title">In-service Training App</string>
+	<string name="request_location_permissions">Android relies on the location services to retrieve the identity of Bluetooth devices.</string>
+
+	<string name="permissions_error">System requires the following permission in order to function well. You can click on the permission or grant app permission via your phone\'s settings page.</string>
+	<string name="permission_camera_rationale">Access to the camera is needed for detection</string>
+	<string name="no_camera_permission">This application cannot run because it does not have the camera permission. The application will now exit.</string>
+	<string name="low_storage_error">Face detector dependencies cannot be downloaded due to low device storage</string>
+	<string name="navigation_drawer_open">Open navigation drawer</string>
+	<string name="navigation_drawer_close">Close navigation drawer</string>
+
+	<string name="select_language">Select language</string>
+	<string name="change_language">Change language</string>
+
+
+</resources>

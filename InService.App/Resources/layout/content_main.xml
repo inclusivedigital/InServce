@@ -1,0 +1,82 @@
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:background="@drawable/layout_gradient2"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:id="@+id/sync_layout"
+            android:visibility="gone"
+            android:layout_height="wrap_content">
+            <android.support.v4.widget.ContentLoadingProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="70dp"
+                android:visibility="gone"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:background="@color/red_600"
+                android:id="@+id/load_progress_bar" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Loading"
+                android:textColor="@color/black"
+                android:id="@+id/load_progress_bar_text"
+            />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="end to end encryption"
+                android:textColor="@color/red_600"
+                android:id="@+id/load_progress_bar_text_encrypt"
+            />
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:layout_height="wrap_content">
+             <ImageView
+            android:src="@drawable/logo"
+            android:layout_width="match_parent"
+            android:layout_height="96dp"
+            android:layout_marginTop="64dp" />
+           <TextView
+               android:layout_width="match_parent"
+                android:text="AGRITEX Branches"
+                android:textColor="@color/green_800"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:gravity="center"
+               android:layout_height="wrap_content"/>
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:layout_marginTop="@dimen/input_spacing"
+            android:scrollbars="vertical"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"
+            android:id="@+id/gridView_main"
+            android:layout_margin="2dp" />
+    </LinearLayout>
+    <ImageButton
+        android:id="@+id/btn_floating_action"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="12dp"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:tint="@color/white"
+        android:gravity="center"
+        android:src="@drawable/ic_sync"
+        android:background="@drawable/fab_normal" />
+</RelativeLayout>

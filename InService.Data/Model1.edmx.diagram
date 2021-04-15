@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="621da98a1a454fd680fe00f3122f096d" Name="Diagram1" ZoomLevel="99">
+        <EntityTypeShape EntityType="InServiceModel.Answer" Width="1.5" PointX="12.75" PointY="53" />
+        <EntityTypeShape EntityType="InServiceModel.Article" Width="1.5" PointX="12" PointY="61.875" />
+        <EntityTypeShape EntityType="InServiceModel.Attachment" Width="1.5" PointX="9.75" PointY="73" />
+        <EntityTypeShape EntityType="InServiceModel.Branch" Width="1.5" PointX="14.25" PointY="60.75" />
+        <EntityTypeShape EntityType="InServiceModel.Continent" Width="1.5" PointX="9.75" PointY="78.625" />
+        <EntityTypeShape EntityType="InServiceModel.Country" Width="1.5" PointX="14.25" PointY="71.25" />
+        <EntityTypeShape EntityType="InServiceModel.Course" Width="1.5" PointX="19.75" PointY="60" />
+        <EntityTypeShape EntityType="InServiceModel.CoursePrice" Width="1.5" PointX="23" PointY="55.125" />
+        <EntityTypeShape EntityType="InServiceModel.Crop" Width="1.5" PointX="22" PointY="61.375" />
+        <EntityTypeShape EntityType="InServiceModel.CropCategory" Width="1.5" PointX="17.5" PointY="65.5" />
+        <EntityTypeShape EntityType="InServiceModel.Currency" Width="1.5" PointX="9.75" PointY="69" />
+        <EntityTypeShape EntityType="InServiceModel.Department" Width="1.5" PointX="9.75" PointY="60.25" />
+        <EntityTypeShape EntityType="InServiceModel.District" Width="1.5" PointX="3" PointY="53" />
+        <EntityTypeShape EntityType="InServiceModel.EmailConfig" Width="1.5" PointX="9.75" PointY="52.125" />
+        <EntityTypeShape EntityType="InServiceModel.Examination" Width="1.5" PointX="26" PointY="54" />
+        <EntityTypeShape EntityType="InServiceModel.ExaminationAttemptCount" Width="1.5" PointX="28.25" PointY="53.5" />
+        <EntityTypeShape EntityType="InServiceModel.ExaminationPrice" Width="1.5" PointX="28.25" PointY="57.125" />
+        <EntityTypeShape EntityType="InServiceModel.ExchangeRate" Width="1.5" PointX="15" PointY="55.375" />
+        <EntityTypeShape EntityType="InServiceModel.ExtensionOfficer" Width="1.5" PointX="5.25" PointY="52.5" />
+        <EntityTypeShape EntityType="InServiceModel.Farmer" Width="1.5" PointX="20.5" PointY="52" />
+        <EntityTypeShape EntityType="InServiceModel.Instruction" Width="1.5" PointX="9.75" PointY="45.25" />
+        <EntityTypeShape EntityType="InServiceModel.Livestock" Width="1.5" PointX="25" PointY="61.125" />
+        <EntityTypeShape EntityType="InServiceModel.LivestockCategory" Width="1.5" PointX="16.5" PointY="61.5" />
+        <EntityTypeShape EntityType="InServiceModel.Module" Width="1.5" PointX="22" PointY="65.875" />
+        <EntityTypeShape EntityType="InServiceModel.NonValueChain" Width="1.5" PointX="17.5" PointY="56.125" />
+        <EntityTypeShape EntityType="InServiceModel.Notice" Width="1.5" PointX="15" PointY="66.25" />
+        <EntityTypeShape EntityType="InServiceModel.Payment" Width="1.5" PointX="22.75" PointY="49.875" />
+        <EntityTypeShape EntityType="InServiceModel.PaymentMethod" Width="1.5" PointX="9.75" PointY="41.25" />
+        <EntityTypeShape EntityType="InServiceModel.Province" Width="1.5" PointX="0.75" PointY="53.25" />
+        <EntityTypeShape EntityType="InServiceModel.Question" Width="1.5" PointX="31.25" PointY="53" />
+        <EntityTypeShape EntityType="InServiceModel.Region" Width="1.5" PointX="12" PointY="67.25" />
+        <EntityTypeShape EntityType="InServiceModel.Section" Width="1.5" PointX="12" PointY="57" />
+        <EntityTypeShape EntityType="InServiceModel.User" Width="1.5" PointX="7.5" PointY="48.125" />
+        <EntityTypeShape EntityType="InServiceModel.UserDeduction" Width="1.5" PointX="34.25" PointY="54.625" />
+        <EntityTypeShape EntityType="InServiceModel.UserExamination" Width="1.5" PointX="31.25" PointY="57.125" />
+        <EntityTypeShape EntityType="InServiceModel.UserExaminationDetail" Width="1.5" PointX="15" PointY="51.375" />
+        <EntityTypeShape EntityType="InServiceModel.ValueChain" Width="1.5" PointX="17.5" PointY="51" />
+        <EntityTypeShape EntityType="InServiceModel.Ward" Width="1.5" PointX="12.75" PointY="49" />
+        <AssociationConnector Association="InServiceModel.FK_Answer_Question" />
+        <AssociationConnector Association="InServiceModel.FK_Answer_User" />
+        <AssociationConnector Association="InServiceModel.FK_FarmerExaminationDetail_Answer" />
+        <AssociationConnector Association="InServiceModel.FK_Article_Attachment" />
+        <AssociationConnector Association="InServiceModel.FK_Article_Course" />
+        <AssociationConnector Association="InServiceModel.FK_Article_Module" />
+        <AssociationConnector Association="InServiceModel.FK_Article_User" />
+        <AssociationConnector Association="InServiceModel.FK_Article_ValueChain" />
+        <AssociationConnector Association="InServiceModel.FK_Attachment_User" />
+        <AssociationConnector Association="InServiceModel.FK_Branch_Attachment" />
+        <AssociationConnector Association="InServiceModel.FK_Course_Attachment" />
+        <AssociationConnector Association="InServiceModel.FK_Crop_Attachment" />
+        <AssociationConnector Association="InServiceModel.FK_CropCategory_Attachment" />
+        <AssociationConnector Association="InServiceModel.FK_Livestock_Attachment" />
+        <AssociationConnector Association="InServiceModel.FK_LivestockCategory_Attachment" />
+        <AssociationConnector Association="InServiceModel.FK_Module_Attachment" />
+        <AssociationConnector Association="InServiceModel.FK_Notice_Attachment" />
+        <AssociationConnector Association="InServiceModel.FK_Branch_Branch1" />
+        <AssociationConnector Association="InServiceModel.FK_Branch_Section" />
+        <AssociationConnector Association="InServiceModel.FK_Branch_User" />
+        <AssociationConnector Association="InServiceModel.FK_Course_Branch" />
+        <AssociationConnector Association="InServiceModel.FK_CropCategory_Branch" />
+        <AssociationConnector Association="InServiceModel.FK_LivestockCategory_Branch" />
+        <AssociationConnector Association="InServiceModel.FK_NonValueChain_Branch" />
+        <AssociationConnector Association="InServiceModel.FK_ValueChain_Branch" />
+        <AssociationConnector Association="InServiceModel.FK_Continent_User" />
+        <AssociationConnector Association="InServiceModel.FK_Region_Continent" />
+        <AssociationConnector Association="InServiceModel.FK_Country_Region" />
+        <AssociationConnector Association="InServiceModel.FK_Farmer_Country" />
+        <AssociationConnector Association="InServiceModel.FK_Province_Country" />
+        <AssociationConnector Association="InServiceModel.FK_User_Country" />
+        <AssociationConnector Association="InServiceModel.FK_Course_NonValueChain" />
+        <AssociationConnector Association="InServiceModel.FK_Course_User" />
+        <AssociationConnector Association="InServiceModel.FK_Course_ValueChain" />
+        <AssociationConnector Association="InServiceModel.FK_CoursePrice_Course" />
+        <AssociationConnector Association="InServiceModel.FK_Crop_Course" />
+        <AssociationConnector Association="InServiceModel.FK_Examination_Course" />
+        <AssociationConnector Association="InServiceModel.FK_FarmerDeduction_Course" />
+        <AssociationConnector Association="InServiceModel.FK_Livestock_Course" />
+        <AssociationConnector Association="InServiceModel.FK_Module_Course" />
+        <AssociationConnector Association="InServiceModel.FK_UserExamination_Course" />
+        <AssociationConnector Association="InServiceModel.FK_CoursePrice_Currency" />
+        <AssociationConnector Association="InServiceModel.FK_CoursePrice_PaymentMethod" />
+        <AssociationConnector Association="InServiceModel.FK_CoursePrice_User" />
+        <AssociationConnector Association="InServiceModel.FK_Crop_CropCategory" />
+        <AssociationConnector Association="InServiceModel.FK_Crop_User" />
+        <AssociationConnector Association="InServiceModel.FK_CropCategory_User" />
+        <AssociationConnector Association="InServiceModel.FK_Currency_User" />
+        <AssociationConnector Association="InServiceModel.FK_ExaminationPrice_Currency" />
+        <AssociationConnector Association="InServiceModel.FK_ExchangeRate_Currency" />
+        <AssociationConnector Association="InServiceModel.FK_FarmerDeduction_Currency" />
+        <AssociationConnector Association="InServiceModel.FK_Payment_Currency" />
+        <AssociationConnector Association="InServiceModel.FK_Department_Department1" />
+        <AssociationConnector Association="InServiceModel.FK_Department_User" />
+        <AssociationConnector Association="InServiceModel.FK_Section_Department" />
+        <AssociationConnector Association="InServiceModel.FK_District_Province" />
+        <AssociationConnector Association="InServiceModel.FK_District_User" />
+        <AssociationConnector Association="InServiceModel.FK_ExtensionOfficer_District" />
+        <AssociationConnector Association="InServiceModel.FK_Farmer_District" />
+        <AssociationConnector Association="InServiceModel.FK_User_District" />
+        <AssociationConnector Association="InServiceModel.FK_Ward_District" />
+        <AssociationConnector Association="InServiceModel.FK_EmailConfig_User" />
+        <AssociationConnector Association="InServiceModel.FK_Examination_Module" />
+        <AssociationConnector Association="InServiceModel.FK_Examination_User" />
+        <AssociationConnector Association="InServiceModel.FK_Examination_ValueChain" />
+        <AssociationConnector Association="InServiceModel.FK_ExaminationAttemptCount_Examination" />
+        <AssociationConnector Association="InServiceModel.FK_ExaminationPrice_Examination" />
+        <AssociationConnector Association="InServiceModel.FK_FarmerDeduction_Examination" />
+        <AssociationConnector Association="InServiceModel.FK_FarmerExamination_Examination" />
+        <AssociationConnector Association="InServiceModel.FK_Question_Examination" />
+        <AssociationConnector Association="InServiceModel.FK_ExaminationAttemptCount_User" />
+        <AssociationConnector Association="InServiceModel.FK_ExaminationPrice_PaymentMethod" />
+        <AssociationConnector Association="InServiceModel.FK_ExaminationPrice_User" />
+        <AssociationConnector Association="InServiceModel.FK_ExchangeRate_PaymentMethod" />
+        <AssociationConnector Association="InServiceModel.FK_ExchangeRate_User" />
+        <AssociationConnector Association="InServiceModel.FK_ExtensionOfficer_Province" />
+        <AssociationConnector Association="InServiceModel.FK_ExtentionOfficer_User" />
+        <AssociationConnector Association="InServiceModel.FK_User_ExtentionOfficer" />
+        <AssociationConnector Association="InServiceModel.FK_Farmer_Province" />
+        <AssociationConnector Association="InServiceModel.FK_Farmer_Ward" />
+        <AssociationConnector Association="InServiceModel.FK_Payment_Farmer" />
+        <AssociationConnector Association="InServiceModel.FK_User_Farmer" />
+        <AssociationConnector Association="InServiceModel.FK_UserDeduction_Farmer" />
+        <AssociationConnector Association="InServiceModel.FK_Instruction_User" />
+        <AssociationConnector Association="InServiceModel.FK_Livestock_Livestock1" />
+        <AssociationConnector Association="InServiceModel.FK_Livestock_LivestockCategory" />
+        <AssociationConnector Association="InServiceModel.FK_Livestock_User" />
+        <AssociationConnector Association="InServiceModel.FK_LivestockCategory_User" />
+        <AssociationConnector Association="InServiceModel.FK_FarmerDeduction_Module" />
+        <AssociationConnector Association="InServiceModel.FK_Module_User" />
+        <AssociationConnector Association="InServiceModel.FK_UserExamination_Module" />
+        <AssociationConnector Association="InServiceModel.FK_NonValueChain_NonValueChain1" />
+        <AssociationConnector Association="InServiceModel.FK_NonValueChain_User" />
+        <AssociationConnector Association="InServiceModel.FK_Notice_User" />
+        <AssociationConnector Association="InServiceModel.FK_Payment_PaymentMethod" />
+        <AssociationConnector Association="InServiceModel.FK_Payment_User" />
+        <AssociationConnector Association="InServiceModel.FK_FarmerDeduction_PaymentMethod" />
+        <AssociationConnector Association="InServiceModel.FK_PaymentMethod_User" />
+        <AssociationConnector Association="InServiceModel.FK_User_Province" />
+        <AssociationConnector Association="InServiceModel.FK_FarmerExaminationDetail_Question" />
+        <AssociationConnector Association="InServiceModel.FK_Question_User" />
+        <AssociationConnector Association="InServiceModel.FK_Region_User" />
+        <AssociationConnector Association="InServiceModel.FK_Section_Section1" />
+        <AssociationConnector Association="InServiceModel.FK_Section_User" />
+        <AssociationConnector Association="InServiceModel.FK_FarmerDeduction_User" />
+        <AssociationConnector Association="InServiceModel.FK_User_User1" />
+        <AssociationConnector Association="InServiceModel.FK_User_Ward" />
+        <AssociationConnector Association="InServiceModel.FK_UserExamination_User" />
+        <AssociationConnector Association="InServiceModel.FK_ValueChain_User" />
+        <AssociationConnector Association="InServiceModel.FK_Ward_User" />
+        <AssociationConnector Association="InServiceModel.FK_FarmerExaminationDetail_FarmerExamination" />
+        <AssociationConnector Association="InServiceModel.FK_ValueChain_ValueChain1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

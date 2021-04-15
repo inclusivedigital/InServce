@@ -1,0 +1,50 @@
+﻿@model CoursePrice
+
+
+<h3 class="font-weight-light">Edit item price</h3>
+<div class="row">
+    <div class="col-md-7">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.ID)
+            <div class="card border-primary">
+
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4">Course</label>
+                        <div class="col-md-8">
+                            @Html.DropDownList("CourseID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CourseID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Amount</label>
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Currency</label>
+                        <div class="col-md-8">
+                            @Html.DropDownList("CurrencyID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.CurrencyID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4">Payment method</label>
+                        <div class="col-md-8">
+                            @Html.DropDownList("PaymentMethodID", null, htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.PaymentMethodID, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer text-right">
+                    <button class="btn btn-primary">Save <i class="mdi mdi-checkbox-marked-circle"></i></button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
